@@ -1,0 +1,2 @@
+- Python, FastAPI, Playwright, OpenCV 5, SQLite, MCP Streamable HTTP
+- Enable: Set LLM_FAST_PROVIDER=nebius, NEBIUS_API_KEY, NEBIUS_BASE_URL, and NEBIUS_FAST_MODEL.

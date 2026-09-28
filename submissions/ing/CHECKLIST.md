@@ -1,0 +1,6 @@
+- [ ] Required piece present: Team of two; topics on 9 October
+- [ ] Flag `ing` demonstrated
+- [ ] Video under 3 minutes
+- [ ] No secrets in the repo
+- [ ] MIT license included
+- [ ] Final submit button left for a human

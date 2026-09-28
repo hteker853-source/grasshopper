@@ -1,0 +1,6 @@
+- [ ] Required piece present: Meaningful image analysis with OpenCV 5
+- [ ] Flag `opencv` demonstrated
+- [ ] Video under 3 minutes
+- [ ] No secrets in the repo
+- [ ] MIT license included
+- [ ] Final submit button left for a human

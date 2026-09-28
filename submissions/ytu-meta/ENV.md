@@ -1,0 +1,10 @@
+# Environment flags
+
+MODE=mock
+BUDGET_USD_DAILY=0.50
+BUDGET_USD_PER_RUN=0.05
+ALLOW_BEDROCK=0
+
+Competition flag: meta
+META_API_KEY, META_BASE_URL, META_MODEL, and WHATSAPP_* .
+

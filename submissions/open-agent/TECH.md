@@ -1,0 +1,2 @@
+- Python, FastAPI, Playwright, OpenCV 5, SQLite, MCP Streamable HTTP
+- Enable: Ready. Every step writes runs/<id>/explain.jsonl and the run page renders it.

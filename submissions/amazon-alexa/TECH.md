@@ -1,0 +1,2 @@
+- Python, FastAPI, Playwright, OpenCV 5, SQLite, MCP Streamable HTTP
+- Enable: Ready. Serve the app and open /alexa. Tools are mounted at /mcp (Streamable HTTP).

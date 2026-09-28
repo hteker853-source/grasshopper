@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Alexa+ · Grasshopper</title>
+  <style>
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #071018; color: #e8f4ff; font-family: system-ui, sans-serif; padding: 20px 0; }
+    main { width: min(540px, calc(100% - 28px)); text-align: center; }
+    .controls { display: flex; justify-content: center; gap: 16px; margin: 20px 0; }
+    .orb { width: 110px; height: 110px; border-radius: 50%; border: 0; background: radial-gradient(circle at 40% 35%, #9be7ff, #1463ff 55%, #081426); color: white; font-weight: 800; font-size: 16px; cursor: pointer; transition: transform 0.2s; box-shadow: 0 4px 20px rgba(20, 99, 255, 0.4); }
+    .orb:hover { transform: scale(1.04); }
+    .orb.listening { background: radial-gradient(circle at 40% 35%, #ff9be7, #ff1463 55%, #260814); box-shadow: 0 4px 20px rgba(255, 20, 99, 0.5); }
+    .btn-listen { width: 110px; height: 110px; border-radius: 50%; border: 0; background: radial-gradient(circle at 40% 35%, #9bffc0, #14ff63 55%, #082614); color: #04200d; font-weight: 800; font-size: 16px; cursor: pointer; transition: transform 0.2s; box-shadow: 0 4px 20px rgba(20, 255, 99, 0.4); }
+    .btn-listen:hover { transform: scale(1.04); }
+    .btn-listen.active { background: radial-gradient(circle at 40% 35%, #ffff9b, #ffba14 55%, #261b08); color: #201404; }
+    textarea { width: 100%; box-sizing: border-box; min-height: 64px; margin-top: 12px; border-radius: 12px; border: 1px solid #1d3b55; background: #0c1b2a; color: inherit; padding: 10px; font: inherit; }
+    .preview-card { margin-top: 20px; border-radius: 12px; background: #0c1b2a; border: 1px solid #1d3b55; overflow: hidden; padding: 12px; }
+    .preview-title { font-size: 13px; text-transform: uppercase; color: #9be7ff; margin-bottom: 8px; font-weight: 700; text-align: left; }
+    #live-frame { width: 100%; height: auto; aspect-ratio: 16/9; background: #04090e; border-radius: 8px; object-fit: contain; display: block; }
+    #approval-card { display: none; margin-top: 16px; padding: 16px; border-radius: 12px; background: #261608; border: 1px solid #ff9b14; text-align: left; }
+    #approval-card.visible { display: block; }
+    .approval-actions { display: flex; gap: 10px; margin-top: 12px; }
+    .btn-approve { background: #14ff63; color: #04200d; border: 0; padding: 8px 16px; border-radius: 6px; font-weight: 700; cursor: pointer; }
+    .btn-reject { background: #ff4757; color: white; border: 0; padding: 8px 16px; border-radius: 6px; font-weight: 700; cursor: pointer; }
+    #log { text-align: left; white-space: pre-wrap; color: #b7c9d8; font-size: 13px; max-height: 180px; overflow-y: auto; background: #060e16; padding: 10px; border-radius: 8px; margin-top: 16px; }
+    a { color: #9be7ff; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <main>
+    <p><a href="/">← Grasshopper Paneli</a></p>
+    <h1>Alexa+ Sesli Ajan</h1>
+    <p>Bu sayfa MCP Streamable HTTP (<code>/mcp/</code>) üzerinden bağlanan sesli bir Alexa+ arayüzüdür.</p>
+
+    <div class="controls">
+      <button class="orb" id="orb" type="button">Konuş (Görev)</button>
+      <button class="btn-listen" id="btn-listen" type="button">Dinle (Sürekli)</button>
+    </div>
+
+    <textarea id="text" placeholder="Veya metinle görev yazın (örn: 'Find cheapest 4-star book')"></textarea>
+    <!-- Güven ve Denetim Paneli -->
+    <div id="trust-panel" style="margin: 14px 0; padding: 12px; border-radius: 10px; background: #0c1b2a; border: 1px solid #1d3b55; font-size: 13px; display: flex; justify-content: space-around; color: #9be7ff; text-align: left;">
+      <div>🛡️ <b>Onay Kapısı:</b> <span id="gate-indicator" style="color: #14ff63; font-weight: 700;">Aktif</span> (Kritik adımlar onay bekler)</div>
+      <div>💰 <b>Harcama Tavanı:</b> <span id="budget-indicator" style="color: #ffba14; font-weight: 700;">$0.50/gün</span> (koşu başı $0.05)</div>
+    </div>
+    <p><button id="send" type="button" style="padding: 10px 20px; border-radius: 8px; background: #1463ff; color: white; border: 0; font-weight: bold; cursor: pointer;">MCP İle Gönder</button></p>
+
+    <!-- Onay Kapısı Kartı -->
+    <div id="approval-card">
+      <div style="font-weight: bold; color: #ffba14; margin-bottom: 6px;">⚠️ İnsan Onayı Bekleniyor</div>
+      <div id="approval-reason" style="font-size: 14px; margin-bottom: 8px;"></div>
+      <div style="font-size: 12px; color: #b7c9d8;">Sesle <i>"onaylıyorum"</i> deyin veya tıklayın:</div>
+      <div class="approval-actions">
+        <button class="btn-approve" id="btn-approve-click" type="button">Onayla</button>
+        <button class="btn-reject" id="btn-reject-click" type="button">Reddet</button>
+      </div>
+    </div>
+
+    <!-- Canlı Tarayıcı Önizleme Penceresi -->
+    <div class="preview-card">
+      <div class="preview-title">📺 Canlı Tarayıcı Önizleme (1 fps)</div>
+      <img id="live-frame" src="/live/frame.png" alt="Canlı Tarayıcı Önizleme" onerror="this.style.opacity='0.4'" onload="this.style.opacity='1'">
+      <div id="preview-caption" style="font-size: 12px; color: #8ba2b5; margin-top: 6px; text-align: left;">Durum: Bekliyor</div>
+    </div>
+
+    <pre id="log">MCP hazır.</pre>
+  </main>
+
+  <script>
+    const logEl = document.getElementById("log");
+    const liveFrameEl = document.getElementById("live-frame");
+    const captionEl = document.getElementById("preview-caption");
+    const approvalCard = document.getElementById("approval-card");
+    const approvalReasonEl = document.getElementById("approval-reason");
+    const orbBtn = document.getElementById("orb");
+    const listenBtn = document.getElementById("btn-listen");
+
+    let currentApprovalId = null;
+    let rpcId = 1;
+    let continuousListening = false;
+
+    function say(line) {
+      logEl.textContent += "\n" + line;
+      logEl.scrollTop = logEl.scrollHeight;
+    }
+
+    function speakSpeech(text) {
+      if (!window.speechSynthesis || !text) return;
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = "tr-TR";
+      window.speechSynthesis.speak(utterance);
+    }
+
+    async function mcp(method, params) {
+      const res = await fetch("/mcp/", {
+        method: "POST",
+        headers: {"Content-Type": "application/json", "Accept": "application/json, text/event-stream"},
+        body: JSON.stringify({jsonrpc: "2.0", id: rpcId++, method, params})
+      });
+      const data = await res.json();
+      if (data.error) throw new Error(data.error.message || "MCP error");
+      return data.result;
+    }
+
+    async function ensure() {
+      if (window.__mcpReady) return;
+      await mcp("initialize", {protocolVersion: "2025-11-25", capabilities: {}, clientInfo: {name: "alexa-sim", version: "0.1"}});
+      window.__mcpReady = true;
+    }
+
+    function toolText(result) {
+      const blocks = (result && result.content) || [];
+      return blocks.map((b) => b.text || "").join("\n") || JSON.stringify(result);
+    }
+
+    // Refresh live frame preview every 1 second
+    setInterval(() => {
+      liveFrameEl.src = "/live/frame.png?t=" + Date.now();
+    }, 1000);
+
+    // Poll pending approvals
+    async function checkApprovals() {
+      try {
+        await ensure();
+        const res = await mcp("tools/call", {name: "list_pending_approvals", arguments: {}});
+        const list = JSON.parse(toolText(res) || "[]");
+        if (list && list.length > 0) {
+          const item = list[0];
+          currentApprovalId = item.id;
+          approvalReasonEl.textContent = item.reason;
+          approvalCard.className = "visible";
+          speakSpeech("Dikkat: Bir işlem insan onayı bekliyor. " + item.reason);
+        } else {
+          currentApprovalId = null;
+          approvalCard.className = "";
+        }
+      } catch (e) {
+        // quiet
+      }
+    }
+    setInterval(checkApprovals, 3000);
+
+    async function handleApprove(decision) {
+      if (!currentApprovalId) return;
+      say("Onay kapısı kararı: " + decision);
+      await mcp("tools/call", {name: "approve", arguments: {approval_id: currentApprovalId, decision}});
+      approvalCard.className = "";
+      speakSpeech(decision === "approved" ? "İşlem onaylandı." : "İşlem reddedildi.");
+      currentApprovalId = null;
+    }
+
+    document.getElementById("btn-approve-click").onclick = () => handleApprove("approved");
+    document.getElementById("btn-reject-click").onclick = () => handleApprove("rejected");
+
+    async function runTask(text) {
+      if (!text) return;
+      say("MCP start_task çağrılıyor: " + text);
+      captionEl.textContent = "Durum: Görev başlatılıyor…";
+      await ensure();
+      const queued = await mcp("tools/call", {name: "start_task", arguments: {text}});
+      const body = JSON.parse(toolText(queued) || "{}");
+      const taskId = body.task_id;
+      if (body.speech) speakSpeech(body.speech);
+      say("Görev alındı: " + taskId);
+
+      for (let i = 0; i < 40; i++) {
+        await new Promise((r) => setTimeout(r, 1500));
+        const statusRes = await mcp("tools/call", {name: "get_task_status", arguments: {task_id: taskId}});
+        const sBody = JSON.parse(toolText(statusRes) || "{}");
+        captionEl.textContent = "Durum: " + sBody.status;
+        say("Durum: " + sBody.status + " | " + (sBody.speech || ""));
+        if (["success", "failed", "cancelled"].includes(sBody.status)) {
+          if (sBody.speech) speakSpeech(sBody.speech);
+          break;
+        }
+      }
+    }
+
+    document.getElementById("send").onclick = () => runTask(document.getElementById("text").value);
+
+    // Web Speech Recognition
+    const Rec = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    orbBtn.onclick = () => {
+      if (!Rec) { alert("Tarayıcınız Web Speech API desteklemiyor. Metin kutusunu kullanın."); return; }
+      const rec = new Rec();
+      rec.lang = "tr-TR";
+      orbBtn.classList.add("listening");
+      rec.onresult = (ev) => {
+        orbBtn.classList.remove("listening");
+        const transcript = ev.results[0][0].transcript;
+        document.getElementById("text").value = transcript;
+        say("Algılanan ses: " + transcript);
+        runTask(transcript);
+      };
+      rec.onerror = () => orbBtn.classList.remove("listening");
+      rec.onend = () => orbBtn.classList.remove("listening");
+      rec.start();
+    };
+
+    let continuousRec = null;
+    listenBtn.onclick = () => {
+      if (!Rec) { alert("Tarayıcınız Web Speech API desteklemiyor."); return; }
+      if (continuousListening) {
+        continuousListening = false;
+        listenBtn.classList.remove("active");
+        if (continuousRec) continuousRec.stop();
+        say("Sürekli dinleme kapatıldı.");
+        return;
+      }
+      continuousListening = true;
+      listenBtn.classList.add("active");
+      say("Sürekli dinleme devrede: 'onaylıyorum' veya görev söyleyebilirsiniz.");
+
+      continuousRec = new Rec();
+      continuousRec.lang = "tr-TR";
+      continuousRec.continuous = true;
+      continuousRec.interimResults = false;
+
+      continuousRec.onresult = (ev) => {
+        for (let i = ev.resultIndex; i < ev.results.length; ++i) {
+          if (ev.results[i].isFinal) {
+            const heard = ev.results[i][0].transcript.trim().toLowerCase();
+            say("Duyuldu: " + heard);
+            if (heard.includes("onaylıyorum") || heard.includes("onayla") || heard.includes("approve")) {
+              handleApprove("approved");
+            } else if (heard.includes("reddet") || heard.includes("reject")) {
+              handleApprove("rejected");
+            } else if (heard.length > 5) {
+              document.getElementById("text").value = heard;
+              runTask(heard);
+            }
+          }
+        }
+      };
+      continuousRec.onend = () => {
+        if (continuousListening) {
+          try { continuousRec.start(); } catch(e) {}
+        }
+      };
+      continuousRec.start();
+    };
+  </script>
+</body>
+</html>

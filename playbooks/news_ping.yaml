@@ -1,0 +1,19 @@
+id: news_ping
+name: Read the news desk and notify
+triggers:
+  - "check the news headlines"
+site: news
+steps:
+  - id: read
+    goal: Read the news headlines
+    site: news
+    success_criteria: "text:Trend score"
+    reason: "A status check only needs the desk, not a video."
+    actions:
+      - type: goto
+        url: "{sandbox}/news"
+      - type: read_text
+        selector: "[data-testid=top-headline]"
+        save_as: headline
+      - type: notify
+        text: "Top story: {{var:headline}}"

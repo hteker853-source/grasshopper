@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Run {{ run_id }}</title>
+  <style>
+    body { margin: 0; font-family: system-ui, sans-serif; background: #10140f; color: #e7f0dc; }
+    main { width: min(860px, calc(100% - 28px)); margin: 0 auto; padding: 20px 0 40px; }
+    a { color: #edffad; }
+    article { border: 1px solid #2a3326; border-radius: 16px; padding: 12px; margin: 10px 0; background: #181e16; }
+    img { width: 100%; border-radius: 10px; }
+    .muted { color: #9aa892; }
+    h1 { font-size: 22px; }
+  </style>
+</head>
+<body>
+  <main>
+    <p><a href="/">Back</a></p>
+    <h1>Run {{ run_id }}</h1>
+    <p class="muted">{{ summary }}</p>
+    <section id="canli">
+      <h2>CANLI <span id="canli-label">bekliyor</span></h2>
+      <p id="canli-meta" class="muted"></p>
+      <img id="live-shot" alt="latest browser frame" hidden src="/runs/{{ run_id }}/live.png">
+    </section>
+    {% for event in events %}
+    <article>
+      <strong>{{ event.step }}</strong> · attempt {{ event.attempt }}
+      {% if event.model_tier %}<span class="muted"> · model {{ event.model_tier }}</span>{% endif %}
+      <p>{{ event.reason }}</p>
+      <p class="muted">{{ event.action }} — {{ event.verifier_result }}</p>
+      {% if event.evidence_rel %}<img alt="evidence" src="/artifacts/{{ event.evidence_rel }}">{% endif %}
+    </article>
+    {% else %}
+    <p>No steps recorded yet.</p>
+    {% endfor %}
+  </main>
+  <script>
+    const live = document.getElementById("live-shot");
+    function refreshLive() {
+      live.src = "/runs/{{ run_id }}/live.png?t=" + Date.now();
+    }
+    live.onload = () => { live.hidden = false; };
+    live.onerror = () => { live.hidden = true; };
+    async function refreshCaption() {
+      const res = await fetch("/api/live");
+      if (!res.ok) return;
+      const data = await res.json();
+      document.getElementById("canli-label").textContent = data.label || "bekliyor";
+      const bits = [];
+      if (data.url) bits.push(data.url);
+      if (data.goal) bits.push(data.goal);
+      document.getElementById("canli-meta").textContent = bits.join(" · ");
+    }
+    refreshCaption();
+    setInterval(refreshLive, 700);
+    setInterval(refreshCaption, 700);
+  </script>
+</body>
+</html>

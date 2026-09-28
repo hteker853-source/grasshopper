@@ -1,0 +1,82 @@
+id: ai_alpha_research
+name: Sign up, research, share, and audit the profile
+triggers:
+  - "enable research mode"
+  - "solar panels"
+  - "missing profile"
+site: ai-alpha
+steps:
+  - id: signup
+    goal: Create the demo account on ai-alpha
+    site: ai-alpha
+    success_criteria: "selector:[data-testid=dashboard]"
+    risk_level: low
+    reason: "The research tools are behind an account, so sign-up comes first."
+    actions:
+      - type: goto
+        url: "{sandbox}/ai-alpha/signup"
+      - type: type
+        selector: "[data-testid=name]"
+        text: "Demo"
+      - type: type
+        selector: "[data-testid=email]"
+        text: "{{secret:ai_alpha_email}}"
+      - type: type
+        selector: "[data-testid=password]"
+        text: "{{secret:ai_alpha_password}}"
+      - type: click
+        selector: "[data-testid=signup-submit]"
+      - type: wait_for
+        selector: "[data-testid=dashboard]"
+  - id: research_mode
+    goal: Turn research mode on
+    site: ai-alpha
+    success_criteria: "text:Research mode is ON"
+    reason: "Sourced answers are withheld until research mode is enabled."
+    actions:
+      - type: goto
+        url: "{sandbox}/ai-alpha/settings"
+      - type: click
+        selector: "[data-testid=enable-research]"
+      - type: wait_for
+        selector: "[data-testid=research-state]"
+  - id: research
+    goal: Research solar panels
+    site: ai-alpha
+    success_criteria: "text:Research complete: solar panels"
+    reason: "The task asked for a sourced note on solar panels."
+    actions:
+      - type: goto
+        url: "{sandbox}/ai-alpha/chat"
+      - type: type
+        selector: "[data-testid=chat-input]"
+        text: "research solar panels"
+      - type: click
+        selector: "[data-testid=chat-send]"
+      - type: wait_for
+        selector: "[data-testid=last-answer]"
+  - id: share
+    goal: Share the research result
+    site: ai-alpha
+    success_criteria: "text:Share link:"
+    risk_level: high
+    requires_approval: true
+    reason: "Sharing leaves a public link, so a person has to approve it."
+    actions:
+      - type: click
+        selector: "[data-testid=share-submit]"
+      - type: wait_for
+        selector: "[data-testid=share-link]"
+  - id: profile
+    goal: Find missing profile fields and suggest fixes
+    site: ai-alpha
+    success_criteria: "text:Missing: phone && text:Missing: bio"
+    reason: "The profile page is the only place the missing fields are listed."
+    actions:
+      - type: goto
+        url: "{sandbox}/ai-alpha/profile"
+      - type: read_text
+        selector: "[data-testid=profile-suggestion]"
+        save_as: profile_suggestion
+      - type: notify
+        text: "{{var:profile_suggestion}}"

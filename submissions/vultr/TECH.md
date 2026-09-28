@@ -1,0 +1,3 @@
+- Python, FastAPI, Playwright, OpenCV 5, SQLite, MCP Streamable HTTP
+- Enable: Default runner is local. Docker is optional. VULTR_API_KEY creates a short-lived instance.
+- Vultr API: Yerel sahte sunucu (tests/fakes/vultr_app.py) ile test edilmiştir, gerçek Vultr hesabında denenmemiştir.

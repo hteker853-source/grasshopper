@@ -1,0 +1,304 @@
+{
+  "amazon": {
+    "comp": "amazon",
+    "results": {
+      "criteria": [
+        {
+          "name": "Tech Implementation",
+          "scores": {
+            "teknik": 9,
+            "urun": 8,
+            "tasarim": 7,
+            "etki": 8,
+            "supheci": 6
+          },
+          "justification": "MCP SDK 2.x Streamable HTTP correctly mounted with 7 tools, 88 passing pytest tests, hard budget ledger enforced, and real Nebius Nemotron execution loop demonstrate strong technical completeness; skeptic notes friction log reveals unresolved MCP SDK lifespan and Playwright fallback issues."
+        },
+        {
+          "name": "Design",
+          "scores": {
+            "teknik": 7,
+            "urun": 6,
+            "tasarim": 6,
+            "etki": 7,
+            "supheci": 4
+          },
+          "justification": "Dashboard delivers live learning curve chart, token cost panel, Alexa simulator, and stream feed but zero external user testing conducted; skeptic penalizes unverified 'live' claims and absent usability validation."
+        },
+        {
+          "name": "Potential Impact",
+          "scores": {
+            "teknik": 8,
+            "urun": 8,
+            "tasarim": 7,
+            "etki": 9,
+            "supheci": 5
+          },
+          "justification": "Measured $0.0238 spend across 5 real sites with second-run zero-LLM recipe learning shows compelling ROI and cost control; skeptic flags tiny sample size, unverified recipe-learning claim, and no external benchmark replication."
+        },
+        {
+          "name": "Quality of the Idea",
+          "scores": {
+            "teknik": 8,
+            "urun": 8,
+            "tasarim": 6,
+            "etki": 8,
+            "supheci": 5
+          },
+          "justification": "Approval gates, budget ledger, recipe caching, and honest friction log documenting MCP SDK 2.x session/Playwright snags prove creative safety architecture beyond a wrapper; skeptic questions reusability scope and whether documented snags remain unresolved."
+        }
+      ]
+    },
+    "usage": {
+      "completion_tokens": 1667,
+      "prompt_tokens": 615,
+      "total_tokens": 2282,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": null,
+        "reasoning_tokens": 1218,
+        "rejected_prediction_tokens": null
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": null,
+        "cached_tokens": 0,
+        "multimodal_tokens": null
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 615
+    },
+    "cost_usd": 0.006846
+  },
+  "nebius": {
+    "comp": "nebius",
+    "results": {
+      "criteria": [
+        {
+          "name": "Technological Implementation",
+          "scores": {
+            "teknik": 9,
+            "urun": 8,
+            "tasarim": 7,
+            "etki": 8,
+            "supheci": 7
+          },
+          "justification": "Live Nebius Token Factory integration with dual Nemotron models, verified token billing ($0.0238/41 calls), and 88 passing pytest tests demonstrate strong execution; supheci notes test coverage depth unverified."
+        },
+        {
+          "name": "Design",
+          "scores": {
+            "teknik": 8,
+            "urun": 8,
+            "tasarim": 9,
+            "etki": 8,
+            "supheci": 6
+          },
+          "justification": "Dashboard shows learning curve (calls→0 on replay), token savings panel, and live frame streaming — strong visual feedback; supheci penalizes absence of documented user testing."
+        },
+        {
+          "name": "Potential Impact",
+          "scores": {
+            "teknik": 8,
+            "urun": 9,
+            "etki": 9,
+            "tasarim": 8,
+            "supheci": 5
+          },
+          "justification": "Recipe caching and hard budget guards enable measurable cost reduction for repetitive web workflows; supheci flags 'drastic reduction' as unverified without live user deployment data."
+        },
+        {
+          "name": "Quality of the Idea",
+          "scores": {
+            "teknik": 9,
+            "urun": 8,
+            "tasarim": 7,
+            "etki": 8,
+            "supheci": 6
+          },
+          "justification": "Two-tier model routing (fast default, strong on failure) plus automated DOM recovery with CV fallback is a non-obvious, clever architecture; supheci questions production readiness of CV fallback."
+        }
+      ]
+    },
+    "usage": {
+      "completion_tokens": 1222,
+      "prompt_tokens": 556,
+      "total_tokens": 1778,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": null,
+        "reasoning_tokens": 807,
+        "rejected_prediction_tokens": null
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": null,
+        "cached_tokens": 0,
+        "multimodal_tokens": null
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 556
+    },
+    "cost_usd": 0.005334
+  },
+  "open-agent": {
+    "comp": "open-agent",
+    "results": {
+      "criteria": [
+        {
+          "name": "Impact",
+          "scores": {
+            "teknik": 6,
+            "urun": 7,
+            "tasarim": 5,
+            "etki": 8,
+            "supheci": 4
+          },
+          "justification": "Human approval gates and domain allowlists provide a safety framework, but real-world validation and robustness of enforcement remain unverified."
+        },
+        {
+          "name": "Technical",
+          "scores": {
+            "teknik": 8,
+            "urun": 7,
+            "tasarim": 5,
+            "etki": 7,
+            "supheci": 6
+          },
+          "justification": "Multi-agent council mechanism and reasoning traces are implemented with 88 passing tests, though test coverage depth and consensus reliability need further scrutiny."
+        },
+        {
+          "name": "Innovation",
+          "scores": {
+            "teknik": 8,
+            "urun": 7,
+            "tasarim": 5,
+            "etki": 8,
+            "supheci": 5
+          },
+          "justification": "Zero-cost recipe caching and hard budget ceilings demonstrate cost-saving innovation, yet actual replay effectiveness and budget enforcement under load are unproven."
+        },
+        {
+          "name": "Demo",
+          "scores": {
+            "teknik": 6,
+            "urun": 7,
+            "tasarim": 7,
+            "etki": 7,
+            "supheci": 4
+          },
+          "justification": "Recorded video showcases dashboard and execution flow, but absence of live streaming endpoint and limited demo duration raise doubts about real-time performance."
+        },
+        {
+          "name": "Product & UX",
+          "scores": {
+            "teknik": 7,
+            "urun": 8,
+            "tasarim": 8,
+            "etki": 7,
+            "supheci": 5
+          },
+          "justification": "Interactive dashboard with runs overview, live screenshots, and budget metrics offers strong usability, though user testing evidence is lacking."
+        },
+        {
+          "name": "Sponsor Tech",
+          "scores": {
+            "teknik": 7,
+            "urun": 6,
+            "tasarim": 5,
+            "etki": 7,
+            "supheci": 4
+          },
+          "justification": "Integration with NVIDIA Nemotron on Nebius cloud is claimed, but technical depth of integration and open agent protocol adherence are not demonstrated."
+        }
+      ]
+    },
+    "usage": {
+      "completion_tokens": 2366,
+      "prompt_tokens": 609,
+      "total_tokens": 2975,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": null,
+        "reasoning_tokens": 1778,
+        "rejected_prediction_tokens": null
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": null,
+        "cached_tokens": 0,
+        "multimodal_tokens": null
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 609
+    },
+    "cost_usd": 0.008925
+  },
+  "vultr": {
+    "comp": "vultr",
+    "results": {
+      "criteria": [
+        {
+          "name": "Application of Technology",
+          "scores": {
+            "teknik": 6,
+            "urun": 7,
+            "tasarim": 5,
+            "etki": 6,
+            "supheci": 4
+          },
+          "justification": "Headless browser with HTTP fallback and Docker sandbox with resource limits show solid engineering, but simulated Vultr operations and absent unit tests/API completeness evidence reduce confidence in production readiness."
+        },
+        {
+          "name": "Presentation",
+          "scores": {
+            "teknik": 6,
+            "urun": 7,
+            "tasarim": 6,
+            "etki": 6,
+            "supheci": 4
+          },
+          "justification": "62-second demo captures containment moment and docs/rules/vultr.md is complete, yet brevity limits technical depth and no live user testing footage leaves adoption friction unverified."
+        },
+        {
+          "name": "Business Value",
+          "scores": {
+            "teknik": 7,
+            "urun": 8,
+            "tasarim": 5,
+            "etki": 8,
+            "supheci": 5
+          },
+          "justification": "Hard budget caps ($0.50/day, $0.05/run), domain allow/deny lists, and approval gates directly address enterprise rogue-agent risk, but UX exposure of these guards and real-world deployment proof are missing."
+        },
+        {
+          "name": "Originality",
+          "scores": {
+            "teknik": 7,
+            "urun": 8,
+            "tasarim": 6,
+            "etki": 7,
+            "supheci": 5
+          },
+          "justification": "Blast_radius.json per-execution ledger tracking files, domains, duration, and USD is a novel containment artifact, though Docker sandboxing itself is established practice and marketing term 'Blast Radius Zero' outpaces independent verification."
+        }
+      ]
+    },
+    "usage": {
+      "completion_tokens": 1408,
+      "prompt_tokens": 513,
+      "total_tokens": 1921,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": null,
+        "reasoning_tokens": 986,
+        "rejected_prediction_tokens": null
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": null,
+        "cached_tokens": 0,
+        "multimodal_tokens": null
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 513
+    },
+    "cost_usd": 0.005763
+  }
+}

@@ -1,0 +1,50 @@
+# Decisions
+
+- Browser actions share one schema. Default driver is HTTP against Sandbox Web (BeautifulSoup + httpx) because it is deterministic on a 2 GB host; Playwright Chromium is used when `BROWSER_DRIVER=playwright` or `auto` and a browser binary launches.
+- Sandbox routes are mounted inside the dashboard process so the preview (port 8080) can open the fake sites. A standalone `sandbox_web.app` still listens on `SANDBOX_PORT` when embedded mode is on, and tests point `SANDBOX_BASE_URL` at an isolated port.
+- MCP SDK 2.x (`MCPServer`) is mounted at `/mcp` with Streamable HTTP, stateless JSON responses, and the session manager started from the FastAPI lifespan. Clients should use the `/mcp/` URL (Starlette redirects `/mcp`).
+- Pre-seeded playbooks are approved skills. The planner uses them with zero LLM calls. A plan invented by the LLM is saved as a candidate and becomes approved after two successes (scenario S8 plus the learned-skill unit test).
+- Sandbox artificial delay defaults to 100–800 ms. Tests set `SANDBOX_DELAY_*` lower so the suite finishes; the reliability test keeps a non-zero random delay.
+- Payments always create an approval row. The mock wallet still enforces daily and per-transaction limits after approval.
+- Repair patches are written under `patches/` and rehearsed on a temp copy. They are never applied to the working tree without an approval.
+- Preview process is started from `startup.sh` via uvicorn on `0.0.0.0:8080` because the product is this Python service, not the unused Node scaffold.
+- OpenCV 5 (`opencv-python-headless` 5.0.0.93) is pinned for the OpenCV AI Competition flag.
+- Mainnet RPC URLs are refused. Solana code only talks to endpoints that do not contain `mainnet`.
+- Tests assign real provider secrets to empty strings before settings load, so `.env` cannot attach Telegram or WhatsApp to the notifier list.
+- Real Chromium checks live in `tests/test_browser_real.py` under the `browser` marker. `make test-browser` runs them; `make test` still runs the whole suite, including those two scenarios.
+- Reliability is `scripts/reliability.py`: fifty real-Chromium runs each of S3 and S1, sandbox delay 100–800 ms, cookie banner left on, secrets blanked so the run cannot notify.
+- The run page reloads `/runs/<id>/live.png` every second. `/canli` and approval notices send that frame only to `TELEGRAM_ALLOWED_USER_ID`.
+- Playwright records each run at 1280x720 under `runs/<id>/video/`. `make record` stitches the agent and dashboard views into `videos/demo.mp4` and sends it only when the file is under 50 MB.
+- `make audit` writes `docs/AUDIT.md`. A competition that still needs a real key is marked waiting, not failed.
+- Provider clients keep their public default hosts. Optional base-URL settings exist so tests can point those same clients at local fakes. Bedrock is verified with a botocore Stubber. Solana stays unwired until a devnet keypair exists.
+- `submissions/amazon/` is a draft for Halil to review. The agent does not upload it or open a submission form.
+- The dashboard cost panel counts fast, strong, and vision calls. Token savings are the fast-tier tokens that were not sent to the strong model.
+- Vision detection stays in-process when `VISION_SERVICE_URL` is empty. A set URL sends the same images to `vision_service`, which is the piece that can be deployed. The container listens on 0.0.0.0; local runs bind 127.0.0.1.
+- Sandbox execution defaults to this machine. Docker adds memory, CPU, and network limits and a named container used as the kill switch; a missing Docker binary falls back to local with a warning. Vultr opens a temporary instance and deletes it. There is no SSH step until `docs/rules/vultr.md` exists; that file will replace the remote-exec placeholder.
+- Dashboard pages and `/api` require `API_TOKEN`. A matching `?token=` sets an HttpOnly cookie and redirects so the token leaves the address bar. `/health`, `/mcp`, and `/webhooks/` stay open. The dev server default bind is 127.0.0.1.
+- Real Chromium runs publish a frame about 1.5 times a second to `runs/live_frame.png` with the current URL and step goal. `make share` parses a trycloudflare address and sends the link only to the allowed Telegram user.
+- `docs/READINESS.md` is an estimate. Rows marked DOĞRULANMADI in `docs/rules/facts.md` are not treated as decided. Colosseum stays out.
+- Real sites need the code allowlist. The env list can only narrow it. Denylist and robots.txt win. Requests wait `REAL_SITE_DELAY_SEC`.
+- The router reserves catalog token price before each call. Daily cap 0.50 USD, per-run cap 0.05 USD. Over the cap the task stops and a budget notice is sent. Mock actual cost stays 0.
+- Bedrock stays off unless `ALLOW_BEDROCK=1`.
+- A learned real-site trace replays with zero model calls. The second-run number is measured on the fixture, not invented for the live web.
+- Jury scores in `docs/WIN_SCORECARD.md` are judgments. They are not pushed up to the 8.0 target.
+- Open Agent gets no new module before 15 October. The plan is `docs/OPEN_AGENT_PLAN.md`.
+- Competition kits are drafts. Nothing is submitted.
+- Competition rules and jury criteria in docs/rules/ are updated from official sources via web search, keeping unverified markers and sources per row in docs/rules/facts.md.
+- Playwright waits 150 ms after single-page route changes so DOM updates settle before observation, and real bench measurements write tables to docs/RELIABILITY_REAL.md.
+- Official arXiv API (`export.arxiv.org/api/query`) is allowlisted with 3-second delay enforcement, honoring robots.txt by permitting only `/api/`.
+- Nebius Nemotron (`nvidia/Nemotron-3_5-Lightning`) is wired as fast provider, tracking live token spend ($0.0238 for 41 calls in 1st run).
+- Win scorecard evaluates 5 jury personas with Monte Carlo simulation in scripts/ev_model.py noting independence correlation limits.
+- Nebius Nemotron Ultra (550B) was evaluated as independent jury for A-class; independent scores (6.81 -> 7.02) were adopted over internal estimates (5.03).
+- Lowest 3 criteria across A-class were closed with test_vultr_sandbox.py, test_nemotron_sponsor.py, test_dashboard_ux.py, and docs/UX_EVALUATION.md.
+- README was expanded with 3-command setup, Mermaid architecture diagram, real benchmark results, and containment-first security architecture.
+- Replaced all usability testing claims with simulated AI persona walkthroughs, marked Vultr API as fake-server tested, and noted AI jury circularity in WIN_SCORECARD.md.
+- Comprehensive competition matrix compiled in docs/COMPETITION_MATRIX.md across 19 hackathons disclosing gaps and proof statuses.
+- Jury loss arguments and ROI-prioritized solutions analyzed in docs/LOSS_ARGUMENTS.md across all competitions.
+- Digital worker 8 core capabilities verified via real assertions in tests/test_working_core.py with out-of-scope security boundaries documented.
+- Sponsor integrations deepened: Meta Llama routed via Nebius, Vultr blast-radius verified, Azure Foundry mapped, and OpenCV AWS deployment path specified.
+- MCP Streamable HTTP protocol compliance verified with official SDK tests, <500ms tools benchmark, Web Speech API live preview on /alexa, and make share-mcp tunnel target.
+- Independent jury re-evaluation updated in docs/WIN_SCORECARD.md with concrete proof for A-class score gains (Amazon 7.85, Nebius 8.00, Open Agent 6.81, Vultr 6.85).
+- Monte Carlo EV model updated in scripts/ev_model.py with quality correlation and 3 scenarios (Base EV $1,601); docs/INCOME_PLAN.md compiled with 60h labor budget.
+- Görev 12: Nebius Token Factory live routing migration, zero-leak privacy sweep, single-commit clean master, headless GitHub OAuth device flow authorization, public repo create, gh-pages static replay deployment, and dual 3-minute demo video generation with bottom-right model overlay completed.

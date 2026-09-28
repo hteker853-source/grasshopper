@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Grasshopper</title>
+  <style>
+    :root {
+      --bg: #10140f;
+      --bg-2: #181e16;
+      --ink: #e7f0dc;
+      --muted: #9aa892;
+      --line: #2a3326;
+      --lime: #d6f25c;
+      --lime-2: #edffad;
+      --danger: #ff8b6a;
+      --ok: #8ee0a2;
+      --warn: #f0c36a;
+      --mock: #f0c36a;
+      --real: #8ee0a2;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background:
+        radial-gradient(1200px 500px at 10% -10%, #24321a 0%, transparent 55%),
+        var(--bg);
+      color: var(--ink);
+      min-height: 100vh;
+    }
+    header, main { width: min(980px, calc(100% - 28px)); margin: 0 auto; }
+    header { padding: 22px 0 8px; display: flex; justify-content: space-between; gap: 12px; align-items: end; }
+    h1 { font-size: 28px; margin: 0; letter-spacing: -0.04em; }
+    h1 span { color: var(--lime); }
+    a { color: var(--lime-2); }
+    .sub { color: var(--muted); margin: 6px 0 0; }
+    .composer, .card, .status {
+      background: var(--bg-2);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+    }
+    .composer { padding: 14px; margin: 14px 0; }
+    textarea, input[type=file] { width: 100%; }
+    textarea {
+      min-height: 88px;
+      resize: vertical;
+      border: 0;
+      background: #10150f;
+      color: var(--ink);
+      border-radius: 12px;
+      padding: 12px;
+      font: inherit;
+      font-size: 16px;
+    }
+    .row { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+    button, .chip {
+      border: 0;
+      background: var(--lime);
+      color: #17200f;
+      font-weight: 700;
+      border-radius: 999px;
+      padding: 12px 16px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+    button.ghost, .chip { background: transparent; color: var(--lime-2); border: 1px solid var(--line); font-weight: 600; }
+    button.danger { background: var(--danger); color: #2a100c; }
+    button.ok { background: var(--ok); }
+    .chips { display: flex; gap: 8px; overflow: auto; padding-bottom: 4px; }
+    .chip { white-space: nowrap; }
+    .grid { display: grid; gap: 12px; }
+    @media (min-width: 800px) { .split { grid-template-columns: 1.4fr 0.8fr; } }
+    .card { padding: 14px; }
+    .card h2 { margin: 0 0 8px; font-size: 16px; }
+    .pill { display: inline-block; border-radius: 999px; padding: 3px 8px; font-size: 12px; background: #243024; color: var(--lime-2); }
+    .pill.wait { background: #3a3018; color: var(--warn); }
+    .pill.bad { background: #3a2018; color: var(--danger); }
+    .pill.good { background: #183226; color: var(--ok); }
+    .shot { width: 100%; border-radius: 12px; margin-top: 8px; background: #0c0f0b; }
+    .muted { color: var(--muted); font-size: 13px; }
+    .status { padding: 12px 14px; margin-bottom: 18px; }
+    .badge { display: flex; justify-content: space-between; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+    .REAL { color: var(--real); font-weight: 700; }
+    .MOCK { color: var(--mock); font-weight: 700; }
+    .actions { display: flex; gap: 8px; margin-top: 10px; }
+    .actions button { flex: 1; }
+    .empty { color: var(--muted); padding: 8px 0 2px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Grass<span>hopper</span></h1>
+      <p class="sub">A worker that hops site to site, checks its work, and asks before it spends.</p>
+    </div>
+    <a href="/alexa">Alexa+</a>
+  </header>
+  <main>
+    <section class="card" id="canli">
+      <h2>CANLI <span id="canli-label">bekliyor</span></h2>
+      <p id="canli-meta" class="muted"></p>
+      <img id="canli-shot" class="shot" alt="canlı kare" hidden>
+    </section>
+    <form class="composer" id="composer">
+      <textarea name="text" placeholder="Tell Grasshopper what to do"></textarea>
+      <div class="row">
+        <input type="file" name="audio" accept="audio/*,.txt">
+        <button type="submit">Send</button>
+        <button type="button" class="ghost" id="mic">Mic</button>
+      </div>
+      <div class="chips" id="chips"></div>
+    </form>
+    <div class="grid split">
+      <section>
+        <div id="approvals"></div>
+        <div id="tasks" class="grid"></div>
+      </section>
+      <aside class="status" id="status"></aside>
+    </div>
+  </main>
+  <script>
+    const examples = [
+      "Go to ai-alpha, sign up with demo account, enable research mode, research 'solar panels', share the result, find missing profile fields and suggest fixes.",
+      "Log into shop, find listings older than 4 months, report them with suggestions.",
+      "Check the news headlines and notify me with the top trend."
+    ];
+    const chips = document.getElementById("chips");
+    examples.forEach((text) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "chip";
+      b.textContent = text.slice(0, 42) + "…";
+      b.onclick = () => { document.querySelector("textarea").value = text; };
+      chips.appendChild(b);
+    });
+    const mic = document.getElementById("mic");
+    mic.onclick = () => {
+      const Rec = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!Rec) { alert("This browser has no speech recognition. Type instead, or upload audio."); return; }
+      const rec = new Rec();
+      rec.lang = "en-US";
+      rec.onresult = (ev) => { document.querySelector("textarea").value = ev.results[0][0].transcript; };
+      rec.start();
+    };
+    document.getElementById("composer").onsubmit = async (ev) => {
+      ev.preventDefault();
+      const data = new FormData(ev.target);
+      const res = await fetch("/api/tasks", { method: "POST", body: data });
+      if (!res.ok) { alert("Could not queue the task"); return; }
+      ev.target.reset();
+      tick();
+    };
+    function learnBars(learn) {
+      if (learn.first_calls == null || learn.second_calls == null) {
+        return "<p class=\"muted\">Grafik için iki koşu ölçümü yok.</p>";
+      }
+      const max = Math.max(learn.first_calls, 1);
+      const h1 = Math.max(4, Math.round(34 * learn.first_calls / max));
+      const h2 = learn.second_calls === 0 ? 3 : Math.max(4, Math.round(34 * learn.second_calls / max));
+      return `<svg id="learn-chart" width="180" height="64" aria-label="öğrenme grafiği">
+        <text x="28" y="${Math.max(12, 44 - h1)}" fill="#d6f25c" font-size="11" font-weight="700" text-anchor="middle">${learn.first_calls}</text>
+        <rect x="12" y="${46 - h1}" width="32" height="${h1}" rx="4" fill="#d6f25c"></rect>
+        <text x="84" y="${Math.max(12, 44 - h2)}" fill="#8ee0a2" font-size="11" font-weight="700" text-anchor="middle">${learn.second_calls}</text>
+        <rect x="68" y="${46 - h2}" width="32" height="${h2}" rx="4" fill="#8ee0a2"></rect>
+        <text x="28" y="60" fill="#9aa892" font-size="11" text-anchor="middle">1. koşu</text>
+        <text x="84" y="60" fill="#9aa892" font-size="11" text-anchor="middle">2. koşu</text>
+      </svg>`;
+    }
+    function pill(status) {
+      const cls = status === "done" ? "good" : status === "failed" || status === "cancelled" ? "bad" : status === "waiting_approval" ? "wait" : "";
+      return `<span class="pill ${cls}">${status}</span>`;
+    }
+    async function decide(id, decision) {
+      await fetch("/api/approvals/" + id, { method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({decision}) });
+      tick();
+    }
+    async function tick() {
+      const res = await fetch("/api/overview");
+      const data = await res.json();
+      const approvals = document.getElementById("approvals");
+      approvals.innerHTML = (data.approvals || []).map((a) => `
+        <article class="card">
+          <h2>Needs you</h2>
+          <p>${a.reason}</p>
+          ${a.screenshot ? `<img class="shot" alt="screenshot" src="/artifacts/${a.screenshot_rel}">` : ""}
+          <div class="actions">
+            <button class="ok" onclick="decide('${a.id}','approved')">Approve</button>
+            <button class="danger" onclick="decide('${a.id}','rejected')">Reject</button>
+          </div>
+        </article>`).join("") || "";
+      const tasks = document.getElementById("tasks");
+      tasks.innerHTML = (data.tasks || []).map((t) => `
+        <article class="card">
+          <h2>${pill(t.status)} ${t.text.slice(0, 90)}</h2>
+          <p class="muted">${t.channel} · steps ${t.steps || "—"} · success ${t.rate} · llm ${t.llm_calls}</p>
+          ${t.summary ? `<p>${t.summary.slice(0, 280)}</p>` : ""}
+          ${t.shot ? `<a href="/runs/${t.run_id}"><img class="shot" alt="latest frame" src="${t.shot}"></a>` : `<p class="muted"><a href="/runs/${t.run_id || ""}">Open run</a></p>`}
+        </article>`).join("") || `<p class="empty">No tasks yet. Send one from the box above.</p>`;
+      const status = document.getElementById("status");
+      const badges = (data.providers || []).map((p) => `<div class="badge"><span>${p.label}</span><span class="${p.mode}">${p.mode}</span></div>`).join("");
+      status.innerHTML = `<h2>System</h2>${badges}
+        <div class="badge"><span>Wallet</span><span>${data.wallet_sol} SOL</span></div>
+        <div class="badge"><span>Daily limit</span><span>${data.daily_limit} SOL</span></div>
+        <div class="badge"><span>Queue</span><span>${data.queue}</span></div>
+        <div class="badge"><span>Fast-tier share</span><span>${Math.round((data.fast_ratio || 0) * 100)}%</span></div>
+        <div id="isolated" class="badge">${data.runner && data.runner.isolated ? "izole çalıştırıldı" : ""}</div>
+        <div id="cost">
+          <h2>Cost & Nebius Routing</h2>
+          <div class="badge"><span>Fast model</span><span style="font-weight:700; color:var(--lime);">${(data.cost || {}).nebius_model || "nvidia/Nemotron-3_5-Lightning"}</span></div>
+          <div class="badge"><span>Maliyet / görev</span><span style="font-weight:700;">$${((data.cost || {}).cost_per_task || 0).toFixed(4)}</span></div>
+          <div class="badge"><span>Fast calls</span><span>${(data.cost || {}).fast || 0}</span></div>
+          <div class="badge"><span>Strong calls</span><span>${(data.cost || {}).strong || 0}</span></div>
+          <div class="badge"><span>Vision calls</span><span>${(data.cost || {}).vision || 0}</span></div>
+          <div class="badge"><span>Tokens saved</span><span>${(data.cost || {}).saved_tokens || 0}</span></div>
+          <p class="muted">Estimated tokens the fast tier kept off the strong model.</p>
+        </div>
+        <div id="savings">
+          <h2>Maliyet tasarrufu</h2>
+          <div class="badge"><span>Tahmini $</span><span>${((data.cost || {}).saved_usd || 0).toFixed(4)}</span></div>
+          <p class="muted">Fast katmanın strong fiyattan farkı. Canlı fatura ayrıdır.</p>
+        </div>
+        <div id="learning">
+          <h2>Öğrenme grafiği</h2>
+          <p class="muted">${(data.learning || {}).scenario || "senaryo yok"}</p>
+          <div class="badge"><span>1. koşu LLM çağrısı</span><span id="learn-first">${(data.learning || {}).first_calls == null ? "ölçülmedi" : data.learning.first_calls}</span></div>
+          <div class="badge"><span>2. koşu LLM çağrısı</span><span id="learn-second">${(data.learning || {}).second_calls == null ? "ölçülmedi" : data.learning.second_calls}</span></div>
+          ${learnBars(data.learning || {})}
+        </div>
+        <p class="muted">Sites live under the sandbox: <a href="/ai-alpha">alpha</a> · <a href="/shop">shop</a> · <a href="/news">news</a></p>`;
+    }
+    async function refreshCanli() {
+      const res = await fetch("/api/live");
+      if (!res.ok) return;
+      const data = await res.json();
+      document.getElementById("canli-label").textContent = data.label || "bekliyor";
+      const bits = [];
+      if (data.url) bits.push(data.url);
+      if (data.goal) bits.push(data.goal);
+      document.getElementById("canli-meta").textContent = bits.join(" · ");
+      const img = document.getElementById("canli-shot");
+      if (data.shot) {
+        img.hidden = false;
+        img.src = data.shot + "?t=" + Date.now();
+      }
+    }
+    window.decide = decide;
+    tick();
+    refreshCanli();
+    setInterval(tick, 2000);
+    setInterval(refreshCanli, 700);
+  </script>
+</body>
+</html>

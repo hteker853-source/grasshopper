@@ -1,0 +1,2 @@
+- Python, FastAPI, Playwright, OpenCV 5, SQLite, MCP Streamable HTTP
+- Enable: META_API_KEY, META_BASE_URL, META_MODEL, and WHATSAPP_* .

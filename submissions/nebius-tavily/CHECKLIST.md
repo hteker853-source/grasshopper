@@ -1,0 +1,6 @@
+- [ ] Required piece present: Tavily search
+- [ ] Flag `tavily` demonstrated
+- [ ] Video under 3 minutes
+- [ ] No secrets in the repo
+- [ ] MIT license included
+- [ ] Final submit button left for a human
