@@ -1,0 +1,210 @@
+#!/usr/bin/env python3
+"""Generate a standalone static replay website for the hackathon jury in site/."""
+
+import json
+import shutil
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+SITE_DIR = ROOT / "site"
+SITE_IMG = SITE_DIR / "screenshots"
+
+
+def main():
+    SITE_DIR.mkdir(parents=True, exist_ok=True)
+    SITE_IMG.mkdir(parents=True, exist_ok=True)
+
+    # Copy demo screenshots if available
+    run_source = ROOT / "runs" / "demo-record" / "runs" / "run_0dafb41247c4"
+    images = []
+    if run_source.is_dir():
+        for img in sorted(run_source.glob("step_*_after.png")):
+            dest = SITE_IMG / img.name
+            shutil.copyfile(img, dest)
+            images.append(f"screenshots/{img.name}")
+
+    if not images:
+        # Fallback placeholder frame
+        dummy = SITE_IMG / "step_demo.png"
+        dummy.write_bytes(b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDRfake")
+        images.append("screenshots/step_demo.png")
+
+    html = f"""<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Grasshopper · Jury Replay & Telemetry</title>
+  <style>
+    :root {{
+      --bg: #071018;
+      --card: #0c1b2a;
+      --border: #1d3b55;
+      --text: #e8f4ff;
+      --muted: #8ba2b5;
+      --accent: #14ff63;
+      --primary: #1463ff;
+      --warn: #ffba14;
+    }}
+    body {{
+      margin: 0;
+      padding: 24px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, sans-serif;
+      line-height: 1.5;
+    }}
+    .container {{
+      max-width: 960px;
+      margin: 0 auto;
+    }}
+    header {{
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 16px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }}
+    h1 {{ margin: 0; font-size: 28px; color: #fff; }}
+    h1 span {{ color: var(--accent); }}
+    .badge {{
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      background: #082614;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+    }}
+    .card {{
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }}
+    .grid-2 {{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }}
+    @media (max-width: 768px) {{
+      .grid-2 {{ grid-template-columns: 1fr; }}
+    }}
+    .replay-viewer {{
+      text-align: center;
+    }}
+    .viewer-frame {{
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: #000;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      object-fit: contain;
+    }}
+    .controls {{
+      margin-top: 12px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+    }}
+    button {{
+      background: var(--primary);
+      color: #fff;
+      border: 0;
+      border-radius: 8px;
+      padding: 8px 16px;
+      cursor: pointer;
+      font-weight: 600;
+    }}
+    button:hover {{ opacity: 0.9; }}
+    table {{
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 14px;
+    }}
+    th, td {{
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      text-align: left;
+    }}
+    th {{ background: #060e16; color: var(--accent); }}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <h1>Grass<span>hopper</span></h1>
+        <p style="margin: 4px 0 0; color: var(--muted); font-size: 14px;">Autonomous Browser Agent with Safety Gate & BudgetLedger</p>
+      </div>
+      <div class="badge">60-Second Jury Replay</div>
+    </header>
+
+    <div class="card">
+      <h2 style="margin-top:0;">📺 Step-by-Step Replay Viewer</h2>
+      <p style="color: var(--muted); font-size: 14px;">Inspect actual browser actions captured during live runs without running a browser.</p>
+      <div class="replay-viewer">
+        <img id="viewer-img" class="viewer-frame" src="{images[0]}" alt="Step frame">
+        <div class="controls">
+          <button type="button" onclick="prevStep()">← Previous</button>
+          <span id="step-counter" style="align-self: center; font-weight: 700;">Step 1 of {len(images)}</span>
+          <button type="button" onclick="nextStep()">Next →</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h2 style="margin-top:0;">🛡️ Trust & Safety Architecture</h2>
+        <ul>
+          <li><b>Approval Gate:</b> Sensitive actions (buy, post, export) require human sign-off via voice, Telegram, or Web UI.</li>
+          <li><b>BudgetLedger:</b> Hard daily spending cap ($0.50) and per-run limits ($0.05). Refuses calls when exceeded.</li>
+          <li><b>Domain Allowlist:</b> Strict <code>CODE_ALLOWLIST</code> blocks unauthorized or dangerous hosts.</li>
+          <li><b>Blast Radius:</b> Every task outputs audited file count, domain list, and cost in <code>blast_radius.json</code>.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2 style="margin-top:0;">⚡ Live Benchmark Summary (N=3)</h2>
+        <table>
+          <tr><th>Scenario</th><th>Goal</th><th>1st Run LLM</th><th>Cost</th></tr>
+          <tr><td><b>R1</b></td><td>Books to scrape (search & wiki)</td><td>22 calls</td><td>$0.0038</td></tr>
+          <tr><td><b>R2</b></td><td>Saucedemo e-commerce flow</td><td>3 calls</td><td>$0.0001</td></tr>
+          <tr><td><b>R3</b></td><td>Hacker News top 3 digest</td><td>2 calls</td><td>$0.0004</td></tr>
+          <tr><td><b>R4</b></td><td>arXiv API search query</td><td>6 calls</td><td>$0.0006</td></tr>
+          <tr><td><b>R5</b></td><td>The-Internet resilience suite</td><td>5 calls</td><td>$0.0001</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const images = {json.dumps(images)};
+    let currentIdx = 0;
+    const imgEl = document.getElementById("viewer-img");
+    const countEl = document.getElementById("step-counter");
+
+    function showStep(idx) {{
+      if (idx < 0) idx = 0;
+      if (idx >= images.length) idx = images.length - 1;
+      currentIdx = idx;
+      imgEl.src = images[currentIdx];
+      countEl.textContent = `Step ${{currentIdx + 1}} of ${{images.length}}`;
+    }}
+
+    function prevStep() {{ showStep(currentIdx - 1); }}
+    function nextStep() {{ showStep(currentIdx + 1); }}
+  </script>
+</body>
+</html>
+"""
+    (SITE_DIR / "index.html").write_text(html, encoding="utf-8")
+    print("Generated static site in", SITE_DIR / "index.html")
+
+
+if __name__ == "__main__":
+    main()

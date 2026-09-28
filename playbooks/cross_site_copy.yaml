@@ -1,0 +1,62 @@
+id: cross_site_copy
+name: Write on ai-alpha, shorten on ai-beta
+triggers:
+  - "product description"
+  - "paste it into ai-beta"
+  - "shorten"
+site: ai-beta
+steps:
+  - id: draft
+    goal: Ask ai-alpha for a planner description
+    site: ai-alpha
+    success_criteria: "text:Northwind Weekly Planner"
+    reason: "The long description has to exist before it can be copied."
+    actions:
+      - type: goto
+        url: "{sandbox}/ai-alpha/signup"
+      - type: type
+        selector: "[data-testid=email]"
+        text: "{{secret:ai_alpha_email}}"
+      - type: type
+        selector: "[data-testid=password]"
+        text: "{{secret:ai_alpha_password}}"
+      - type: click
+        selector: "[data-testid=signup-submit]"
+      - type: goto
+        url: "{sandbox}/ai-alpha/chat"
+      - type: type
+        selector: "[data-testid=chat-input]"
+        text: "write a product description for a planner"
+      - type: click
+        selector: "[data-testid=chat-send]"
+      - type: read_text
+        selector: "[data-testid=last-answer]"
+        save_as: draft
+      - type: copy
+        selector: "[data-testid=last-answer]"
+  - id: shorten
+    goal: Paste the draft into ai-beta and shorten it
+    site: ai-beta
+    success_criteria: "text:Shortened:"
+    reason: "ai-beta is a different site, so the internal clipboard has to carry the text."
+    actions:
+      - type: goto
+        url: "{sandbox}/ai-beta/login"
+      - type: type
+        selector: "[data-testid=email]"
+        text: "{{secret:ai_beta_email}}"
+      - type: type
+        selector: "[data-testid=password]"
+        text: "{{secret:ai_beta_password}}"
+      - type: click
+        selector: "[data-testid=login-submit]"
+      - type: type
+        selector: "[data-testid=prompt]"
+        text: "shorten {{var:draft}}"
+      - type: click
+        selector: "[data-testid=send]"
+      - type: read_text
+        selector: "[data-testid=last-answer]"
+        save_as: shortened
+      - type: notify
+        text: "{{var:shortened}}"

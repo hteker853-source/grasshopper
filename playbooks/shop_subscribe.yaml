@@ -1,0 +1,44 @@
+id: shop_subscribe
+name: Subscribe to the shop Pro plan with the wallet
+triggers:
+  - "subscribe to the pro plan"
+  - "pro plan on shop"
+site: shop
+steps:
+  - id: login
+    goal: Log into the shop
+    site: shop
+    success_criteria: "selector:[data-testid=dashboard]"
+    reason: "Billing sits behind the seller session."
+    actions:
+      - type: goto
+        url: "{sandbox}/shop/login"
+      - type: type
+        selector: "[data-testid=email]"
+        text: "{{secret:shop_email}}"
+      - type: type
+        selector: "[data-testid=password]"
+        text: "{{secret:shop_password}}"
+      - type: click
+        selector: "[data-testid=login-submit]"
+  - id: pay
+    goal: Pay for the Pro plan from the wallet
+    site: shop
+    success_criteria: "selector:[data-testid=receipt]"
+    risk_level: high
+    requires_approval: true
+    reason: "Moving SOL, even on a mock ledger, always waits for a person."
+    actions:
+      - type: goto
+        url: "{sandbox}/shop/subscribe"
+      - type: wallet_pay
+        amount_sol: 0.05
+        memo: "shop pro plan"
+        save_as: tx_hash
+      - type: type
+        selector: "[data-testid=tx-hash]"
+        text: "{{var:tx_hash}}"
+      - type: click
+        selector: "[data-testid=pay-submit]"
+      - type: wait_for
+        selector: "[data-testid=receipt]"

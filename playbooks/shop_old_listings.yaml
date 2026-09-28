@@ -1,0 +1,36 @@
+id: shop_old_listings
+name: Report shop listings older than four months
+triggers:
+  - "listings older than 4 months"
+  - "older than 4 months"
+site: shop
+steps:
+  - id: login
+    goal: Log into the shop
+    site: shop
+    success_criteria: "selector:[data-testid=dashboard]"
+    reason: "Listing tools are on the seller dashboard."
+    actions:
+      - type: goto
+        url: "{sandbox}/shop/login"
+      - type: type
+        selector: "[data-testid=email]"
+        text: "{{secret:shop_email}}"
+      - type: type
+        selector: "[data-testid=password]"
+        text: "{{secret:shop_password}}"
+      - type: click
+        selector: "[data-testid=login-submit]"
+  - id: stale
+    goal: Open listings older than 4 months and report them
+    site: shop
+    success_criteria: "text:Stale listings"
+    reason: "The four-month filter is the supported way to find stale listings."
+    actions:
+      - type: click
+        selector: "[data-testid=old-filter]"
+      - type: read_text
+        selector: "[data-testid=old-report]"
+        save_as: old_report
+      - type: notify
+        text: "{{var:old_report}}"

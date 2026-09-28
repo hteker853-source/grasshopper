@@ -1,0 +1,2 @@
+- Python, FastAPI, Playwright, OpenCV 5, SQLite, MCP Streamable HTTP
+- Enable: Ready. requirements.txt pins opencv-python-headless 5. vision.py scores page change and numbers click targets.

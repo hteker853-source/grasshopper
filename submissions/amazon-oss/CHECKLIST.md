@@ -1,0 +1,6 @@
+- [ ] Required piece present: Public repo with an OSI license
+- [ ] Flag `mit` demonstrated
+- [ ] Video under 3 minutes
+- [ ] No secrets in the repo
+- [ ] MIT license included
+- [ ] Final submit button left for a human

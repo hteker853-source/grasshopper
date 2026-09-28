@@ -1,0 +1,19 @@
+id: broken_export
+name: Click the export button on the broken page
+triggers:
+  - "export button on broken"
+  - "click the export button"
+site: broken
+steps:
+  - id: export
+    goal: Click the export button
+    site: broken
+    success_criteria: "selector:[data-testid=exported]"
+    reason: "The playbook still uses the selector from before the redesign."
+    actions:
+      - type: goto
+        url: "{sandbox}/broken"
+      - type: click
+        selector: "[data-testid=export-btn]"
+      - type: wait_for
+        selector: "[data-testid=exported]"

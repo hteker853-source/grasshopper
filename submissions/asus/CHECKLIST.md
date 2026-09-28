@@ -1,0 +1,6 @@
+- [ ] Required piece present: 20 page deck and a short video
+- [ ] Flag `asus` demonstrated
+- [ ] Video under 3 minutes
+- [ ] No secrets in the repo
+- [ ] MIT license included
+- [ ] Final submit button left for a human

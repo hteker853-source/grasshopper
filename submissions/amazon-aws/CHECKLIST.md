@@ -1,0 +1,6 @@
+- [ ] Required piece present: Amazon Bedrock (AgentCore / Strands-compatible model call)
+- [ ] Flag `bedrock` demonstrated
+- [ ] Video under 3 minutes
+- [ ] No secrets in the repo
+- [ ] MIT license included
+- [ ] Final submit button left for a human

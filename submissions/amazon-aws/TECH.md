@@ -1,0 +1,2 @@
+- Python, FastAPI, Playwright, OpenCV 5, SQLite, MCP Streamable HTTP
+- Enable: Set LLM_STRONG_PROVIDER=bedrock plus AWS_REGION, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, and BEDROCK_MODEL_ID.

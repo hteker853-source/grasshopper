@@ -1,0 +1,2 @@
+- Python, FastAPI, Playwright, OpenCV 5, SQLite, MCP Streamable HTTP
+- Enable: Set WALLET_PROVIDER=solana_devnet, a devnet SOLANA_RPC_URL, and WALLET_KEYPAIR_PATH. Mainnet URLs refuse to start.

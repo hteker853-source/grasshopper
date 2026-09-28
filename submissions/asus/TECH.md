@@ -1,0 +1,2 @@
+- Python, FastAPI, Playwright, OpenCV 5, SQLite, MCP Streamable HTTP
+- Enable: Read submissions/asus/PRESENTATION.md. No device key.

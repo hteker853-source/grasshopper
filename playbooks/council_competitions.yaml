@@ -1,0 +1,29 @@
+id: council_competitions
+name: Pick one competition project with the council
+triggers:
+  - "run council"
+  - "strongest project"
+site: competitions
+steps:
+  - id: read_board
+    goal: Read competitions the demo profile can enter
+    site: competitions
+    success_criteria: "selector:[data-testid=eligible-list]"
+    reason: "The council should argue about the real board, not a hallucinated list."
+    actions:
+      - type: goto
+        url: "{sandbox}/competitions"
+      - type: read_text
+        selector: "[data-testid=eligible-list]"
+        save_as: competitions_text
+  - id: council
+    goal: Run a three-model council and pick one project
+    site: council
+    success_criteria: "var:council_winner"
+    reason: "The task asked for three models, critique, a devil's advocate, and one winner."
+    actions:
+      - type: council
+        question: "Which single project should we ship for these competitions? {{var:competitions_text}}"
+        save_as: council_winner
+      - type: notify
+        text: "Council winner: {{var:council_winner}}"

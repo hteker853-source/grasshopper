@@ -1,0 +1,2 @@
+- Python, FastAPI, Playwright, OpenCV 5, SQLite, MCP Streamable HTTP
+- Enable: Set SEARCH_PROVIDER=tavily and TAVILY_API_KEY.

@@ -1,0 +1,58 @@
+id: news_video
+name: If a headline is hot, write a script and merge two frames
+triggers:
+  - "trend score"
+  - "video script"
+site: news
+steps:
+  - id: read_news
+    goal: Read the top headline and its trend score
+    site: news
+    success_criteria: "text:92"
+    reason: "Only a score above 80 should become a video, and the desk publishes the score in the page."
+    actions:
+      - type: goto
+        url: "{sandbox}/news"
+      - type: read_text
+        selector: "[data-testid=top-headline]"
+        save_as: headline
+  - id: frame_one
+    goal: Generate the first frame
+    site: media
+    success_criteria: "selector:[data-testid=image-id]"
+    reason: "The media bench turns a prompt into a still."
+    actions:
+      - type: goto
+        url: "{sandbox}/media"
+      - type: type
+        selector: "[data-testid=prompt]"
+        text: "night market bees wide shot"
+      - type: click
+        selector: "[data-testid=generate]"
+      - type: wait_for
+        selector: "[data-testid=image-id]"
+  - id: frame_two
+    goal: Generate the second frame
+    site: media
+    success_criteria: "selector:[data-testid=image-id]"
+    reason: "A merge needs two stills."
+    actions:
+      - type: type
+        selector: "[data-testid=prompt]"
+        text: "close up of a bee on a lamp"
+      - type: click
+        selector: "[data-testid=generate]"
+      - type: wait_for
+        selector: "[data-testid=image-id]"
+  - id: merge
+    goal: Merge the two frames and send the script
+    site: media
+    success_criteria: "selector:[data-testid=merged-image]"
+    reason: "The task asked for one merged image plus a short script."
+    actions:
+      - type: click
+        selector: "[data-testid=merge]"
+      - type: wait_for
+        selector: "[data-testid=merged-image]"
+      - type: notify
+        text: "Video script (15s): Open on {{var:headline}}. Cut to the merged frame. End on one line: the city does not sleep, and neither do the bees."

@@ -1,0 +1,6 @@
+- [ ] Required piece present: Self-hosted MCP server (spec >= 2025-11-25, Streamable HTTP) or a simulated Alexa+ web experience
+- [ ] Flag `mcp` demonstrated
+- [ ] Video under 3 minutes
+- [ ] No secrets in the repo
+- [ ] MIT license included
+- [ ] Final submit button left for a human

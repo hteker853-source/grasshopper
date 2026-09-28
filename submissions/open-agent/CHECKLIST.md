@@ -1,0 +1,6 @@
+- [ ] Required piece present: An agent that does real work and can explain why
+- [ ] Flag `explainer` demonstrated
+- [ ] Video under 3 minutes
+- [ ] No secrets in the repo
+- [ ] MIT license included
+- [ ] Final submit button left for a human

@@ -1,0 +1,6 @@
+- [ ] Required piece present: At least two Microsoft AI services (Azure OpenAI + Azure Speech)
+- [ ] Flag `azure` demonstrated
+- [ ] Video under 3 minutes
+- [ ] No secrets in the repo
+- [ ] MIT license included
+- [ ] Final submit button left for a human

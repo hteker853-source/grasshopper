@@ -1,0 +1,6 @@
+- [ ] Required piece present: Nebius Token Factory and at least one NVIDIA open model, public repo, open license, video <= 3 min
+- [ ] Flag `nebius` demonstrated
+- [ ] Video under 3 minutes
+- [ ] No secrets in the repo
+- [ ] MIT license included
+- [ ] Final submit button left for a human

@@ -1,0 +1,2 @@
+- Python, FastAPI, Playwright, OpenCV 5, SQLite, MCP Streamable HTTP
+- Enable: Set LLM_REPAIR_PROVIDER=ollama and GEMMA_MODEL. self_repair.py is the call site.

@@ -1,0 +1,10 @@
+# Optional providers. Install with:
+#   .venv/bin/pip install -r requirements-real.txt
+# Missing packages never crash mock mode; the matching Real* class logs a
+# warning and the factory falls back to the mock provider.
+-r requirements.txt
+boto3>=1.35
+openai>=1.50
+solders>=0.21
+solana>=0.35
+browser-use>=0.1
