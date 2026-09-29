@@ -42,13 +42,13 @@ class LearningStore:
                 picked = (key, row)
                 break
         if picked is None:
-            return {"scenario": "", "first_calls": None, "second_calls": None, "label": "ölçülmedi"}
+            return {"scenario": "", "first_calls": None, "second_calls": None, "label": "unmeasured"}
         key, row = picked
         return {
             "scenario": key,
             "first_calls": row.get("first_calls"),
             "second_calls": row.get("second_calls"),
-            "label": "ölçüldü",
+            "label": "measured",
         }
 
     def _write(self) -> None:

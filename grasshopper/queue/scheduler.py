@@ -14,11 +14,11 @@ _RELATIVE = re.compile(
     re.I,
 )
 _DAILY = re.compile(
-    r"(?:every\s+day|her\s+g[uü]n|daily)\s*(?:at\s*)?(\d{1,2})[:.](\d{2})(?:['’](?:da|de|ta|te))?",
+    r"(?:every\s+day|her\s+g[\u00fc]n|daily)\s*(?:at\s*)?(\d{1,2})[:.](\d{2})(?:['’](?:da|de|ta|te))?",
     re.I,
 )
 _TOMORROW = re.compile(
-    r"(?:tomorrow|yar[ıi]n)\s*(?:at\s*)?(\d{1,2})[:.](\d{2})(?:['’](?:da|de|ta|te))?",
+    r"(?:tomorrow|yar[\u0131i]n)\s*(?:at\s*)?(\d{1,2})[:.](\d{2})(?:['’](?:da|de|ta|te))?",
     re.I,
 )
 _TONIGHT = re.compile(

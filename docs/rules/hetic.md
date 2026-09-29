@@ -1,17 +1,17 @@
 # HETIC AI Agents for Founders
 
-## Rubrik
+## Rubric
 
-**varsayılan rubrik.** Resmi ağırlık sayfasına bu oturumda ulaşılamadı.
+**default rubric.** Official weighting page was not reachable during this session.
 
-| Kriter | Ağırlık |
+| Criterion | Weight |
 | --- | --- |
-| Teknik | 25 |
-| Yenilik | 20 |
-| Etki | 20 |
+| Technical | 25 |
+| Innovation | 20 |
+| Impact | 20 |
 | Demo | 20 |
 | UX | 15 |
 
-## Brifing
+## Briefing
 
-1.100 $. Kurucu akışları. Shop ve araştırma playbook'ları bu demonun karşılığıdır.
+$1,100. Founder workflows. Shop and research playbooks correspond to this demo.

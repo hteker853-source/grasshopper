@@ -4,7 +4,7 @@ Deadline: 2026-11-03
 
 Prize: Autonomous agent
 
-Verification: varsayılan rubrik
+Verification: default rubric
 
 The queue, scheduler, and approval gate let the agent run unattended until a risky step.
 

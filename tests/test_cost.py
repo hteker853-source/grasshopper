@@ -27,4 +27,4 @@ def test_savings_counts_fast_strong_and_vision_and_estimates_tokens(ctx):
     assert "Fast calls" in html and "Strong calls" in html and "Vision calls" in html
     assert "saved_tokens" in html
     assert 'id="learning"' in html and 'id="learn-first"' in html and 'id="learn-second"' in html
-    assert 'id="savings"' in html and "Maliyet tasarrufu" in html
+    assert 'id="savings"' in html and "Cost savings" in html

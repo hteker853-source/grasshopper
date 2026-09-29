@@ -29,8 +29,8 @@ def test_dashboard_telemetry_elements_and_viewport():
     assert 'id="learning"' in html, "Dashboard missing #learning panel"
     assert 'id="savings"' in html, "Dashboard missing #savings panel"
     assert 'id="isolated"' in html, "Dashboard missing #isolated badge"
-    assert "öğrenme grafiği" in html
-    assert "Maliyet tasarrufu" in html
+    assert "learning graph" in html
+    assert "Cost savings" in html
 
 
 def test_alexa_simulator_interactive_elements():

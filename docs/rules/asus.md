@@ -1,30 +1,30 @@
 # ASUS UGen AI League 2026
 
-Kaynak: resmi kurallar ve yarışma duyuruları, 2026-09-28 tarihinde alındı.
-Düzenleyen: ASUS, Intel ve Hailo iş birliğiyle.
-https://asus.com / Bhuntr portalı
+Source: official rules and competition announcements, retrieved 2026-09-28.
+Organized by: ASUS, in collaboration with Intel and Hailo.
+https://asus.com / Bhuntr portal
 
-## Odak Alanları (Temalar)
+## Focus Areas (Themes)
 
-1. **Creator AI:** Yaratıcı içerik üretimi ve tasarım araçları.
-2. **Workplace AI:** İş yeri verimliliği ve güvenlik çözümleri.
-3. **Everyday AI:** Günlük yaşam ve kişisel zekâ araçları.
+1. **Creator AI:** Creative content authoring and design tooling.
+2. **Workplace AI:** Workplace productivity and security solutions.
+3. **Everyday AI:** Daily life and personal intelligence tools.
 
-## Geliştirme Platformları (Battlefields)
+## Development Platforms (Battlefields)
 
-- **Battlefield Lightning:** ASUS UGen300 AI Hızlandırıcı (Hailo-10H AI işlemcisi, 8GB LPDDR4, 40 TOPS çıkarım gücü, tak-çalıştır USB). Kenarda çalışan yerel AI modelleri.
+- **Battlefield Lightning:** ASUS UGen300 AI Accelerator (Hailo-10H AI processor, 8GB LPDDR4, 40 TOPS inference, plug-and-play USB). On-device edge AI models.
 - **Battlefield Thunderstorm:** ASUS UGen Intel Arc Pro B70 (32GB).
 
-## Aşama ve Teslimler
+## Stages and Deliverables
 
-- **Stage I (Son Başvuru: 14 Ekim 2026):**
-  - 20 sayfalık proje sunumu (`submissions/asus/PRESENTATION.md`).
-  - En fazla 3 dakikalık YouTube tanıtım videosu.
-- **Stage II (Final: 19 Aralık 2026, ASUS Genel Merkezi):**
-  - Finale kalan takımlara UGen300 cihazı sağlanır.
+- **Stage I (Deadline: Oct 14, 2026):**
+  - 20-slide project presentation (`submissions/asus/PRESENTATION.md`).
+  - At most 3-minute YouTube product video.
+- **Stage II (Final: Dec 19, 2026, ASUS Headquarters):**
+  - Finalist teams receive physical UGen300 devices.
 
-## Ödüller
+## Prizes
 
-- Toplam 20.000 $ üzerinde ödül havuzu.
-- Lightning Şampiyonluğu: 4.500 $.
-- Diğer ödüller: 1.500 $'lık kategori ödülleri ve UGen300 donanımı.
+- Over $20,000 total prize pool.
+- Lightning Championship: $4,500.
+- Category prizes: $1,500 awards and UGen300 hardware.

@@ -29,7 +29,7 @@ async def start_task(text: str) -> str:
     return json.dumps({
         "task_id": task.id,
         "status": task.status.value,
-        "speech": f"Göreviniz alındı: {text[:40]}. Tarayıcıda başlatılıyor.",
+        "speech": f"Task accepted: {text[:40]}. Starting in browser.",
     }, ensure_ascii=False)
 
 
@@ -43,10 +43,10 @@ def _blast_radius_summary(task) -> str:
                 n_files = len(data.get("files_touched") or [])
                 n_domains = len(data.get("domains") or [])
                 cost = float(data.get("cost_usd") or 0.0)
-                return f"{n_files} dosya, {n_domains} domain, ${cost:.2f} maliyet"
+                return f"{n_files} files, {n_domains} domains, ${cost:.2f} cost"
             except Exception:
                 pass
-    return "2 dosya, 1 domain, $0.00 maliyet"
+    return "2 files, 1 domain, $0.00 cost"
 
 
 @mcp_server.tool()
@@ -57,18 +57,18 @@ async def get_task_status(task_id: str) -> str:
         return json.dumps({
             "error": "not found",
             "task_id": task_id,
-            "speech": "Belirtilen görev bulunamadı.",
+            "speech": "Specified task was not found.",
         }, ensure_ascii=False)
     status_str = task.status.value
     blast = _blast_radius_summary(task)
     speech_map = {
-        "queued": "Göreviniz şu anda kuyrukta bekliyor.",
-        "running": "Göreviniz tarayıcıda çalışıyor.",
-        "success": f"Göreviniz başarıyla tamamlandı. Blast radius: {blast}.",
-        "done": f"Göreviniz başarıyla tamamlandı. Blast radius: {blast}.",
-        "failed": "Göreviniz hata ile sonuçlandı.",
+        "queued": "Your task is queued and waiting.",
+        "running": "Your task is running in browser.",
+        "success": f"Your task completed successfully. Blast radius: {blast}.",
+        "done": f"Your task completed successfully. Blast radius: {blast}.",
+        "failed": "Your task failed with an error.",
     }
-    speech = speech_map.get(status_str, f"Görev durumu: {status_str}")
+    speech = speech_map.get(status_str, f"Task status: {status_str}")
     return json.dumps({
         "task_id": task.id,
         "status": status_str,
@@ -86,16 +86,16 @@ async def get_task_result(task_id: str) -> str:
         return json.dumps({
             "error": "not found",
             "task_id": task_id,
-            "speech": "Görev bulunamadı.",
+            "speech": "Task not found.",
         }, ensure_ascii=False)
     blast = _blast_radius_summary(task)
     if task.status.value in {"success", "done"}:
-        summary = str(task.result or "Sonuç hazır")[:80]
-        speech = f"İşlem tamamlandı ({blast}). Sonuç: {summary}"
+        summary = str(task.result or "Result ready")[:80]
+        speech = f"Task completed ({blast}). Summary: {summary}"
     elif task.status.value == "failed":
-        speech = "Maalesef görev yürütülürken hata oluştu."
+        speech = "An error occurred while executing the task."
     else:
-        speech = f"Görev henüz tamamlanmadı, mevcut durum: {task.status.value}."
+        speech = f"Task is not yet completed, current status: {task.status.value}."
     return json.dumps({
         "task_id": task.id,
         "status": task.status.value,

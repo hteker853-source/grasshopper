@@ -342,12 +342,12 @@ def stamp_competition_titles() -> str:
     out_dir = ROOT / "videos" / "kits"
     out_dir.mkdir(parents=True, exist_ok=True)
     if not src.is_file():
-        note = "ölçülmedi: videos/demo.mp4 yok"
+        note = "unmeasured: videos/demo.mp4 missing"
         (out_dir / "TITLES.md").write_text(note + "\n", encoding="utf-8")
         return note
     font = find_font()
     if not shutil.which("ffmpeg") or not font:
-        note = "ölçülmedi: ffmpeg veya font yok"
+        note = "unmeasured: ffmpeg or font missing"
         (out_dir / "TITLES.md").write_text(note + "\n", encoding="utf-8")
         return note
     rows = json.loads((ROOT / "data" / "competitions.json").read_text(encoding="utf-8"))

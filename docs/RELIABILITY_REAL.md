@@ -1,104 +1,104 @@
-# Gerçek site güvenilirliği
+# Real site reliability
 
-N=3. Provider: nebius (nvidia/Nemotron-3_5-Lightning). Gecikme: 0.35s.
-1. koşu canlı LLM ile kararları üretir ve iz kaydeder; 2. koşu öğrenilen tarifi 0 model çağrısıyla yeniden oynatır.
+N=3. Provider: nebius (nvidia/Nemotron-3_5-Lightning). Delay: 0.35s.
+Run 1 generates decisions with live LLM and records trace; Run 2 replays learned playbook with 0 model calls.
 
-## Güvenilirlik Tablosu
+## Reliability Table
 
-| Senaryo | Hedef | Koşu | Başarı Oranı | Ort. Adım | 1. Koşu LLM | 1. Koşu Token | 1. Koşu $ | 1. Koşu Süre | 2. Koşu (Tarif) | Not / Hata |
+| Scenario | Goal | Runs | Success Rate | Avg Steps | Run 1 LLM | Run 1 Tokens | Run 1 $ | Run 1 Duration | Run 2 (Playbook) | Notes / Error |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
-| **R1** | books.toscrape üzerinde en ucuz 4 yıldız | 3 | 0/3 (0.0%) | 20.3 | 22 | 19272 | $0.003814 | 230.2s | 20 çağrı | stuck; time budget |
-| **R2** | saucedemo'ya gir, iki ürün ekle, ödeme ö | 3 | 0/3 (0.0%) | 3.0 | 3 | 702 | $0.000140 | 10.9s | 3 çağrı | stuck |
-| **R3** | Hacker News ilk üç başlığı özetle | 3 | 0/3 (0.0%) | 3.7 | 2 | 2220 | $0.000444 | 40.7s | 3 çağrı | stuck; time budget |
-| **R4** | arXiv 'browser agents' aramasındaki son  | 3 | 0/3 (0.0%) | 4.0 | 6 | 2941 | $0.000588 | 39.2s | 3 çağrı | stuck |
-| **R5** | the-internet dinamik yükleme, açılır lis | 3 | 0/3 (0.0%) | 2.0 | 5 | 1834 | $0.000108 | 41.6s | 5 çağrı | stuck |
+| **R1** | books.toscrape cheapest 4-star book | 3 | 0/3 (0.0%) | 20.3 | 22 | 19272 | $0.003814 | 230.2s | 20 calls | stuck; time budget |
+| **R2** | saucedemo login, add two items, checkout | 3 | 0/3 (0.0%) | 3.0 | 3 | 702 | $0.000140 | 10.9s | 3 calls | stuck |
+| **R3** | Hacker News top three headlines summary | 3 | 0/3 (0.0%) | 3.7 | 2 | 2220 | $0.000444 | 40.7s | 3 calls | stuck; time budget |
+| **R4** | arXiv 'browser agents' search 3 papers | 3 | 0/3 (0.0%) | 4.0 | 6 | 2941 | $0.000588 | 39.2s | 3 calls | stuck |
+| **R5** | the-internet dynamic loading, dropdown, upload | 3 | 0/3 (0.0%) | 2.0 | 5 | 1834 | $0.000108 | 41.6s | 5 calls | stuck |
 
-## Bozulan Sayfa Toparlanma Tablosu
+## Broken Page Recovery Table
 
-| Test Metriği | Deneme | Başarılı Toparlanma | Yüzde |
+| Test Metric | Trials | Successful Recovery | Percentage |
 | :--- | :---: | :---: | :---: |
-| Kontrollü görüntü seti (değişiklik ayrımı) | 20 | 20 | 100% |
-| DOM kimliği silinmiş kontrolde Continue seçimi | 20 | 20 | 100% |
-| Canlı sitede kasıtlı HTML değişikliği | - | - | ölçülmedi (üçüncü parti sayfa değiştirilmedi) |
-| REC senaryosu (yerel bozuk sayfa toparlanması) | 1 | 1 | 100% |
+| Controlled image set (change detection) | 20 | 20 | 100% |
+| Continue selection on control with stripped DOM id | 20 | 20 | 100% |
+| Deliberate HTML mutation on live site | - | - | unmeasured (third-party page not mutated) |
+| REC scenario (local broken page recovery) | 1 | 1 | 100% |
 
-## Senaryo Detayları
+## Scenario Details
 
 ## R1
 
-- Koşu: 3
-- Başarı: 0/3 (0.0%)
-- Ortalama adım: 20.3
-- Ortalama token: 24247
-- Toplam gerçek harcama: $0.013914
-- 1. koşu LLM çağrısı: 22
-- 1. koşu token: 19272
-- 1. koşu $: $0.003814
-- 1. koşu süre: 230.2s
-- 2. koşu (tarif) LLM çağrısı: 20
-- Hatalar: stuck; time budget
+- Runs: 3
+- Success: 0/3 (0.0%)
+- Average steps: 20.3
+- Average tokens: 24247
+- Total actual spend: $0.013914
+- Run 1 LLM calls: 22
+- Run 1 tokens: 19272
+- Run 1 $: $0.003814
+- Run 1 duration: 230.2s
+- Run 2 (playbook) LLM calls: 20
+- Errors: stuck; time budget
 
 ## R2
 
-- Koşu: 3
-- Başarı: 0/3 (0.0%)
-- Ortalama adım: 3.0
-- Ortalama token: 702
-- Toplam gerçek harcama: $0.000421
-- 1. koşu LLM çağrısı: 3
-- 1. koşu token: 702
-- 1. koşu $: $0.000140
-- 1. koşu süre: 10.9s
-- 2. koşu (tarif) LLM çağrısı: 3
-- Hatalar: stuck
+- Runs: 3
+- Success: 0/3 (0.0%)
+- Average steps: 3.0
+- Average tokens: 702
+- Total actual spend: $0.000421
+- Run 1 LLM calls: 3
+- Run 1 tokens: 702
+- Run 1 $: $0.000140
+- Run 1 duration: 10.9s
+- Run 2 (playbook) LLM calls: 3
+- Errors: stuck
 
 ## R3
 
-- Koşu: 3
-- Başarı: 0/3 (0.0%)
-- Ortalama adım: 3.7
-- Ortalama token: 3280
-- Toplam gerçek harcama: $0.001968
-- 1. koşu LLM çağrısı: 2
-- 1. koşu token: 2220
-- 1. koşu $: $0.000444
-- 1. koşu süre: 40.7s
-- 2. koşu (tarif) LLM çağrısı: 3
-- Hatalar: stuck; time budget
+- Runs: 3
+- Success: 0/3 (0.0%)
+- Average steps: 3.7
+- Average tokens: 3280
+- Total actual spend: $0.001968
+- Run 1 LLM calls: 2
+- Run 1 tokens: 2220
+- Run 1 $: $0.000444
+- Run 1 duration: 40.7s
+- Run 2 (playbook) LLM calls: 3
+- Errors: stuck; time budget
 
 ## R4
 
-- Koşu: 3
-- Başarı: 0/3 (0.0%)
-- Ortalama adım: 4.0
-- Ortalama token: 1840
-- Toplam gerçek harcama: $0.001104
-- 1. koşu LLM çağrısı: 6
-- 1. koşu token: 2941
-- 1. koşu $: $0.000588
-- 1. koşu süre: 39.2s
-- 2. koşu (tarif) LLM çağrısı: 3
-- Hatalar: stuck
+- Runs: 3
+- Success: 0/3 (0.0%)
+- Average steps: 4.0
+- Average tokens: 1840
+- Total actual spend: $0.001104
+- Run 1 LLM calls: 6
+- Run 1 tokens: 2941
+- Run 1 $: $0.000588
+- Run 1 duration: 39.2s
+- Run 2 (playbook) LLM calls: 3
+- Errors: stuck
 
 ## R5
 
-- Koşu: 3
-- Başarı: 0/3 (0.0%)
-- Ortalama adım: 2.0
-- Ortalama token: 1831
-- Toplam gerçek harcama: $0.000323
-- 1. koşu LLM çağrısı: 5
-- 1. koşu token: 1834
-- 1. koşu $: $0.000108
-- 1. koşu süre: 41.6s
-- 2. koşu (tarif) LLM çağrısı: 5
-- Hatalar: stuck
+- Runs: 3
+- Success: 0/3 (0.0%)
+- Average steps: 2.0
+- Average tokens: 1831
+- Total actual spend: $0.000323
+- Run 1 LLM calls: 5
+- Run 1 tokens: 1834
+- Run 1 $: $0.000108
+- Run 1 duration: 41.6s
+- Run 2 (playbook) LLM calls: 5
+- Errors: stuck
 
-## Okuma
+## Reading
 
-Ölçülen 15 koşunun 0'i başarılı: %0. Provider: nebius (nvidia/Nemotron-3_5-Lightning). 1. koşularda toplam 38 canlı LLM çağrısı yapıldı ve BudgetLedger ile harcama $0.017731 olarak ölçüldü. Canlı LLM çağrılarında döngü takılma tespiti (stuck) ve süre bütçesi tetiklendi; başarılı iz tamamlanamadığında 2. koşuda tarif oynatılamadı.
+0 of 15 measured runs succeeded: 0%. Provider: nebius (nvidia/Nemotron-3_5-Lightning). Across Run 1 executions, 38 live LLM calls were made and spend was measured at $0.017731 via BudgetLedger. In live LLM calls, loop stuck detection and time budget were triggered; because successful traces could not be completed, playbooks could not replay on Run 2.
 
-## Harcama
+## Spend
 
-Bu bankonun gerçek `cost_usd` toplamı: $0.017731.
-Canlı Nebius Nemotron çağrılarının gerçek maliyeti BudgetLedger'dan geçmiştir. Mock çağrılarda maliyet 0 iken gerçek çağrılarda non-zero harcama doğrulanmıştır.
+Total actual `cost_usd` for this bench: $0.017731.
+Live Nebius Nemotron calls were accurately billed through BudgetLedger. Non-zero spend was verified for real calls while remaining $0 for mock.

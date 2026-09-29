@@ -102,29 +102,29 @@ def classify(url: str, settings) -> Verdict:
     """Decide without fetching. Local URLs are not special here."""
     parsed = urlparse(url)
     if parsed.scheme not in {"http", "https"}:
-        return Verdict(False, "yalnızca http(s)")
+        return Verdict(False, "http(s) only")
     host = hostname(url)
     path = (parsed.path or "/").lower()
     if not host:
-        return Verdict(False, "alan adı yok")
+        return Verdict(False, "no domain")
     if _amazon(host) or _host_is(host, "etsy.com"):
         return Verdict(False, "denylist")
     if any(_host_is(host, name) for name in _SOCIAL):
-        return Verdict(False, "sosyal medya")
+        return Verdict(False, "social media")
     if any(_host_is(host, name) for name in _PAYMENT_HOSTS):
-        return Verdict(False, "ödeme sayfası")
+        return Verdict(False, "payment page")
     if host == "accounts.google.com" or host.endswith(".accounts.google.com"):
-        return Verdict(False, "google giriş")
+        return Verdict(False, "google login")
     if _host_is(host, "google.com") and any(bit in path for bit in ("/signin", "/servicelogin", "/login")):
-        return Verdict(False, "google giriş")
+        return Verdict(False, "google login")
     if _host_is(host, "github.com") and path.startswith(("/login", "/session", "/sessions")):
-        return Verdict(False, "github giriş")
+        return Verdict(False, "github login")
     if not _on_code_list(host) and any(bit in path for bit in _PAYMENT_PATHS):
-        return Verdict(False, "ödeme sayfası")
+        return Verdict(False, "payment page")
     if not _on_code_list(host):
-        return Verdict(False, "REAL_SITES_ALLOWLIST dışında")
+        return Verdict(False, "outside REAL_SITES_ALLOWLIST")
     if not _env_allows(host, settings):
-        return Verdict(False, "REAL_SITES_ALLOWLIST daraltması")
+        return Verdict(False, "REAL_SITES_ALLOWLIST narrowing")
     return Verdict(True, "")
 
 
@@ -195,7 +195,7 @@ async def enforce(url: str, settings, client: httpx.AsyncClient | None = None, *
                 response = await client.get(origin + "/robots.txt")
                 body = response.text if response.status_code < 400 else ""
             except httpx.HTTPError as exc:
-                raise PolicyError(f"robots.txt okunamadı: {exc.__class__.__name__}") from exc
+                raise PolicyError(f"robots.txt could not be read: {exc.__class__.__name__}") from exc
             _robots[host] = robots_disallow(body)
         rules, crawl = _robots[host]
         if path_blocked(path, rules, host=host):

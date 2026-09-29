@@ -1,10 +1,10 @@
 # Grasshopper
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Tests](https://img.shields.io/badge/tests-110%20passed-brightgreen.svg)]()
+[![Tests](https://img.shields.io/badge/tests-111%20passed-brightgreen.svg)]()
 [![Audit](https://img.shields.io/badge/audit-22%20✅%20%2F%208%20⏳-blue.svg)](docs/AUDIT.md)
 
-Grasshopper, tarayıcıyı insan gibi kullanan açık kaynaklı bir yapay zekâ ajanıdır. Tarayıcıda elle yapılan tekrarlı işleri tek prompt veya sesle güvenli, bütçeli ve öğrenen bir otomasyona çevirir. Canlı site: [halil.devnet](https://halil.devnet) (veya GitHub: [https://github.com/grasshopper-agent/grasshopper](https://github.com/grasshopper-agent/grasshopper)).
+Grasshopper is an open-source, multi-step browser AI agent that operates web browsers like a human. It turns repetitive manual browser workflows into safe, budgeted, self-healing automations via a single natural-language prompt or voice command. Live deployment: [halil.devnet](https://halil.devnet) (or GitHub: [https://github.com/grasshopper-agent/grasshopper](https://github.com/grasshopper-agent/grasshopper)).
 
 Once a workflow is successfully completed, Grasshopper learns the recipe and replays it on subsequent runs with **zero model calls**, driving marginal inference cost to zero.
 
@@ -22,34 +22,34 @@ make run
 
 ---
 
-## Jüri İçin 60 Saniye (60 Seconds for the Jury)
+## 60 Seconds for the Jury
 
-Grasshopper'ı sıfır dış bağımlılık ve sıfır harcamayla 60 saniyenin altında denemek için:
+To evaluate Grasshopper in under 60 seconds with zero external dependencies and zero cost:
 
 ```bash
 make judge
 ```
 
-Bu komut:
-1. Deterministik tohumlanmış senaryoyu başlatır.
-2. Doğal dil görev alımını, çok adımlı planlamayı ve tarayıcı adımlarını simüle eder.
-3. `BudgetLedger` harcama tavanını ve `ApprovalGate` insan onay mekanizmasını doğrular.
-4. Adım adım ekran görüntüleriyle `site/index.html` statik jüri oynatma sayfasını üretir.
+This command:
+1. Launches a deterministically seeded scenario.
+2. Simulates natural language task intake, multi-step planning, and browser interactions.
+3. Verifies the `BudgetLedger` hard spending cap and `ApprovalGate` human sign-off policy.
+4. Generates a static jury playback page at `site/index.html` with step-by-step screenshots.
 
 ---
 
-## Nebius Token Factory Üzerinde 3 Dakikada Çalıştır
+## Run on Nebius Token Factory in 3 Minutes
 
-Nebius Token Factory (`https://api.tokenfactory.nebius.com/v1`) ve `nvidia/Nemotron-3_5-Lightning` ile canlı ajan kararlarını 3 dakikada test etmek için:
+To test live agent decisions with Nebius Token Factory (`https://api.tokenfactory.nebius.com/v1`) and `nvidia/Nemotron-3_5-Lightning`:
 
 ```bash
 make nebius-demo
 ```
 
-Bu komut:
-1. Token Factory `/chat/completions` uç noktasına bağlanır.
-2. Gerçek DOM durumunu Fast katmana iletir ve geçerli JSON eylemi alır.
-3. `BudgetLedger` üzerinde gerçek token ve dolar maliyetini ($0.0001 seviyesi) ölçer.
+This command:
+1. Connects to the Token Factory `/chat/completions` endpoint.
+2. Sends real DOM state to the Fast model tier and parses valid structured JSON actions.
+3. Records actual token and USD expenditure ($0.0001 level) on the `BudgetLedger`.
 
 ---
 
@@ -71,52 +71,52 @@ flowchart TD
 
 ---
 
-## Real-World Benchmark (Gerçek Site Ölçümleri)
+## Real-World Benchmark
 
 Measurements from [docs/RELIABILITY_REAL.md](docs/RELIABILITY_REAL.md) across 5 real web benchmarks evaluated with live **Nebius Nemotron** (`nvidia/Nemotron-3_5-Lightning`, N=3).
 
-| Senaryo | Hedef Site | Koşu | 1. Koşu LLM | 1. Koşu Token | 1. Koşu Gerçek $ | 1. Koşu Süre | 2. Koşu (Tarif) |
+| Scenario | Target Site | Runs | Run 1 LLM Calls | Run 1 Tokens | Run 1 Real Cost | Run 1 Duration | Run 2 (Recipe Replay) |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **R1** | books.toscrape.com (En ucuz 4★ kitap) | 3 | 22 | 19,272 | $0.003814 | 230.2s | 20 çağrı |
-| **R2** | saucedemo.com (Sepete ekleme ve ödeme) | 3 | 3 | 702 | $0.000140 | 10.9s | 3 çağrı |
-| **R3** | news.ycombinator.com (İlk 3 HN haberi) | 3 | 2 | 2,220 | $0.000444 | 40.7s | 3 çağrı |
-| **R4** | export.arxiv.org (Resmî API makale özeti) | 3 | 6 | 2,941 | $0.000588 | 39.2s | 3 çağrı |
-| **R5** | the-internet.herokuapp.com (Dayanıklılık) | 3 | 5 | 1,834 | $0.000108 | 41.6s | 5 çağrı |
-| **Toplam** | **5 Canlı Senaryo** | **15** | **38** | **26,969** | **$0.017731** | **362.6s** | **Öğrenme devrede** |
+| **R1** | books.toscrape.com (Cheapest 4★ book) | 3 | 22 | 19,272 | $0.003814 | 230.2s | 20 calls |
+| **R2** | saucedemo.com (Add to cart & checkout) | 3 | 3 | 702 | $0.000140 | 10.9s | 3 calls |
+| **R3** | news.ycombinator.com (Top 3 HN headlines) | 3 | 2 | 2,220 | $0.000444 | 40.7s | 3 calls |
+| **R4** | export.arxiv.org (Official API paper summary) | 3 | 6 | 2,941 | $0.000588 | 39.2s | 3 calls |
+| **R5** | the-internet.herokuapp.com (Robustness test) | 3 | 5 | 1,834 | $0.000108 | 41.6s | 5 calls |
+| **Total** | **5 Live Scenarios** | **15** | **38** | **26,969** | **$0.017731** | **362.6s** | **Learning active** |
 
-### Nebius Model Yönlendirme Ölçümü (Fast vs Strong)
+### Nebius Model Routing Benchmark (Fast vs Strong)
 
-Özet [docs/NEBIUS_BENCH.md](docs/NEBIUS_BENCH.md) dosyasından alınmıştır:
+Summary extracted from [docs/NEBIUS_BENCH.md](docs/NEBIUS_BENCH.md):
 
-| Senaryo | Fast (`nvidia/Nemotron-3_5-Lightning`) | Strong (`nvidia/Nemotron-3-Ultra-550b-a55b`) | Tasarruf |
+| Scenario | Fast (`nvidia/Nemotron-3_5-Lightning`) | Strong (`nvidia/Nemotron-3-Ultra-550b-a55b`) | Savings |
 | :--- | :---: | :---: | :---: |
-| **R1** | 4.44s · 82 token · $0.000082 | 4.70s · 111 token · $0.000555 | %85 maliyet tasarrufu |
-| **R2** | 12.12s · 76 token · $0.000076 | 0.82s · 76 token · $0.000380 | %80 maliyet tasarrufu |
-| **R3** | 16.03s · 68 token · $0.000068 | 2.24s · 98 token · $0.000491 | %86 maliyet tasarrufu |
+| **R1** | 4.44s · 82 tokens · $0.000082 | 4.70s · 111 tokens · $0.000555 | 85% cost savings |
+| **R2** | 12.12s · 76 tokens · $0.000076 | 0.82s · 76 tokens · $0.000380 | 80% cost savings |
+| **R3** | 16.03s · 68 tokens · $0.000068 | 2.24s · 98 tokens · $0.000491 | 86% cost savings |
 
 ---
 
-## Security Architecture (Güvenlik ve İzolasyon)
+## Security Architecture
 
 Grasshopper is built with a **Containment-First** philosophy designed for unattended execution without risk of financial or data loss:
 
-1. **Hard Spend Ceiling (Bütçe Tavanı):**
+1. **Hard Spend Ceiling:**
    - Enforced by `grasshopper/core/budget.py` (`BudgetLedger`).
    - Default caps: **$0.50 / day** and **$0.05 / run**.
    - The model router calculates an estimate and reserves catalog tokens *before* every API call. If a threshold is crossed, execution stops immediately and a notification is dispatched.
-2. **Domain Allowlist & Denylist (İzin ve Engel Listesi):**
+2. **Domain Allowlist & Denylist:**
    - Enforced by `grasshopper/realweb/policy.py`.
    - Only explicitly approved domains (`REAL_SITES_ALLOWLIST`) can be contacted.
    - High-risk destinations (social networks, OAuth/Google login, payment checkout portals) are permanently blocked in `DENYLIST`.
    - `robots.txt` directives and request rate limits (e.g. 3.0s delay for arXiv) are strictly honored.
-3. **Human Approval Gate (İnsan Onay Kapısı):**
+3. **Human Approval Gate:**
    - Any sensitive action (spending Solana, submitting checkout forms, sending external messages) creates a pending row in `/api/approvals`.
    - The agent pauses and waits for explicit approval via the web UI or Telegram bot (`@halil_ops_bot`).
 4. **Blast Radius Zero Containment:**
    - Every execution writes `blast_radius.json`, tracking all modified files, contacted network domains, run duration, and token expenditures.
-   - Sandbox runners execute inside CPU-, memory-, and network-isolated Docker containers or disposable Vultr cloud instances. *(Dürüstlük notu: Vultr API entegrasyonu gerçek fonlanmış bir hesapta denenmemiştir; yerel sahte sunucu `tests/fakes/vultr_app.py` ve Docker izolasyon testleriyle doğrulanmıştır).*
-5. **Kapsam Dışı Güvenlik Sınırları (Out of Scope):**
-   - Canlı kredi kartı ve finansal ödemeler, kullanıcı girişi gerektiren gerçek hesaplar (Google login, e-posta) ve sosyal medya platformları (Twitter/X, Meta) hesap ve veri güvenliğini korumak amacıyla kesin olarak kapsam dışı bırakılmıştır (`DENYLIST`). Ayrıntılı gerekçeler için bkz. [docs/COST.md](docs/COST.md).
+   - Sandbox runners execute inside CPU-, memory-, and network-isolated Docker containers or disposable Vultr cloud instances. *(Honesty note: Vultr API integration was not verified on a live funded account; it was tested against a local fake server `tests/fakes/vultr_app.py` and Docker isolation tests).*
+5. **Out of Scope Security Boundaries:**
+   - Live credit card transactions, financial payments, real authenticated user accounts (Google login, personal email), and social media platforms (Twitter/X, Meta) are strictly out of scope (`DENYLIST`) to prevent data leakage and account compromise. For detailed rationale, see [docs/COST.md](docs/COST.md).
 
 ---
 

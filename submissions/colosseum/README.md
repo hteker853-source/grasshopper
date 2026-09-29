@@ -4,7 +4,7 @@ Deadline: 2026-10-12
 
 Prize: Crypto World's Fair
 
-Verification: varsayılan rubrik
+Verification: default rubric
 
 Payments hit a daily limit, a per-transaction limit, and a human approval before the ledger moves.
 

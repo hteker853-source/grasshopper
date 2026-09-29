@@ -4,7 +4,7 @@ Deadline: 2026-10-14
 
 Prize: 4500 USD Lightning (brief)
 
-Verification: varsayılan rubrik
+Verification: default rubric
 
 Stage I deck. UGen300 is not attached.
 

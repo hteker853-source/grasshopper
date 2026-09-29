@@ -1,48 +1,48 @@
-# Grasshopper — Public AWS Dağıtım Kılavuzu (App Runner & ECS Fargate)
+# Grasshopper — Public AWS Deployment Guide (App Runner & ECS Fargate)
 
-Bu belge Grasshopper MCP sunucusunu ve web arayüzünü internete genel açık (HTTPS) olarak sunmak için izlenecek dağıtım adımlarını içerir.
+This document details the deployment steps to expose Grasshopper's MCP server and web dashboard publicly over HTTPS.
 
 > [!IMPORTANT]
-> Bu oturumda AWS hesabı açılmamış ve canlı buluta deploy yapılmamıştır. Bu kılavuz Halil'in uygulayacağı resmi adımlardır. Gizli anahtarlar asla repoya yazılmaz.
+> No AWS accounts were opened or live cloud deployments executed in this session. This guide provides official operating instructions for Halil. Secret credentials must never be committed to git.
 
 ---
 
-## 1. Mimari Seçenekleri
+## 1. Architectural Options
 
-| Yöntem | Uygunluk | Maliyet Modeli | HTTPS / SSL | Kurulum Süresi |
+| Option | Suitability | Cost Model | HTTPS / SSL | Setup Time |
 | --- | --- | --- | --- | --- |
-| **AWS App Runner (Önerilen)** | MCP Streamable HTTP ve Web UI | Kullanım başı (dakika bazlı vCPU/RAM) | Otomatik ücretsiz AWS SSL | ~5 dakika |
-| **AWS ECS Fargate** | Büyük ölçekli ve arka plan Chromium işçileri | Sürekli çalışan container | ALB / ACM üzerinden | ~15 dakika |
+| **AWS App Runner (Recommended)** | MCP Streamable HTTP & Web UI | Pay-per-use (minute-level vCPU/RAM) | Automatic free AWS SSL | ~5 minutes |
+| **AWS ECS Fargate** | Large-scale background Chromium workers | Persistent running container | Via ALB / ACM | ~15 minutes |
 
 ---
 
-## 2. AWS App Runner İle Tek Komutla Dağıtım
+## 2. AWS App Runner Single-Command Deployment
 
-### A. Ön Koşullar (Halil'in Yapacağı Kök Adımlar)
-1. AWS Management Console'a giriş yapın (`us-east-1` veya `eu-west-1` bölgesi).
-2. IAM Console'dan `grasshopper-deployer` adında bir kullanıcı oluşturun ve `AppRunnerFullAccess`, `AmazonEC2ContainerRegistryFullAccess` yetkilerini verin.
-3. Kendi makinenizde AWS CLI'ı yapılandırın:
+### A. Prerequisites (Operational Steps for Halil)
+1. Log in to AWS Management Console (`us-east-1` or `eu-west-1` region).
+2. Create an IAM user named `grasshopper-deployer` with `AppRunnerFullAccess` and `AmazonEC2ContainerRegistryFullAccess`.
+3. Configure AWS CLI locally:
    ```bash
    aws configure
    ```
 
-### B. Docker İmajını ECR'ye İtme
+### B. Building and Pushing Docker Image to ECR
 ```bash
-# 1. ECR deposu oluştur
+# 1. Create ECR repository
 aws ecr create-repository --repository-name grasshopper --region us-east-1
 
-# 2. ECR'ye oturum aç
+# 2. Authenticate Docker with ECR
 aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $(aws sts get-caller-identity --query Account --output text).dkr.ecr.us-east-1.amazonaws.com
 
-# 3. İmajı derle ve etiketle
+# 3. Build and tag image
 docker build -t grasshopper:latest .
 docker tag grasshopper:latest $(aws sts get-caller-identity --query Account --output text).dkr.ecr.us-east-1.amazonaws.com/grasshopper:latest
 
-# 4. İmajı ECR'ye yükle
+# 4. Push image to ECR
 docker push $(aws sts get-caller-identity --query Account --output text).dkr.ecr.us-east-1.amazonaws.com/grasshopper:latest
 ```
 
-### C. App Runner Servisini Başlatma
+### C. Launching App Runner Service
 ```bash
 aws apprunner create-service \
   --service-name grasshopper-live \
@@ -53,7 +53,7 @@ aws apprunner create-service \
         "Port": "8080",
         "RuntimeEnvironmentVariables": {
           "MODE": "mock",
-          "API_TOKEN": "halil-guclu-gizli-token",
+          "API_TOKEN": "halil-strong-secret-token",
           "MCP_BEARER_TOKEN": "alexa-secret-bearer-token",
           "MCP_ALLOWED_ORIGINS": "https://alexa.amazon.com,https://developer.amazon.com",
           "ALLOW_BEDROCK": "0",
@@ -71,17 +71,17 @@ aws apprunner create-service \
 
 ---
 
-## 3. Sağlık Kontrolü ve Doğrulama
+## 3. Health Check and Verification
 
-App Runner dağıtım bittiğinde size `https://<service-id>.us-east-1.awsapprunner.com` adresini tahsis eder.
+Upon completion, App Runner provisions a domain: `https://<service-id>.us-east-1.awsapprunner.com`.
 
-1. **Sağlık Kontrolü**:
+1. **Health Endpoint**:
    ```bash
    curl -I https://<service-id>.us-east-1.awsapprunner.com/health
    # HTTP/1.1 200 OK
    ```
 
-2. **MCP Araç Listesi Testi**:
+2. **MCP Tool Discovery Verification**:
    ```bash
    curl -X POST https://<service-id>.us-east-1.awsapprunner.com/mcp/ \
      -H "Content-Type: application/json" \
@@ -91,12 +91,12 @@ App Runner dağıtım bittiğinde size `https://<service-id>.us-east-1.awsapprun
 
 ---
 
-## 4. GitHub Actions CI/CD İle Otomatik Dağıtım (Opsiyonel)
+## 4. Automated CI/CD via GitHub Actions (Optional)
 
-Repo secret'larına şunlar eklenir:
+Add repository secrets:
 - `AWS_ACCESS_KEY_ID`
 - `AWS_SECRET_ACCESS_KEY`
 - `AWS_REGION` (`us-east-1`)
 - `APP_RUNNER_SERVICE_ARN`
 
-Commit `main` branch'ine düştüğünde `.github/workflows/deploy.yml` ECR derlemesini yapıp servisi günceller.
+Commits pushed to `main` trigger `.github/workflows/deploy.yml` to build, tag, and redeploy App Runner instances.

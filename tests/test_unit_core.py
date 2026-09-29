@@ -43,9 +43,9 @@ def test_schedule_parser():
     daily = parse_when("every day 08:00 read the news", now)
     assert daily.cron == "0 8 * * *"
     assert daily.scheduled_at.hour == 8
-    tonight = parse_when("bu gece 00:00 gündemi takip et", now)
+    tonight = parse_when("tonight 00:00 follow the news", now)
     assert tonight.scheduled_at.hour == 0
-    tomorrow = parse_when("yarın 09:30 özeti çıkar", now)
+    tomorrow = parse_when("tomorrow 09:30 summarize the report", now)
     assert tomorrow.scheduled_at.day == 28
     assert tomorrow.scheduled_at.hour == 9
 

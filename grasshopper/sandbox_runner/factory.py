@@ -59,5 +59,5 @@ def runner_status(path: Path) -> dict:
     return {
         "name": container,
         "isolated": isolated,
-        "label": "izole çalıştırıldı" if isolated else "",
+        "label": "isolated execution" if isolated else "",
     }

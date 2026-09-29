@@ -1,28 +1,28 @@
-# Kazanç Modeli ve Beklenen Değer (EV) Raporu
+# Earnings Model and Expected Value (EV) Report
 
 > [!IMPORTANT]
-> Bu bir kesin gelir taahhüdü değildir. Yapay zekâ jüri puanlarına ve Monte Carlo simülasyonuna dayanan TAHMİNDİR.
+> This is not a guaranteed income commitment. It is an ESTIMATE based on AI jury scores and Monte Carlo simulation.
 
-UYARI: Yarışmalar birbirinden bağımsız çizildiğinde sonuçlar aşırı iyimser olur. Aynı jüri, aynı kod tabanı ve aynı takvim yüzünden sonuçlar pozitif korelasyonla birlikte hareket eder. Gerçekte tam bağımsızlık varsayımı fazlasıyla iyimserdir; kötü günde genel bir hata veya jüri şüphesi toplu elemeye neden olur.
+WARNING: Assuming competitions are fully independent produces overly optimistic estimates. Shared evaluation criteria, common code base, and the same submission window introduce positive correlation. In reality, complete independence is overly optimistic; a general defect or jury skepticism on a bad day causes batch rejection.
 
-## 1. Üç Senaryo Analizi (Korelasyonlu Model)
+## 1. Three Scenario Analysis (Correlated Model)
 
-| Metrik | Ayı (Bear) | Taban (Base) | Boğa (Bull) |
+| Metric | Bear | Base | Bull |
 | --- | --- | --- | --- |
-| **Beklenen Değer (EV)** | **$903** | **$1601** | **$2290** |
-| **En Az 1 Ödül İhtimali** | 14.0% | 23.7% | 33.1% |
-| **10.000$+ Gelir İhtimali** | 2.6% | 4.7% | 6.9% |
-| **20.000$+ Gelir İhtimali** | 1.1% | 2.0% | 2.8% |
+| **Expected Value (EV)** | **$903** | **$1601** | **$2290** |
+| **At Least 1 Prize Probability** | 14.0% | 23.7% | 33.1% |
+| **$10,000+ Earnings Probability** | 2.6% | 4.7% | 6.9% |
+| **$20,000+ Earnings Probability** | 1.1% | 2.0% | 2.8% |
 
-## 2. '20.000$ Ortalama' Varsayımının Gerçeklik Testi
+## 2. Reality Check on the '$20,000 Average' Premise
 
-- **19 yarışmada 20.000$ ortalama:** Toplam 380.000$ nakit ödül demektir. Bu varsayım **İMKÂNSIZDIR**; çünkü 19 yarışmanın tüm birincilik ödüllerinin toplam nakit havuzu bile ~180.000$ civarındadır ve birçok yarışma (ING, Kestra, Arbiter, Nordic) nakit değil kredi veya sertifika verir.
-- **Toplamda 20.000$+ kazanma ihtimali:**
-  - Taban senaryoda toplam gelirin 20.000$ veya üzerine çıkma ihtimali **%2.0**, Boğa senaryoda **%2.8**'dir.
-- **Hangi yarışmalar olmadan 20.000$ imkânsız?**
-  - **Amazon (Alexa+ 1.: 25.000$)** ve **Nebius (1.: 20.000$)** bu hedefin omurgasıdır. Bu iki yarışma olmadan portföydeki diğer tüm yarışmalar kazanılsa dahi 20.000$ nakite ulaşmak neredeyse imkânsızdır (Vultr 9K + Open Agent 8K = 17K).
+- **$20,000 average across 19 competitions:** That would mean $380,000 in cash prizes. This premise is **IMPOSSIBLE**; the entire first-place cash prize pool of all 19 competitions combined is only ~$180,000, and several contests (ING, Kestra, Arbiter, Nordic) award credits or certificates rather than cash.
+- **Probability of winning $20,000+ total:**
+  - In the Base scenario, the probability of total income reaching $20,000 or more is **2.0%**, and in the Bull scenario it is **2.8%**.
+- **Which competitions are critical for $20,000?**
+  - **Amazon (Alexa+ 1st: $25,000)** and **Nebius (1st: $20,000)** form the backbone of this goal. Without these two competitions, even winning all other contests in the portfolio makes reaching $20,000 in cash virtually impossible (Vultr 9K + Open Agent 8K = 17K).
 
-## 3. Varsayımlar ve Notlar
-- Simülasyon her senaryo için 20.000 çekiliş ile yapılmıştır.
-- Aynı yarışma içindeki dereceler birbirini dışlar (aynı anda 1. ve 2. olunamaz).
-- Kalite faktörü korelasyonu (±0.35 şok) ile yarışmaların birlikte başarı/başarısızlık eğilimi modellenmiştir.
+## 3. Assumptions and Notes
+- The simulation runs 20,000 draws for each scenario.
+- Placement outcomes within the same competition are mutually exclusive (one cannot place 1st and 2nd simultaneously).
+- A latent quality correlation shock (±0.35) models co-dependent success/failure tendencies across contests.

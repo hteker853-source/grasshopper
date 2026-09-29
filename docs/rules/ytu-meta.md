@@ -1,17 +1,17 @@
 # YTU x Meta Student Hackathon 2026
 
-Kaynak: resmi program duyurusu, 2026-09-28 tarihinde alındı.
-Düzenleyen: YTÜ, YTU Startup House ve Meta iş birliğiyle ("AI Builders Türkiye").
+Source: official program announcement, retrieved 2026-09-28.
+Organized by: YTU, YTU Startup House in collaboration with Meta ("AI Builders Turkiye").
 https://ytustartuphouse.com.tr / https://yildizteknopark.com.tr
 
-## Program Aşamaları ve Takvim
+## Program Stages and Timeline
 
-- **Başvuru Dönemi:** 21 Eylül – 11 Ekim 2026
-- **Eğitim Serisi:** 23 Ekim – 5 Kasım 2026 (Meta akredite eğitmenler eşliğinde 4 oturumluk çevrim içi AI 101 eğitimi; en az 3 oturuma katılanlara öncelik).
-- **Hackathon Maratonu:** 4–6 Aralık 2026 (YTÜ Davutpaşa Kampüsü, yüz yüze / yerinde).
+- **Application Period:** September 21 – October 11, 2026
+- **Training Series:** October 23 – November 5, 2026 (4-session online AI 101 training with Meta accredited trainers; priority given to attendees of at least 3 sessions).
+- **Hackathon Marathon:** December 4–6, 2026 (YTU Davutpasa Campus, in-person / on-site).
 
-## Katılım Şartları ve Ödüller
+## Eligibility and Prizes
 
-- Katılımcılar: 18–26 yaş arası ön lisans ve lisans öğrencileri.
-- Ödül Havuzu: 6.000 $ ve YTU Startup House Ön Kuluçka Programı'na kabul hakkı.
-- Ayrıntılı jüri puanlama rubriği eğitim serisi ve hackathon başlangıcında ilan edilecektir.
+- Participants: Undergraduate and associate degree students aged 18–26.
+- Prize Pool: $6,000 and admission to the YTU Startup House Pre-Incubation Program.
+- Detailed judging rubric will be announced during the training series and hackathon kickoff.

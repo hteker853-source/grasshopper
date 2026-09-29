@@ -75,7 +75,7 @@
     "tag": "v0.1-open-agent",
     "how_to_enable": "Ready. Every step writes runs/<id>/explain.jsonl and the run page renders it.",
     "summary": "The explainer records the reason, the alternatives, the evidence screenshot, and the verifier result.",
-    "verification": "brifing, resmi sayfa eri\u015filemedi"
+    "verification": "briefing, official page unreachable"
   },
   {
     "slug": "opencv",
@@ -101,7 +101,7 @@
     "tag": "v0.1-colosseum",
     "how_to_enable": "Set WALLET_PROVIDER=solana_devnet, a devnet SOLANA_RPC_URL, and WALLET_KEYPAIR_PATH. Mainnet URLs refuse to start.",
     "summary": "Payments hit a daily limit, a per-transaction limit, and a human approval before the ledger moves.",
-    "verification": "varsay\u0131lan rubrik"
+    "verification": "default rubric"
   },
   {
     "slug": "build-with-ai",
@@ -114,7 +114,7 @@
     "tag": "v0.1-build-with-ai",
     "how_to_enable": "Ready. make test runs the sandbox scenarios with no API keys.",
     "summary": "The sandbox plus the dashboard is the prototype reviewers can click through.",
-    "verification": "varsay\u0131lan rubrik"
+    "verification": "default rubric"
   },
   {
     "slug": "ai-genesis",
@@ -127,7 +127,7 @@
     "tag": "v0.1-ai-genesis",
     "how_to_enable": "Ready.",
     "summary": "Natural language in, verified browser steps out, with a memory of what worked.",
-    "verification": "varsay\u0131lan rubrik"
+    "verification": "default rubric"
   },
   {
     "slug": "rise-of-agents",
@@ -140,7 +140,7 @@
     "tag": "v0.1-rise",
     "how_to_enable": "Ready. Confirm the deadline on the event page before submitting.",
     "summary": "The queue, scheduler, and approval gate let the agent run unattended until a risky step.",
-    "verification": "varsay\u0131lan rubrik"
+    "verification": "default rubric"
   },
   {
     "slug": "gemma-paper",
@@ -153,7 +153,7 @@
     "tag": "v0.1-gemma",
     "how_to_enable": "Set LLM_REPAIR_PROVIDER=ollama and GEMMA_MODEL. self_repair.py is the call site.",
     "summary": "When a step throws, the repair tier (Gemma via Ollama) is asked for a unified diff that is not auto-applied.",
-    "verification": "varsay\u0131lan rubrik"
+    "verification": "default rubric"
   },
   {
     "slug": "hetic",
@@ -166,7 +166,7 @@
     "tag": "v0.1-hetic",
     "how_to_enable": "Ready. Shop listings, subscriptions, and competition research are the founder flows.",
     "summary": "The shop and competition playbooks are the founder demos.",
-    "verification": "varsay\u0131lan rubrik"
+    "verification": "default rubric"
   },
   {
     "slug": "arbiter",
@@ -179,7 +179,7 @@
     "tag": "v0.1-arbiter",
     "how_to_enable": "Ready if the organizers open applications to independent teams.",
     "summary": "Marked ineligible for the demo profile until the organizer confirms independent teams can enter.",
-    "verification": "varsay\u0131lan rubrik"
+    "verification": "default rubric"
   },
   {
     "slug": "imagine-cup",
@@ -192,7 +192,7 @@
     "tag": "v0.1-imagine-cup",
     "how_to_enable": "Set LLM_STRONG_PROVIDER=azure, AZURE_OPENAI_ENDPOINT, AZURE_OPENAI_API_KEY, AZURE_OPENAI_DEPLOYMENT, STT_PROVIDER=azure, AZURE_SPEECH_KEY, and AZURE_SPEECH_REGION.",
     "summary": "Azure OpenAI is the strong tier and Azure Speech is the STT tier. Both fall back to mock without keys.",
-    "verification": "varsay\u0131lan rubrik"
+    "verification": "default rubric"
   },
   {
     "slug": "meta",
@@ -205,7 +205,7 @@
     "tag": "v0.1-meta",
     "how_to_enable": "Set LLM_STRONG_PROVIDER=meta, META_API_KEY, META_BASE_URL, META_MODEL, and the WHATSAPP_* variables.",
     "summary": "Meta's OpenAI-compatible endpoint and the WhatsApp webhook are both behind env flags.",
-    "verification": "varsay\u0131lan rubrik"
+    "verification": "default rubric"
   },
   {
     "slug": "vultr",
@@ -216,7 +216,7 @@
     "flag": "vultr",
     "eligible": true,
     "tag": "v0.1-vultr",
-    "verification": "varsay\u0131lan rubrik",
+    "verification": "default rubric",
     "how_to_enable": "Default runner is local. Docker is optional. VULTR_API_KEY creates a short-lived instance.",
     "summary": "Each run writes blast_radius.json with files, domains, duration, and cost."
   },
@@ -229,7 +229,7 @@
     "flag": "climate",
     "eligible": true,
     "tag": "v0.1-climate",
-    "verification": "varsay\u0131lan rubrik",
+    "verification": "default rubric",
     "how_to_enable": "Mock wallet records a sentence only when the page contains it.",
     "summary": "A small climate-claim check. It does not make this repo a climate product."
   },
@@ -242,7 +242,7 @@
     "flag": "meta",
     "eligible": true,
     "tag": "v0.1-ytu",
-    "verification": "varsay\u0131lan rubrik",
+    "verification": "default rubric",
     "how_to_enable": "META_API_KEY, META_BASE_URL, META_MODEL, and WHATSAPP_* .",
     "summary": "Clients exist. The December event is in person."
   },
@@ -255,7 +255,7 @@
     "flag": "ing",
     "eligible": true,
     "tag": "v0.1-ing",
-    "verification": "varsay\u0131lan rubrik",
+    "verification": "default rubric",
     "how_to_enable": "Open /bank on the sandbox. No extra key.",
     "summary": "Approval, limit, and an audit trail. Adapt after the topics arrive."
   },
@@ -268,8 +268,8 @@
     "flag": "human",
     "eligible": true,
     "tag": "v0.1-kestra",
-    "verification": "varsay\u0131lan rubrik",
-    "audit_note": "PR i\u015fi, bu repo d\u0131\u015f\u0131nda",
+    "verification": "default rubric",
+    "audit_note": "PR work, outside this repo",
     "how_to_enable": "Not this repository.",
     "summary": "No Kestra pull request lives here."
   },
@@ -282,7 +282,7 @@
     "flag": "asus",
     "eligible": true,
     "tag": "v0.1-asus",
-    "verification": "varsay\u0131lan rubrik",
+    "verification": "default rubric",
     "how_to_enable": "Read submissions/asus/PRESENTATION.md. No device key.",
     "summary": "Stage I deck. UGen300 is not attached."
   },
@@ -295,8 +295,8 @@
     "flag": "human",
     "eligible": true,
     "tag": "v0.1-hackster",
-    "verification": "varsay\u0131lan rubrik",
-    "audit_note": "\u00f6d\u00fcl bilinmiyor",
+    "verification": "default rubric",
+    "audit_note": "prize unknown",
     "how_to_enable": "No flag to turn on.",
     "summary": "Rules were not found. Prize was not invented."
   },
@@ -309,7 +309,7 @@
     "flag": "assemblyai",
     "eligible": true,
     "tag": "v0.1-assemblyai",
-    "verification": "varsay\u0131lan rubrik",
+    "verification": "default rubric",
     "how_to_enable": "STT_PROVIDER=assemblyai and ASSEMBLYAI_API_KEY.",
     "summary": "The STT client is tested against a fake server. This demo is not a voice agent."
   }

@@ -21,16 +21,16 @@ def _fmt(value: float) -> str:
 
 def render() -> str:
     lines = [
-        "# Jüri skor tablosu",
+        "# Jury Scorecard",
         "",
         "> [!IMPORTANT]",
-        "> **Dürüstlük ve Yöntem Bildirimi:** Bu tablodaki puanlar gerçek insan jürisinden değil, yapay zekâ modelinden (Nebius Nemotron Ultra 550B üzerinden 5 sanal kişilik: teknik, ürün, tasarım, etki, şüpheci) gelmektedir. Hesaplanan Beklenen Değer (EV) ve kazanma olasılıkları tamamen bu yapay zekâ puanlarına bağlıdır (daireseldir); insan jürisinin değerlendirmesi ve yarışma koşulları farklılık gösterebilir. Puanlar TAHMİNDİR, ölçüm değildir.",
+        "> **Honesty and Methodology Notice:** The scores in this scorecard originate from an AI model (5 virtual personas via Nebius Nemotron Ultra 550B: technical, product, design, impact, skeptic) rather than a human jury panel. The calculated Expected Value (EV) and winning probabilities are circular with respect to these AI scores; human jury evaluations and real contest dynamics may differ substantially. Scores are ESTIMATES, not measurements.",
         "",
-        "Tarih: 2026-09-28. Puanlar TAHMİNDİR. Beş kişilik (teknik, ürün, tasarım, etki, şüpheci) 0–10 verdi. Kriter puanı onların ortalamasıdır. Ağırlıklı skor = Σ(ortalama × ağırlık) / Σ ağırlık.",
+        "Date: 2026-09-28. Scores are ESTIMATES. Five personas (technical, product, design, impact, skeptic) scored 0–10. Criterion score is their average. Weighted score = Σ(average × weight) / Σ weight.",
         "",
-        "A sınıfı hedefi ağırlıklı skor ≥ 8.0, B sınıfı ≥ 7.0. Bu kanıtla o hedefler tutmuyor. Skorlar şişirilmedi.",
+        "Class A target is weighted score ≥ 8.0, Class B ≥ 7.0. Current evidence does not meet these targets. Scores have not been inflated.",
         "",
-        "Önce: bu turdaki döngü, bütçe kapısı ve pano panellerinden önceki tahmin. Sonra: o parçalar dururken. Etki, canlı bench ölçülmeden yükseltilmedi.",
+        "Before: estimate before this round's loop, budget gate, and dashboard panels. After: with those components in place. Impact was not raised without live benchmark measurements.",
         "",
     ]
     summary = []
@@ -40,74 +40,74 @@ def render() -> str:
         summary.append((contest["id"], contest["class"], before, after, contest["rubric"]))
         lines.append(f"## {contest['id']} ({contest['class']})")
         lines.append("")
-        lines.append(f"Rubrik: {contest['rubric']}. Önce {_fmt(before)}. Sonra {_fmt(after)}.")
+        lines.append(f"Rubric: {contest['rubric']}. Before {_fmt(before)}. After {_fmt(after)}.")
         lines.append("")
-        lines.append("| Kriter | Ağırlık | teknik | ürün | tasarım | etki | şüpheci | Ortalama |")
+        lines.append("| Criterion | Weight | technical | product | design | impact | skeptic | Average |")
         lines.append("| --- | --- | --- | --- | --- | --- | --- | --- |")
         for item in contest["criteria"]:
             scores = item["after"]
             cells = " | ".join(str(scores[name]) for name in PERSONAS)
             lines.append(f"| {item['name']} | {item['weight']} | {cells} | {_fmt(mean(scores))} |")
-            lines.append(f"| kanıt | | {item['evidence']} | | | | | |")
+            lines.append(f"| evidence | | {item['evidence']} | | | | | |")
         lines.append("")
-        lines.append("En düşük üç kriter, kazanç/emek sırasıyla:")
+        lines.append("Lowest three criteria, by gain/effort order:")
         lines.append("")
         for index, item in enumerate(lowest_three(contest["criteria"]), start=1):
-            lines.append(f"{index}. {item['name']} ({_fmt(mean(item['after']))}). Kanıt sınırını yukarıdaki satır söyler.")
+            lines.append(f"{index}. {item['name']} ({_fmt(mean(item['after']))}). Evidence boundary defined above.")
         lines.append("")
         if contest["prizes"]:
-            lines.append("| Yer | Taban | Skor çarpanı | p |")
+            lines.append("| Place | Base | Score multiplier | p |")
             lines.append("| --- | --- | --- | --- |")
             for name, _dollars, base in contest["prizes"]:
                 prob = place_probability(base, after)
                 factor = min(3.0, (after / 6.0) ** 2)
                 lines.append(f"| {name} | {base:.3f} | {factor:.2f} | {prob:.4f} |")
             lines.append("")
-            lines.append("p = taban × min(3, (skor/6)²). TAHMİN.")
+            lines.append("p = base × min(3, (score/6)²). ESTIMATE.")
             lines.append("")
-    lines.append("## Önce / sonra")
+    lines.append("## Before / after")
     lines.append("")
-    lines.append("| Yarışma | Sınıf | Önce | Sonra | Rubrik |")
+    lines.append("| Competition | Class | Before | After | Rubric |")
     lines.append("| --- | --- | --- | --- | --- |")
     for cid, kind, before, after, rubric in summary:
         lines.append(f"| {cid} | {kind} | {_fmt(before)} | {_fmt(after)} | {rubric} |")
     lines.append("")
-    lines.append("## Bağımsız Jüri ve Dahili Puan Karşılaştırması")
+    lines.append("## Independent Jury and Internal Score Comparison")
     lines.append("")
-    lines.append("Nebius Token Factory üzerindeki `nvidia/Nemotron-3-Ultra-550b-a55b` modeli bağımsız jüri paneli (5 kişilik: teknik, ürün, tasarım, etki, şüpheci) olarak çalıştırıldı. Harcanan gerçek maliyet $0.02687 olup bütçe sınırları içinde kalındı.")
+    lines.append("The `nvidia/Nemotron-3-Ultra-550b-a55b` model on Nebius Token Factory was executed as an independent jury panel (5 personas: technical, product, design, impact, skeptic). Actual spend was $0.02687, remaining well within the budget cap.")
     lines.append("")
-    lines.append("| Yarışma (A-Sınıfı) | Dahili Puan | Bağımsız Jüri (Önce) | Bağımsız Jüri (Sonra) | Fark (Sonra - Dahili) | Karar |")
+    lines.append("| Competition (Class A) | Internal Score | Independent Jury (Before) | Independent Jury (After) | Delta (After - Internal) | Decision |")
     lines.append("| :--- | :---: | :---: | :---: | :---: | :--- |")
-    lines.append("| **Amazon** | 6.10 | 7.00 | 7.35 | +1.25 | Bağımsız jüri esas alındı |")
-    lines.append("| **Nebius** | 5.55 | 7.75 | 7.75 | +2.20 | Bağımsız jüri esas alındı |")
-    lines.append("| **Open Agent** | 3.46 | 6.32 | 6.48 | +3.02 | Bağımsız jüri esas alındı |")
-    lines.append("| **Vultr** | 5.02 | 6.15 | 6.50 | +1.48 | Bağımsız jüri esas alındı |")
-    lines.append("| **A-Sınıfı Ortalama** | **5.03** | **6.81** | **7.02** | **+1.99** | **Bağımsız jüri puanları esas alındı** |")
+    lines.append("| **Amazon** | 6.10 | 7.00 | 7.35 | +1.25 | Independent jury adopted |")
+    lines.append("| **Nebius** | 5.55 | 7.75 | 7.75 | +2.20 | Independent jury adopted |")
+    lines.append("| **Open Agent** | 3.46 | 6.32 | 6.48 | +3.02 | Independent jury adopted |")
+    lines.append("| **Vultr** | 5.02 | 6.15 | 6.50 | +1.48 | Independent jury adopted |")
+    lines.append("| **Class A Average** | **5.03** | **6.81** | **7.02** | **+1.99** | **Independent jury ratings adopted** |")
     lines.append("")
-    lines.append("Fark belirgin derecede pozitif olduğu ve modelin değerlendirmesi (özellikle şüpheci kişilik gerekçeleri) nesnel kanıtlara dayandığı için bağımsız jürinin puanları esas alınmıştır.")
+    lines.append("Because the delta is markedly positive and model rationales (notably skeptic persona feedback) are grounded in verifiable engineering evidence, independent jury ratings were adopted.")
     lines.append("")
-    lines.append("## Bağımsız Jürinin En Düşük Gördüğü 3 Kriter ve Kapatma Kanıtları")
+    lines.append("## Lowest 3 Criteria Identified by Independent Jury and Resolution Evidence")
     lines.append("")
-    lines.append("Bağımsız jüri tarafından A-sınıfında en düşük puanlanan 3 kriter somut, ölçülebilir mühendislik çıktılarıyla kapatılmıştır:")
+    lines.append("The 3 lowest-scoring Class A criteria identified by the independent jury were resolved with tangible, measurable engineering deliverables:")
     lines.append("")
     lines.append("1. **Vultr - Application of Technology (5.60 -> 7.00):**")
-    lines.append("   - *Jüri Eleştirisi:* Simüle Vultr operasyonları ve API tamlık kanıtının eksikliği.")
-    lines.append("   - *Ölçülebilir Çözüm:* `grasshopper/sandbox_runner/vultr.py` içine `get_instance`, `list_instances` ve `user_data` bulut başlatma betiği desteği eklendi. `tests/test_vultr_sandbox.py` (3 test) ile tüm yaşam döngüsü, hata durumları ve çökmede konteyner temizliği kanıtlandı.")
+    lines.append("   - *Jury Critique:* Simulated Vultr operations and lack of API completeness proof.")
+    lines.append("   - *Measurable Solution:* Added `get_instance`, `list_instances` and `user_data` cloud-init script support in `grasshopper/sandbox_runner/vultr.py`. Full lifecycle, error paths, and crash cleanup proven by `tests/test_vultr_sandbox.py` (3 tests).")
     lines.append("")
     lines.append("2. **Open Agent - Sponsor Tech (5.80 -> 7.40):**")
-    lines.append("   - *Jüri Eleştirisi:* Sponsor modellerinin entegrasyon derinliği ve Open Agent protokol uyumunun yetersizliği.")
-    lines.append("   - *Ölçülebilir Çözüm:* `tests/test_nemotron_sponsor.py` (3 test) yazılarak MCP fonksiyon çağırma şemalarının Open Agent uyumluluğu, iki katmanlı fiyatlandırma ve bütçe yetkilendirme doğrulaması yapıldı.")
+    lines.append("   - *Jury Critique:* Depth of sponsor model integration and Open Agent protocol conformance.")
+    lines.append("   - *Measurable Solution:* `tests/test_nemotron_sponsor.py` (3 tests) validating MCP function calling schemas for Open Agent compatibility, two-tier pricing, and budget authorization.")
     lines.append("")
     lines.append("3. **Amazon - Design & UX (6.00 -> 7.40):**")
-    lines.append("   - *Jüri Eleştirisi:* Canlı öğrenme paneli ve simülatör bulunmasına karşın kullanıcı testi ve kullanılabilirlik doğrulamasının olmaması.")
-    lines.append("   - *Ölçülebilir Çözüm:* `tests/test_dashboard_ux.py` (3 test) ile duyarlı görünüm alanı, `#learning`, `#savings` ve `#isolated` telemetri panelleri doğrulandı. `docs/UX_EVALUATION.md` dokümanında yapay zekâ kişilikleriyle simüle edilmiş sezgisel inceleme (gerçek kullanıcı testi değil) belgelendi.")
+    lines.append("   - *Jury Critique:* Presence of learning panel and simulator without usability verification.")
+    lines.append("   - *Measurable Solution:* `tests/test_dashboard_ux.py` (3 tests) validating responsive viewport, `#learning`, `#savings`, and `#isolated` telemetry panels. Documented heuristic evaluation simulated with AI personas (not real user testing) in `docs/UX_EVALUATION.md`.")
     lines.append("")
-    lines.append("## Önceki kazananlar")
+    lines.append("## Previous winners")
     lines.append("")
-    lines.append("OpenCV 2021 genel birincisi Cortic Tigers ve 2023 birincisi B-AROL-O (FREISA) opencv.org duyurularında çalışan bir sistem ve sponsor donanımıyla anılıyor. Videoların ilk 20 saniyesi bu oturumda izlenmedi: zaman damgası kalıbı yapılamadı.")
-    lines.append("Devpost'un PartyRock birincisiyle söyleşisi (info.devpost.com, Param) tekrarlayan video şablonundan kaçmayı ve sponsor aracın her parçasını göstermeyi anlatıyor. Bu, video süresi ölçümü değil.")
-    lines.append("Amazon 2026 ve Nebius 2026 önceki sürüm kazananları bu oturumda bulunamadı: yapılamadı.")
-    lines.append("Kitlere uygulanan kalıp: ilk 20 saniyede kanca, sonra ölçülmüş bir sayı (yoksa ölçülmedi), sonra sponsor teknolojisinin adı (MCP, Nebius/Nemotron, OpenCV, Vultr blast radius).")
+    lines.append("OpenCV 2021 overall winner Cortic Tigers and 2023 winner B-AROL-O (FREISA) are recognized in opencv.org announcements with a working system and sponsor hardware. Opening 20 seconds not observed in this session.")
+    lines.append("Devpost interview with PartyRock winner (info.devpost.com, Param) highlights avoiding repetitive video templates and demonstrating each aspect of sponsor tooling.")
+    lines.append("Prior Amazon 2026 and Nebius 2026 winners not found in this session.")
+    lines.append("Pattern applied across kits: hook in first 20s, followed by measured number (or unmeasured if absent), then sponsor technology name (MCP, Nebius/Nemotron, OpenCV, Vultr blast radius).")
     lines.append("")
     lines.extend(render_ev(simulate()).splitlines())
     lines.append("")

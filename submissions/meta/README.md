@@ -4,7 +4,7 @@ Deadline: TBA
 
 Prize: Meta Model API + WhatsApp
 
-Verification: varsayılan rubrik
+Verification: default rubric
 
 Meta's OpenAI-compatible endpoint and the WhatsApp webhook are both behind env flags.
 

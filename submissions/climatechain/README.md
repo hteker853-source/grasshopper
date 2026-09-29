@@ -4,7 +4,7 @@ Deadline: 2026-10-25
 
 Prize: 1500 / 1000 / 500 USD (brief)
 
-Verification: varsayılan rubrik
+Verification: default rubric
 
 A small climate-claim check. It does not make this repo a climate product.
 

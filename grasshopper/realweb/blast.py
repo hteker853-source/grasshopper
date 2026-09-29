@@ -9,8 +9,8 @@ from pathlib import Path
 
 def runner_label() -> str:
     if shutil.which("docker"):
-        return "docker mevcut; bu koşu yerel (docker isteğe bağlı)"
-    return "docker yok, uyarıyla yerel"
+        return "docker available; this run is local (docker optional)"
+    return "no docker, local with warning"
 
 
 def write_blast(

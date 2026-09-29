@@ -59,10 +59,10 @@ def build_kit(slug: str, dest_root: Path | None = None) -> Path:
 def _measured_line() -> str:
     path = ROOT / "docs" / "RELIABILITY_REAL.md"
     if not path.is_file():
-        return "Measured real-site success: ölçülmedi."
+        return "Measured real-site success: unmeasured."
     text = path.read_text(encoding="utf-8")
-    if "Başarı:" not in text:
-        return "Measured real-site success: ölçülmedi."
+    if "Success:" not in text and "Ba\u015far\u0131:" not in text:
+        return "Measured real-site success: unmeasured."
     return "Measured real-site numbers are in docs/RELIABILITY_REAL.md. Read them on camera. Do not invent a percentage."
 
 
@@ -86,7 +86,7 @@ def _script(row: dict, measured: str) -> str:
         "Halil should review this draft. It is not a submission.\n\n"
         "0:00–0:20 Hook. One sentence: a worker that checks its own clicks, stops before it spends, "
         f"and shows the cost. Name the sponsor piece for this kit: {row.get('required', '')}.\n\n"
-        f"0:20–1:10 Measured number. {measured} If the file says ölçülmedi, say ölçülmedi.\n\n"
+        f"0:20–1:10 Measured number. {measured} If the file says unmeasured, say unmeasured.\n\n"
         "1:10–2:20 Live path. Dashboard, one task, the timeline, the approval gate.\n\n"
         "2:20–2:45 What is still missing. Read MISSING.md. Do not claim a key you do not have.\n\n"
         "2:45–3:00 Close on the license and the three setup commands. Keep the cut under 180 seconds.\n"
@@ -130,7 +130,7 @@ def _missing(row: dict) -> str:
         "- Halil reviews the draft.\n"
         "- The form is not submitted.\n"
         "- A public repository URL is not recorded here.\n"
-        "- Live provider spend for this kit: ölçülmedi unless docs/RELIABILITY_REAL.md says otherwise.\n"
+        "- Live provider spend for this kit: unmeasured unless docs/RELIABILITY_REAL.md says otherwise.\n"
         f"- Enable when ready: {row.get('how_to_enable', '')}\n"
     )
 

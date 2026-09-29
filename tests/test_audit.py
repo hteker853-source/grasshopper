@@ -34,7 +34,7 @@ def test_missing_keys_are_waiting_not_failed():
     assert row.status == WAIT
     assert row.status != FAIL
     assert "AWS_ACCESS_KEY_ID" in row.missing
-    assert "anahtar" in row.missing
+    assert "key" in row.missing
 
 
 def test_video_form_and_pr_gaps_fail_when_no_key_is_required(tmp_path):
@@ -112,6 +112,6 @@ def test_secret_scan_reports_the_file_not_the_value(tmp_path):
 
 def test_readme_needs_setup_and_a_competition_table():
     assert readme_gaps("# Grasshopper\n\nbash scripts/setup.sh\n\n| Competition | Flag |\n") == []
-    assert readme_gaps("# Hi\n") == ["kurulum", "yarışma tablosu"]
+    assert readme_gaps("# Hi\n") == ["setup", "competition table"]
     text = Path("README.md").read_text(encoding="utf-8")
     assert readme_gaps(text) == []

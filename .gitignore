@@ -10,6 +10,7 @@ data/*.db*
 data/*.db-shm
 data/*.db-wal
 videos/
+data/video_tmp/
 docs/INSAN_ISLERI.md
 docs/HANDOFF.md
 live_frame.png

@@ -4,7 +4,7 @@ Deadline: 2026-10-20
 
 Prize: Open Agent — explain why
 
-Verification: brifing, resmi sayfa erişilemedi
+Verification: briefing, official page unreachable
 
 The explainer records the reason, the alternatives, the evidence screenshot, and the verifier result.
 

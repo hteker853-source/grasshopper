@@ -1,20 +1,20 @@
 # Microsoft Imagine Cup 2027
 
-Kaynak: resmi portal ve yarışma duyuruları, 2026-09-28 tarihinde alındı.
+Source: official portal and competition announcements, retrieved 2026-09-28.
 https://imaginecup.microsoft.com/
 
-## Genel Bilgiler ve Şartlar
+## Overview and Requirements
 
-- **Büyük Ödül:** 100.000 $ nakit ve Microsoft Yönetim Kurulu Başkanı / CEO ile 1:1 mentorluk oturumu. Azure kredileri.
-- **Son Başvuru Tarihi:** 8 Ocak 2027 (erken aşama / döngü başvuru takvimi).
-- **Teknik Şart:** En az 2 Microsoft AI / Azure bulut servisinin kullanımı.
-- **Track'ler:** Scale (mevcut çekişe sahip girişimler) ve Launch (erken aşama fikirler).
+- **Grand Prize:** $100,000 cash and 1:1 mentorship session with Microsoft Chairman / CEO. Azure credits.
+- **Application Deadline:** January 8, 2027 (early stage / cycle timeline).
+- **Technical Requirement:** Use of at least 2 Microsoft AI / Azure cloud services.
+- **Tracks:** Scale (startups with traction) and Launch (early-stage concepts).
 
-## Doğrulama Durumu
+## Verification Status
 
-2027 kuralları DOĞRULANMADI (ayrıntılı nihai kural kitapçığı sezon lansmanında netleşir).
+2027 rules UNVERIFIED (detailed final rulebook finalized upon season kickoff).
 
-## Bu Repo
+## This Repo
 
-- Mimari plan: `docs/IMAGINE_CUP_PLAN.md`.
-- Azure OpenAI ve Azure Speech entegrasyonu hazır olup, anahtarsız ortamda güvenli mock modundadır.
+- Architectural plan: `docs/IMAGINE_CUP_PLAN.md`.
+- Azure OpenAI and Azure Speech integration is ready and runs in secure mock mode in keyless environments.

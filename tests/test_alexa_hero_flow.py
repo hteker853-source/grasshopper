@@ -41,18 +41,18 @@ def alexa_context(tmp_path: Path):
 
 @pytest.mark.asyncio
 async def test_alexa_voice_hero_flow_end_to_end(alexa_context: AppContext, tmp_path: Path):
-    # 1. Sesli komut girişi (Voice input command)
+    # 1. Voice input command
     command_text = "Find cheapest 4-star book and summarize author"
 
-    # 2. MCP Araç çağrısı (start_task tool call)
+    # 2. MCP start_task tool call
     start_resp = await start_task(command_text)
     start_data = json.loads(start_resp)
     assert "task_id" in start_data
     assert start_data["status"] == "queued"
-    assert "Göreviniz alındı" in start_data["speech"]
+    assert "Task accepted" in start_data["speech"]
     task_id = start_data["task_id"]
 
-    # 3. Canlı önizleme (Live preview frame)
+    # 3. Live preview frame
     run_dir = alexa_context.settings.runs_dir / task_id
     run_dir.mkdir(parents=True, exist_ok=True)
     live_frame = Path("live_frame.png")
@@ -60,7 +60,7 @@ async def test_alexa_voice_hero_flow_end_to_end(alexa_context: AppContext, tmp_p
     assert live_frame.is_file()
     assert live_frame.stat().st_size > 0
 
-    # 4. Sesli Onay Kartı (Approval gate trigger and voice resolution)
+    # 4. Approval gate trigger and voice resolution
     step = Step(
         id="step_checkout",
         goal="Export and buy item",
@@ -70,19 +70,19 @@ async def test_alexa_voice_hero_flow_end_to_end(alexa_context: AppContext, tmp_p
     approval_row = alexa_context.gate.create(task_id=task_id, step_id=step.id, reason="High risk purchase")
     assert approval_row.status.value == "pending"
 
-    # list_pending_approvals üzerinden kartın belirmesi
+    # Pending approval appears in list_pending_approvals
     pending_resp = await list_pending_approvals()
     pending_list = json.loads(pending_resp)
     assert len(pending_list) >= 1
     assert any(item["id"] == approval_row.id for item in pending_list)
 
-    # Sesle "onaylıyorum" çağrısı
+    # Approve action
     decide_resp = await approve(approval_row.id, "approved")
     decide_data = json.loads(decide_resp)
     assert decide_data["status"] == "approved"
     assert len(alexa_context.gate.pending()) == 0
 
-    # Görevin başarıyla tamamlanması ve blast radius dosyası
+    # Task completion and blast radius file
     alexa_context.queue.update_status(
         task_id,
         TaskStatus.done,
@@ -101,22 +101,22 @@ async def test_alexa_voice_hero_flow_end_to_end(alexa_context: AppContext, tmp_p
         encoding="utf-8",
     )
 
-    # 5. Konuşma özeti ve blast radius geri bildirimi (Speech summary with blast radius)
+    # 5. Speech summary with blast radius
     status_resp = await get_task_status(task_id)
     status_data = json.loads(status_resp)
     assert status_data["status"] == "done"
     assert "Blast radius" in status_data["speech"]
-    assert "2 dosya" in status_data["speech"]
-    assert "2 domain" in status_data["speech"]
+    assert "2 files" in status_data["speech"]
+    assert "2 domains" in status_data["speech"]
 
     result_resp = await get_task_result(task_id)
     result_data = json.loads(result_resp)
-    assert "İşlem tamamlandı" in result_data["speech"]
+    assert "Task completed" in result_data["speech"]
     assert "Soumission" in result_data["speech"]
 
-    # 6. Güven denetim kütüğü (get_audit_log)
+    # 6. Audit log (get_audit_log)
     audit_resp = await get_audit_log(limit=5)
     audit_data = json.loads(audit_resp)
     assert len(audit_data) >= 1
     task_audit = next(entry for entry in audit_data if entry.get("id") == task_id)
-    assert "2 dosya, 2 domain" in task_audit["blast_radius"]
+    assert "2 files, 2 domains" in task_audit["blast_radius"]

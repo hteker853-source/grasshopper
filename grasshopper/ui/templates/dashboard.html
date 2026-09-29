@@ -98,9 +98,9 @@
   </header>
   <main>
     <section class="card" id="canli">
-      <h2>CANLI <span id="canli-label">bekliyor</span></h2>
+      <h2>LIVE <span id="canli-label">waiting</span></h2>
       <p id="canli-meta" class="muted"></p>
-      <img id="canli-shot" class="shot" alt="canlı kare" hidden>
+      <img id="canli-shot" class="shot" alt="live frame" hidden>
     </section>
     <form class="composer" id="composer">
       <textarea name="text" placeholder="Tell Grasshopper what to do"></textarea>
@@ -153,18 +153,18 @@
     };
     function learnBars(learn) {
       if (learn.first_calls == null || learn.second_calls == null) {
-        return "<p class=\"muted\">Grafik için iki koşu ölçümü yok.</p>";
+        return "<p class=\"muted\">No dual-run benchmark data available for graph.</p>";
       }
       const max = Math.max(learn.first_calls, 1);
       const h1 = Math.max(4, Math.round(34 * learn.first_calls / max));
       const h2 = learn.second_calls === 0 ? 3 : Math.max(4, Math.round(34 * learn.second_calls / max));
-      return `<svg id="learn-chart" width="180" height="64" aria-label="öğrenme grafiği">
+      return `<svg id="learn-chart" width="180" height="64" aria-label="learning graph">
         <text x="28" y="${Math.max(12, 44 - h1)}" fill="#d6f25c" font-size="11" font-weight="700" text-anchor="middle">${learn.first_calls}</text>
         <rect x="12" y="${46 - h1}" width="32" height="${h1}" rx="4" fill="#d6f25c"></rect>
         <text x="84" y="${Math.max(12, 44 - h2)}" fill="#8ee0a2" font-size="11" font-weight="700" text-anchor="middle">${learn.second_calls}</text>
         <rect x="68" y="${46 - h2}" width="32" height="${h2}" rx="4" fill="#8ee0a2"></rect>
-        <text x="28" y="60" fill="#9aa892" font-size="11" text-anchor="middle">1. koşu</text>
-        <text x="84" y="60" fill="#9aa892" font-size="11" text-anchor="middle">2. koşu</text>
+        <text x="28" y="60" fill="#9aa892" font-size="11" text-anchor="middle">Run 1</text>
+        <text x="84" y="60" fill="#9aa892" font-size="11" text-anchor="middle">Run 2</text>
       </svg>`;
     }
     function pill(status) {
@@ -204,11 +204,11 @@
         <div class="badge"><span>Daily limit</span><span>${data.daily_limit} SOL</span></div>
         <div class="badge"><span>Queue</span><span>${data.queue}</span></div>
         <div class="badge"><span>Fast-tier share</span><span>${Math.round((data.fast_ratio || 0) * 100)}%</span></div>
-        <div id="isolated" class="badge">${data.runner && data.runner.isolated ? "izole çalıştırıldı" : ""}</div>
+        <div id="isolated" class="badge">${data.runner && data.runner.isolated ? "isolated execution" : ""}</div>
         <div id="cost">
           <h2>Cost & Nebius Routing</h2>
           <div class="badge"><span>Fast model</span><span style="font-weight:700; color:var(--lime);">${(data.cost || {}).nebius_model || "nvidia/Nemotron-3_5-Lightning"}</span></div>
-          <div class="badge"><span>Maliyet / görev</span><span style="font-weight:700;">$${((data.cost || {}).cost_per_task || 0).toFixed(4)}</span></div>
+          <div class="badge"><span>Cost / task</span><span style="font-weight:700;">$${((data.cost || {}).cost_per_task || 0).toFixed(4)}</span></div>
           <div class="badge"><span>Fast calls</span><span>${(data.cost || {}).fast || 0}</span></div>
           <div class="badge"><span>Strong calls</span><span>${(data.cost || {}).strong || 0}</span></div>
           <div class="badge"><span>Vision calls</span><span>${(data.cost || {}).vision || 0}</span></div>
@@ -216,15 +216,15 @@
           <p class="muted">Estimated tokens the fast tier kept off the strong model.</p>
         </div>
         <div id="savings">
-          <h2>Maliyet tasarrufu</h2>
-          <div class="badge"><span>Tahmini $</span><span>${((data.cost || {}).saved_usd || 0).toFixed(4)}</span></div>
-          <p class="muted">Fast katmanın strong fiyattan farkı. Canlı fatura ayrıdır.</p>
+          <h2>Cost savings</h2>
+          <div class="badge"><span>Estimated $</span><span>${((data.cost || {}).saved_usd || 0).toFixed(4)}</span></div>
+          <p class="muted">Delta of fast tier vs strong tier pricing. Live invoice is billed separately.</p>
         </div>
         <div id="learning">
-          <h2>Öğrenme grafiği</h2>
-          <p class="muted">${(data.learning || {}).scenario || "senaryo yok"}</p>
-          <div class="badge"><span>1. koşu LLM çağrısı</span><span id="learn-first">${(data.learning || {}).first_calls == null ? "ölçülmedi" : data.learning.first_calls}</span></div>
-          <div class="badge"><span>2. koşu LLM çağrısı</span><span id="learn-second">${(data.learning || {}).second_calls == null ? "ölçülmedi" : data.learning.second_calls}</span></div>
+          <h2>Learning Curve</h2>
+          <p class="muted">${(data.learning || {}).scenario || "no scenario"}</p>
+          <div class="badge"><span>1st run LLM calls</span><span id="learn-first">${(data.learning || {}).first_calls == null ? "unmeasured" : data.learning.first_calls}</span></div>
+          <div class="badge"><span>2nd run LLM calls</span><span id="learn-second">${(data.learning || {}).second_calls == null ? "unmeasured" : data.learning.second_calls}</span></div>
           ${learnBars(data.learning || {})}
         </div>
         <p class="muted">Sites live under the sandbox: <a href="/ai-alpha">alpha</a> · <a href="/shop">shop</a> · <a href="/news">news</a></p>`;
@@ -233,7 +233,7 @@
       const res = await fetch("/api/live");
       if (!res.ok) return;
       const data = await res.json();
-      document.getElementById("canli-label").textContent = data.label || "bekliyor";
+      document.getElementById("canli-label").textContent = data.label || "idle";
       const bits = [];
       if (data.url) bits.push(data.url);
       if (data.goal) bits.push(data.goal);

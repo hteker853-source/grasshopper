@@ -4,7 +4,7 @@ Deadline: 2026-11-02
 
 Prize: General agent project
 
-Verification: varsayılan rubrik
+Verification: default rubric
 
 Natural language in, verified browser steps out, with a memory of what worked.
 

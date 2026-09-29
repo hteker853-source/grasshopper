@@ -98,7 +98,7 @@ def _r3(memory: dict) -> dict:
     if memory.get("hn") and not memory.get("summaries"):
         lines = []
         for item in memory["hn"][:3]:
-            lines.append(f"{item['title']} — başlık özeti; makale gövdesi allowlist dışındaysa alınmadı.")
+            lines.append(f"{item['title']} — headline summary; article body skipped if outside allowlist.")
         return {"type": "remember", "key": "summaries", "value": lines}
     return {"type": "finish"}
 

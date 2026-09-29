@@ -70,7 +70,7 @@ def _send(public: str, target: str = "dashboard") -> str:
         msg = f"Grasshopper MCP endpoint: {link}"
     else:
         link = f"{public}/?token={token}"
-        msg = f"Grasshopper canlı: {link}"
+        msg = f"Grasshopper live: {link}"
     proc = subprocess.run(
         [
             "curl", "-sS",

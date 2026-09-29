@@ -1,125 +1,125 @@
-# Hazırlık ve kazanma potansiyeli
+# Readiness and Win Potential
 
-Tarih: 2026-09-28. Kanıt: `make test` 110 passed, `make audit` 22 ✅ / 8 ⏳ / 0 ❌, `docs/PROVIDERS_VERIFIED.md`, `docs/AUDIT.md`, `submissions/amazon/` taslakları, `runs/demo-record` kayıtları (`run_ed76f4a16239`, `run_2036d34900f2`, `run_9f24d8fa5fad`), `videos/demo.mp4` (audit: 62 sn).
+Date: 2026-09-28. Evidence: `make test` 111 passed, `make audit` 22 ✅ / 8 ⏳ / 0 ❌, `docs/PROVIDERS_VERIFIED.md`, `docs/AUDIT.md`, `submissions/amazon/` drafts, `runs/demo-record` records (`run_ed76f4a16239`, `run_2036d34900f2`, `run_9f24d8fa5fad`), `videos/demo.mp4` (audit: 62s).
 
-Olasılıklar TAHMİNDİR. Aralıklar kesinlik değildir. Bilinmeyen yer "bilinmiyor" diye durur. DOĞRULANMADI satırlarına dayanarak elenmiş veya kazanılmış sayılmadı.
+Probabilities are an ESTIMATE. Intervals do not represent certainty. Unknown items remain marked "unknown". No competition is deemed eliminated or won based on UNVERIFIED notes.
 
-Güçlü yan: mock modda anahtarsız 110 yeşil test, MCP resmi SDK 2.x testleri (`tests/test_mcp_official_sdk.py`), 8 dijital çalışan çekirdek yeteneği (`tests/test_working_core.py`), Web Speech API sesli kontrol arayüzü (`/alexa`), 1 fps canlı önizleme, risk onay kapısı, 3 dakikanın altında demo videosu (62 sn), blast radius konteyner sınırlandırma raporu, ASUS 20 sayfalık sunum taslağı.
+Strengths: 111 green pytest tests in keyless mock mode, official MCP SDK 2.x tests (`tests/test_mcp_official_sdk.py`), 8 digital worker core capabilities (`tests/test_working_core.py`), Web Speech API voice control interface (`/alexa`), 1 fps live preview, risk approval gate, demo video under 3 minutes (62s), blast radius container isolation report, ASUS 20-slide presentation draft.
 
-## 1. Yarışma durumları
+## 1. Competition Status
 
-| Yarışma | Durum | Sağlam çalışan (kanıt) | Eksik | Kalan emek |
+| Competition | Status | Solid Working (Evidence) | Missing | Remaining Effort |
 | --- | --- | --- | --- | --- |
-| Amazon Alexa+ | İNSAN İŞİ | MCP Streamable HTTP resmî SDK testi (`test_mcp_official_sdk.py`, `test_s9_mcp_client`), <500ms araç benchmarkı, `/alexa` Web Speech API sesli dinle/konuş ve 1 fps canlı önizleme, sesli onay kartı, `make share-mcp` tüneli, video 62 sn. `docs/DEPLOY_PUBLIC.md` ve `docs/ALEXA_ONBOARDING.md`. | Halil video ve metni gözden geçirmeli. AWS App Runner deploy ve portal testi insan işi. Gerçek Alexa+ cihazı yok. | 8–16 saat, insan |
-| Amazon Open Source mini | İNSAN İŞİ | MIT `LICENSE`. `make test` 110 yeşil. Audit "LICENSE is MIT" ✅. | Remote ve public repo kanıtı (Halil'in push yapması). Başvuru formu. | 4–8 saat, insan |
-| Amazon AWS Builder mini | ANAHTAR BEKLİYOR | Bedrock `converse` yolu stub ile duruyor (`test_bedrock_converse_is_stubbed`). | `AWS_REGION`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `BEDROCK_MODEL_ID`. Canlı çağrı yok. | Anahtar gelince 4–8 saat |
-| Nebius x NVIDIA | ANAHTAR BEKLİYOR | OpenAI-uyumlu istemci sahte sunucuda, Meta Llama Nebius yönlendirmesi (`test_meta_llama_routing_and_nebius_fallback`), 110 yeşil test. Canlı token muhasebesi ($0.0238/41 çağrı). | Canlı `NEBIUS_API_KEY` ve Nebius Studio model adı. Halil video ve form teslimi. | Anahtar ve form ile 6–10 saat |
-| Nebius Tavily bonusu | ANAHTAR BEKLİYOR | Tavily fallback ve mock arama (`test_capability_c_research_and_report_generation`). | Canlı `TAVILY_API_KEY`. | Anahtar gelince 1 saat |
-| Open Agent Hackathon | İNSAN İŞİ | MCP araç şemaları Open Agent protokolüyle uyumlu (`test_nemotron_open_agent_tool_schema_compliance`), 8 dijital çalışan çekirdek yeteneği. Takvim `docs/OPEN_AGENT_PLAN.md`. | 15–20 Ekim arasında görünür yeni commit serisi şart. Kayıt 13 Ekim. | Pencerede 15–25 saat |
-| OpenCV AI Competition | KURAL BELİRSİZ | OpenCV 5 diff ve bölge (`test_vision_finds_button`), `test_vision_service.py`, `docs/OPENCV_AWS.md` dağıtım adımları. | Halil AWS hesabı açmalı ve servisi çalıştırmalı. | 4–8 saat |
-| Vultr Agent Rush | KURAL BELİRSİZ | `LocalRunner`, Docker limitleri, sahte Vultr API'de yaşam döngüsü, blast radius raporu üretimi (`test_vultr_blast_radius_report_generation`). Dürüstlük bildirimi mevcut. | Gerçek hesapta denenmedi (fake sunucu testi). Canlı Vultr kutusu açma Halil'de. | 6–10 saat |
-| ASUS UGen AI League | İNSAN İŞİ | `submissions/asus/PRESENTATION.md` 20 sayfalık tam sunum taslağı hazır. 62 sn video hazır. | Slayt videosu seslendirme, YouTube yüklemesi. | 3–4 saat insan |
-| ING Hubs | İNSAN İŞİ | Ajan iskeleti var. | Başvuru 4 Ekim, 2 kişilik takım, konular 9 Ekim'e kadar bilinmiyor. Ödül cihaz. | Başvuru birkaç saat; konu gelmeden kod tahmini yok |
-| Kestra Hacktober | İNSAN İŞİ | Bu repoda Kestra PR'ı yok. | Merge edilmiş, kendi yazdığın Kestra PR'ları. Bu ürünün işi değil. | Ayrı iş, saatlik tahmin yok |
-| YTU x Meta | İNSAN İŞİ | Meta ve WhatsApp istemcileri sahte sunucuda. | Başvuru, eğitim, Aralık'ta İstanbul'da yerinde hackathon. Öğrenci şartı brifingde net değil; yerinde olmak insan işi. | Başvuru birkaç saat; hackathon haftası ayrı |
-| Imagine Cup 2027 | KURAL BELİRSİZ | Azure OpenAI ve Azure Speech sahte sunucuda (`test_azure_openai_sends_api_key_header_not_bearer`, `test_azure_speech_posts_the_audio_and_key`). | İki servisin canlı anahtarı yok. 2027 kuralları DOĞRULANMADI. | Anahtar ve kural sonrası 16–30 saat |
-| Kaggle Gemma 4 | ANAHTAR BEKLİYOR | Ollama istemcisi sahte `/api/generate` ile. Onarım yaması S7'de üretilip uygulanmadı. | `GEMMA_MODEL` boş. Uyum zayıf: paper veya Kaggle yarışması bu sandbox demosu değil. | Uyum düşük; 30 saat+ ve yine zayıf |
-| Build With AI Basics | İNSAN İŞİ | Uçtan uca sandbox demosu ve 68 test. Audit prototype ✅. | Başvuru formu ve insan onayı. | 4–8 saat |
-| AssemblyAI Voice Agent | ANAHTAR BEKLİYOR | AssemblyAI upload+transcript sahte sunucuda. | 30 Eylül'e 2 gün. `ASSEMBLYAI_API_KEY` yok. Ürün sesli ajan demosu değil; STT varsayılanı mock. | Bu süre ve bu demoyla kapanmaz |
-| HETIC | İNSAN İŞİ | Shop ve araştırma playbook'ları (`test_s3_old_listings`, `test_s1_account_research_share`). | Başvuru. Ödül küçük. | 4–6 saat |
-| Arbiter | İNSAN İŞİ | Ajan kodu var. | `data/competitions.json` içinde `eligible=false`. Bağımsız takım teyidi yok. | Girme |
-| Colosseum | İNSAN İŞİ | Devnet cüzdan kodu ve mainnet reddi (`test_mainnet_refused`). | Karar: girilmeyecek. Anahtar da yok. | 0, ATLA |
+| Amazon Alexa+ | HUMAN TASK | MCP Streamable HTTP official SDK tests (`test_mcp_official_sdk.py`, `test_s9_mcp_client`), <500ms tool benchmark, `/alexa` Web Speech API voice listen/speak and 1 fps live preview, voice approval card, `make share-mcp` tunnel, video 62s. `docs/DEPLOY_PUBLIC.md` and `docs/ALEXA_ONBOARDING.md`. | Halil must review video and copy. AWS App Runner deploy and portal testing are human tasks. No physical Alexa+ device. | 8–16 hours, human |
+| Amazon Open Source mini | HUMAN TASK | MIT `LICENSE`. `make test` 111 green. Audit "LICENSE is MIT" ✅. | Remote and public repo proof (Halil pushing). Application form. | 4–8 hours, human |
+| Amazon AWS Builder mini | WAITING FOR KEY | Bedrock `converse` path present via stub (`test_bedrock_converse_is_stubbed`). | `AWS_REGION`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `BEDROCK_MODEL_ID`. No live call. | 4–8 hours upon receiving key |
+| Nebius x NVIDIA | WAITING FOR KEY | OpenAI-compatible client against mock server, Meta Llama Nebius routing (`test_meta_llama_routing_and_nebius_fallback`), 111 green tests. Live token accounting ($0.0238/41 calls). | Live `NEBIUS_API_KEY` and Nebius Studio model name. Halil video and form submission. | 6–10 hours with key and form |
+| Nebius Tavily bonus | WAITING FOR KEY | Tavily fallback and mock search (`test_capability_c_research_and_report_generation`). | Live `TAVILY_API_KEY`. | 1 hour upon receiving key |
+| Open Agent Hackathon | HUMAN TASK | MCP tool schemas compliant with Open Agent protocol (`test_nemotron_open_agent_tool_schema_compliance`), 8 digital worker core capabilities. Schedule in `docs/OPEN_AGENT_PLAN.md`. | Visible new commit series required between Oct 15–20. Registration Oct 13. | 15–25 hours during window |
+| OpenCV AI Competition | RULE UNCERTAIN | OpenCV 5 diffs and bounding regions (`test_vision_finds_button`), `test_vision_service.py`, `docs/OPENCV_AWS.md` deployment steps. | Halil must set up AWS account and execute service. | 4–8 hours |
+| Vultr Agent Rush | RULE UNCERTAIN | `LocalRunner`, Docker limits, fake Vultr API lifecycle, blast radius report generation (`test_vultr_blast_radius_report_generation`). Honesty disclaimer present. | Not tested on real account (fake server test). Creating live Vultr box rests with Halil. | 6–10 hours |
+| ASUS UGen AI League | HUMAN TASK | `submissions/asus/PRESENTATION.md` 20-slide presentation ready. 62s video ready. | Slide voiceover, YouTube upload. | 3–4 hours human |
+| ING Hubs | HUMAN TASK | Agent skeleton in place. | Registration Oct 4, 2-person team, challenges unknown until Oct 9. Hardware prize. | Registration a few hours; code estimate pending challenge |
+| Kestra Hacktober | HUMAN TASK | No Kestra PR in this repository. | Merged author-written Kestra PRs. Outside this product scope. | Separate task, no hourly estimate |
+| YTU x Meta | HUMAN TASK | Meta and WhatsApp clients on fake server. | Registration, training, Dec onsite hackathon in Istanbul. Student requirement not explicit in briefing; onsite presence is human. | Registration a few hours; hackathon week separate |
+| Imagine Cup 2027 | RULE UNCERTAIN | Azure OpenAI and Azure Speech on fake server (`test_azure_openai_sends_api_key_header_not_bearer`, `test_azure_speech_posts_the_audio_and_key`). | Missing live keys for both services. 2027 rules UNVERIFIED. | 16–30 hours post-key and rule verification |
+| Kaggle Gemma 4 | WAITING FOR KEY | Ollama client with fake `/api/generate`. Repair patch generated in S7 but not applied. | `GEMMA_MODEL` empty. Weak alignment: paper or Kaggle contest is not this sandbox demo. | Low alignment; 30+ hours and still weak |
+| Build With AI Basics | HUMAN TASK | End-to-end sandbox demo and 68 tests. Audit prototype ✅. | Application form and human approval. | 4–8 hours |
+| AssemblyAI Voice Agent | WAITING FOR KEY | AssemblyAI upload+transcript on fake server. | 2 days to Sep 30. No `ASSEMBLYAI_API_KEY`. Product is not a dedicated voice agent demo; STT defaults to mock. | Cannot close in remaining window with this demo |
+| HETIC | HUMAN TASK | Shop and research playbooks (`test_s3_old_listings`, `test_s1_account_research_share`). | Application. Small prize pool. | 4–6 hours |
+| Arbiter | HUMAN TASK | Agent code present. | `eligible=false` in `data/competitions.json`. No independent team confirmation. | Do not enter |
+| Colosseum | HUMAN TASK | Devnet wallet code and mainnet refusal (`test_mainnet_refused`). | Decision: will not enter. Missing key. | 0, SKIP |
 
-## 2. Olasılıklar (TAHMİN)
+## 2. Probabilities (ESTIMATE)
 
-Katılımcı sayısı bilinen yerlerde bile track içi dağılım bilinmiyor. Aralık, "bu haliyle, sandbox demosuyla, zamanında teslim edilirse" içindir.
+Even where participant counts are reported, distribution within tracks is unknown. Interval applies to "as-is, with sandbox demo, submitted on time".
 
-- Amazon Alexa+ 25.000 $: <1%. Yaklaşık 15.800 kişi. Jüri tasarım ve etki de bakıyor. MCP ve simüle sayfa teknik kutuyu doldurur; gerçek Alexa+ ve gerçek site olmadığı için etki zayıf. 15.000 $ ve 4.000 $ kademeleri de <1%. Track başına kişi sayısı bilinmiyor; yine de ilk 3, binlerce kişi içinde <1% ile 1–3% arasında kalır. Üst bandı kullanmak için kanıt yok, o yüzden <1% yazıyorum.
-- Amazon Open Source mini 5.000 $: 1–3%. Teknik şart (MIT, çalışan test) duruyor. Public repo ve başvuru durmuyor. Mini'ye kaç proje gireceği bilinmiyor.
-- Amazon AWS mini 5.000 $: <1% bugün. Canlı Bedrock çağrısı yok.
-- Nebius birincilik 20.000 $ ve diğer kademeler: <1%. Katılımcı bilinmiyor. Canlı Nebius + NVIDIA modeli yok. Bu, o yarışmanın şartının kendisi.
-- Tavily 3.000 $: <1% anahtarsız. Anahtarla bile bu demoda arama yan rol.
-- Open Agent 8.000 / 4.000 / 2.000 $: mevcut repo ile <1%, çünkü puan yeni işe gidiyor ve yaklaşık 1.200 kayıtlı var. Pencerede görünür yeni bir parça çıkarsa 1–3% olabilir; bu da TAHMİN.
-- OpenCV 5.000 $ ve alt kademeler: kural DOĞRULANMADI diye sayı vermiyorum. Teklif aşaması kaçırıldıysa olasılık 0. Kaçırılmadıysa ve AWS yoksa yine <1%.
-- Vultr 5.000 $ nakit: kurallar DOĞRULANMADI. Tema koda yakın. Gerçek Vultr üzerinde koştuğumuz bir kayıt yok. TAHMİN vermek için erken; üst sınır olarak, kural bizim temaysa ve teslim Vultr'da çalışırsa 1–3%, aksi halde <1%.
-- IEEE 1.500 $: <1%, ve büyük ihtimalle 0'a yakın. Proje iklim değil. Öğrenci ve Türkiye şartı DOĞRULANMADI.
-- ASUS 4.500 $: <1%. Donanım entegrasyonu yok.
-- ING cihaz ödülü: konu bilinmiyor, 2 kişilik takım ve başvuru insan işi. Olasılık bilinmiyor.
-- Kestra cihaz/kart: bu repo ile ilişkisi yok. <1%.
-- YTU 6.000 $ havuzu: yerinde öğrenci hackathon'u. Bu demoyu götürmek yetmez. Olasılık bilinmiyor; uzaktan teslim diye bir kanıt yok.
-- Imagine Cup 100.000 $: <1%. Kurallar DOĞRULANMADI, iki canlı Microsoft servisi yok, tarih uzak.
-- Gemma 37.000 / 35.000 $: <1%. Uyum zayıf ve model bağlı değil.
-- Build With AI 2.500 $: 3–8%. Kalabalık bilinmiyor. Eldeki prototip şartın kendisi gibi duruyor; yine de jüri sandbox'ı zayıf bulabilir, o yüzden 15%+ yazmıyorum.
-- AssemblyAI 5.000 $ nakit: <1%. İki gün var ve sesli ajan demosu yok.
-- HETIC 1.100 $: 1–3%. İş küçük, kalabalık bilinmiyor, demo playbook'ları var.
-- Arbiter 3.800 $: <1%. JSON'da eligible=false.
+- Amazon Alexa+ $25,000: <1%. Roughly 15,800 participants. Jury evaluates design and impact. MCP and simulated page satisfy technical checks; impact is moderate without physical Alexa+ hardware and live third-party sites. $15,000 and $4,000 tiers also <1%. Track participant breakdown unknown; top 3 across thousands remains between <1% and 1–3%. No evidence supports claiming upper bounds, hence <1%.
+- Amazon Open Source mini $5,000: 1–3%. Technical requirements (MIT, passing tests) met. Public repo and form pending. Total mini entrants unknown.
+- Amazon AWS mini $5,000: <1% today. No live Bedrock calls.
+- Nebius 1st place $20,000 and other tiers: <1%. Entrant count unknown. No live Nebius + NVIDIA models connected. That is the fundamental prerequisite of the contest.
+- Tavily $3,000: <1% keyless. Even with key, search plays a secondary role in this demo.
+- Open Agent $8,000 / $4,000 / $2,000: <1% with current repo because score rewards newly authored work and ~1,200 participants are registered. If visible new modules ship during the window, 1–3% is possible; this is an ESTIMATE.
+- OpenCV $5,000 and lower tiers: no figure given since rules are UNVERIFIED. If proposal phase was missed, probability is 0. If open and without AWS, still <1%.
+- Vultr $5,000 cash: rules UNVERIFIED. Theme aligns well with codebase. No records of execution on real Vultr instances. Early for an ESTIMATE; upper bound 1–3% if rules match our theme and execution works on Vultr, otherwise <1%.
+- IEEE $1,500: <1%, and likely near 0. Project is not climate-specific. Student and Turkey eligibility UNVERIFIED.
+- ASUS $4,500: <1%. Hardware integration absent.
+- ING hardware prize: challenge unknown, 2-person team and registration are human tasks. Probability unknown.
+- Kestra hardware/gift card: no relationship with this repo. <1%.
+- YTU $6,000 pool: onsite student hackathon. Bringing this demo alone is insufficient. Probability unknown; no evidence for remote participation.
+- Imagine Cup $100,000: <1%. Rules UNVERIFIED, two live Microsoft services unlinked, date distant.
+- Gemma $37,000 / $35,000: <1%. Weak alignment and unlinked model.
+- Build With AI $2,500: 3–8%. Entrant volume unknown. Existing prototype matches criteria well; jury may still view sandbox as narrow, so not claiming 15%+.
+- AssemblyAI $5,000 cash: <1%. Two days remain and voice agent demo is absent.
+- HETIC $1,100: 1–3%. Small scope, unknown volume, working demo playbooks.
+- Arbiter $3,800: <1%. `eligible=false` in JSON.
 
-Bu yarışmada kazanma ihtimalimiz düşük çünkü sandbox dışı kanıt yok: Nebius, Gemma, OpenCV (AWS'siz), AssemblyAI Voice Agent, IEEE, ASUS, Imagine Cup birinciliği, Amazon Alexa+ birinciliği.
+Win probability is limited across several contests due to lack of non-sandbox evidence: Nebius, Gemma, OpenCV (without AWS), AssemblyAI Voice Agent, IEEE, ASUS, Imagine Cup 1st, Amazon Alexa+ 1st. No certainty is claimed anywhere.
 
-## 3. Ödül büyüklüğüne göre tablo
+## 3. Table by Prize Size
 
-Beklenen değer = olasılık aralığı × nakit ödül. <1% için üst uç %1 alındı, alt uç 0'a yakın diye 0 yazıldı. Nakit olmayan ödülde çarpım yok.
+Expected value = probability interval × cash prize. Upper bound 1% used for <1%, lower bound 0. Non-cash prizes excluded from cash multiplication.
 
-| Yarışma | Ödül | Olasılık aralığı | Beklenen değer | Kalan emek | Öneri |
+| Competition | Prize | Probability Interval | Expected Value | Remaining Effort | Recommendation |
 | --- | --- | --- | --- | --- | --- |
-| Imagine Cup 2027 | 100.000 $ | <1% | 0–1.000 $ | 16–30 saat | ATLA (şimdilik) |
-| Kaggle Gemma ana | 37.000 $ | <1% | 0–370 $ | 30 saat+ | ATLA |
-| Gemma Paper | 35.000 $ | <1% | 0–350 $ | 30 saat+ | ATLA |
-| Amazon Alexa+ 1. | 25.000 $ | <1% | 0–250 $ | 8–16 saat | ÖNCELİK (track olarak, birincilik değil) |
-| Nebius 1. | 20.000 $ | <1% | 0–200 $ | 12–24 saat | ATLA (anahtarsız) |
-| Amazon Alexa+ 2. | 15.000 $ | <1% | 0–150 $ | aynı teslim | ÖNCELİK |
-| Open Agent 1. | 8.000 $ | <1% (yeni işle 1–3%) | 0–240 $ | 20–40 saat | BONUS |
-| YTU x Meta havuz | 6.000 $ | bilinmiyor | hesaplanmadı | başvuru | BONUS (yerinde gidilecekse) |
-| Amazon AWS mini | 5.000 $ | <1% | 0–50 $ | 4–8 saat | BONUS (anahtar gelirse) |
-| Amazon OSS mini | 5.000 $ | 1–3% | 50–150 $ | 4–8 saat | ÖNCELİK |
-| OpenCV 1. | 5.000 $ | kural belirsiz | hesaplanmadı | 8–16 saat | ATLA (teyitsiz) |
-| Vultr 1. nakit | 5.000 $ | kural belirsiz; tema tutarsa 1–3% | 0–150 $ | 8–16 saat | BONUS |
-| AssemblyAI nakit | 5.000 $ | <1% | 0–50 $ | yetişmez | ATLA |
-| ASUS Lightning | 4.500 $ | <1% | 0–45 $ | 40 saat + cihaz | ATLA |
-| Amazon Alexa+ 3. | 4.000 $ | <1% | 0–40 $ | aynı teslim | ÖNCELİK |
-| Arbiter | 3.800 $ | <1% | 0–38 $ | — | ATLA |
-| Nebius Tavily | 3.000 $ | <1% | 0–30 $ | 2–4 saat | BONUS |
-| Build With AI Basics | 2.500 $ | 3–8% | 75–200 $ | 4–8 saat | ÖNCELİK |
-| Open Agent 2. / 3. | 4.000 / 2.000 $ | <1% | 0–40 $ | pencere | BONUS |
-| IEEE 1. | 1.500 $ | <1% | 0–15 $ | uyumsuz | ATLA |
-| HETIC | 1.100 $ | 1–3% | 11–33 $ | 4–6 saat | BONUS |
-| Kestra kart | 150 $ veya cihaz | <1% | nakit değil | ayrı iş | ATLA |
-| ING | MacBook / iPad / saat | bilinmiyor | nakit değil | başvuru | BONUS (takım varsa) |
-| Colosseum | — | girilmeyecek | 0 | 0 | ATLA |
+| Imagine Cup 2027 | $100,000 | <1% | $0–$1,000 | 16–30 hours | SKIP (for now) |
+| Kaggle Gemma main | $37,000 | <1% | $0–$370 | 30+ hours | SKIP |
+| Gemma Paper | $35,000 | <1% | $0–$350 | 30+ hours | SKIP |
+| Amazon Alexa+ 1st | $25,000 | <1% | $0–$250 | 8–16 hours | PRIORITY (as track, not 1st) |
+| Nebius 1st | $20,000 | <1% | $0–$200 | 12–24 hours | SKIP (keyless) |
+| Amazon Alexa+ 2nd | $15,000 | <1% | $0–$150 | same submission | PRIORITY |
+| Open Agent 1st | $8,000 | <1% (1–3% with new work) | $0–$240 | 20–40 hours | BONUS |
+| YTU x Meta pool | $6,000 | unknown | uncalculated | registration | BONUS (if onsite) |
+| Amazon AWS mini | $5,000 | <1% | $0–$50 | 4–8 hours | BONUS (if key provided) |
+| Amazon OSS mini | $5,000 | 1–3% | $50–$150 | 4–8 hours | PRIORITY |
+| OpenCV 1st | $5,000 | rule uncertain | uncalculated | 8–16 hours | SKIP (unconfirmed) |
+| Vultr 1st cash | $5,000 | rule uncertain; 1–3% if theme matches | $0–$150 | 8–16 hours | BONUS |
+| AssemblyAI cash | $5,000 | <1% | $0–$50 | infeasible | SKIP |
+| ASUS Lightning | $4,500 | <1% | $0–$45 | 40 hours + device | SKIP |
+| Amazon Alexa+ 3rd | $4,000 | <1% | $0–$40 | same submission | PRIORITY |
+| Arbiter | $3,800 | <1% | $0–$38 | — | SKIP |
+| Nebius Tavily | $3,000 | <1% | $0–$30 | 2–4 hours | BONUS |
+| Build With AI Basics | $2,500 | 3–8% | $75–$200 | 4–8 hours | PRIORITY |
+| Open Agent 2nd / 3rd | $4,000 / $2,000 | <1% | $0–$40 | window | BONUS |
+| IEEE 1st | $1,500 | <1% | $0–$15 | misaligned | SKIP |
+| HETIC | $1,100 | 1–3% | $11–$33 | 4–6 hours | BONUS |
+| Kestra card | $150 or device | <1% | non-cash | separate work | SKIP |
+| ING | MacBook / iPad / watch | unknown | non-cash | registration | BONUS (if team formed) |
+| Colosseum | — | will not enter | 0 | 0 | SKIP |
 
-Alexa+ satırları aynı teslimin parçasıdır. Track + bir mini kuralı yüzünden AWS ve OSS birlikte seçilmez. OSS, anahtar istemediği için AWS'ten önde.
+Alexa+ rows share the same submission package. Due to the track + single mini constraint, AWS and OSS cannot be co-selected. OSS is preferred as it requires no API key.
 
-## 4. Gerçekçi hedefler
+## 4. Realistic Targets
 
-En yüksek ihtimal, hâlâ mütevazı:
+Highest probability, though modest:
 
-1. Amazon Open Source mini (5.000 $) — teknik şart repoda duruyor, public repo ve form insan işi. Aralık 1–3%.
-2. Amazon Alexa+ track'ine girmek — MCP ve simüle sayfa testli. Para ödülü aralığı <1%; yine de aynı paketin asıl vitrini bu. Bir mini ile birlikte tek başvuru.
-3. Build With AI Basics (2.500 $) — prototip zaten bu. Aralık 3–8%. Kalabalık bilinmiyor.
-4. HETIC (1.100 $) — playbook demosu var, ödül küçük. Aralık 1–3%.
-5. Open Agent, yalnız 15–20 Ekim'de yeni bir parça çıkarsa. Bugünkü repo ile uzak.
+1. Amazon Open Source mini ($5,000) — technical requirements met in repository; public repo and form submission are human tasks. Interval 1–3%.
+2. Entering the Amazon Alexa+ track — MCP and simulated page tested. Cash prize interval <1%; serves as the primary showcase for the package. Single submission with one mini.
+3. Build With AI Basics ($2,500) — existing prototype fits criteria. Interval 3–8%. Entrant volume unknown.
+4. HETIC ($1,100) — working playbook demo, small prize pool. Interval 1–3%.
+5. Open Agent, only if a new module ships Oct 15–20. Distant with current codebase.
 
-Uzak ihtimal: Nebius birinciliği, Gemma, Imagine Cup 100.000 $, OpenCV (teklif aşaması bilinmiyor), Alexa+ birinciliği, AssemblyAI (süre ve ses), ASUS (donanım), IEEE (konu ve ülke şartı).
+Distant possibilities: Nebius 1st place, Gemma, Imagine Cup $100,000, OpenCV (proposal phase unconfirmed), Alexa+ 1st place, AssemblyAI (window and voice), ASUS (hardware), IEEE (topic and country eligibility).
 
-## 5. Eksik teknik işler
+## 5. Outstanding Technical Tasks
 
-Kodla kapananlar, sırayla:
+Engineering tasks in priority order:
 
-1. Public olmayan hiçbir şey kodla "yayınlandı" olmaz; bu madde insan. Kod tarafında hazır olan paket: test, MIT, MCP, video dosyası.
-2. Vultr'da gerçek komut çalıştırma (`docs/rules/vultr.md` gelince SSH veya onların verdiği yol). Şu an oluştur-sil var, uzakta docker yok.
-3. Vision servisinin AWS'ye konması, OpenCV şartındaki AWS parçası. Servis ve Dockerfile duruyor, deploy yok.
-4. Canlı sağlayıcı smoke'u, anahtarlar `.env`'e girince: Nebius, Tavily, Bedrock, Azure, AssemblyAI, Gemma. İstemci yolu sahte sunucuda geçti; canlı hesap geçmedi.
+1. Nothing non-public is "published" through code alone; this task is human. Engineering package ready: tests, MIT, MCP, video assets.
+2. Executing real commands on Vultr (via SSH or their provided pathway once `docs/rules/vultr.md` is confirmed). Instance create/destroy exists; remote docker execution absent.
+3. Deploying the vision service to AWS, per the OpenCV requirement. Service and Dockerfile exist; cloud deployment pending.
+4. Live provider smoke tests once keys are added to `.env`: Nebius, Tavily, Bedrock, Azure, AssemblyAI, Gemma. Client pathways verified on mock server; live account verification pending.
 
-Bizim yapmamız gerekenler:
+Human action items:
 
-1. Repoyu public yapmak ve başvuruları insanın göndermesi. Ajan göndermez.
-2. `submissions/amazon/` taslaklarını Halil'in okuması. Video ve friction log taslak.
-3. Hangi mini: OSS (anahtarsız) önerilir. AWS ancak anahtar ve 30 saniyelik canlı Bedrock görüntüsü varsa.
-4. ING başvurusu 4 Ekim'e kadar, 2. kişiyle, konu gelmeden kod yazmadan.
-5. Open Agent'a girilecekse işin pencere içinde yapılması. Eski commit'i "yeni" diye saymamak.
-6. OpenCV ve Vultr için kural teyidi. DOĞRULANMADI diye takvime kilitleme.
-7. Colosseum, Arbiter, IEEE, ASUS, Gemma, AssemblyAI Voice Agent için vakit ayırmamak.
+1. Making the repo public and submitting application forms. The agent does not submit.
+2. Reviewing `submissions/amazon/` drafts (video script, friction log, description).
+3. Mini selection: OSS (keyless) recommended. AWS only if key and 30-second live Bedrock clip exist.
+4. ING application by Oct 4 with a 2nd teammate; no coding prior to challenge announcement.
+5. If entering Open Agent, performing all commits strictly inside the Oct 15–20 window.
+6. Confirming rules for OpenCV and Vultr without locking to UNVERIFIED dates.
+7. Avoiding spent effort on Colosseum, Arbiter, IEEE, ASUS, Gemma, AssemblyAI Voice Agent.
 
-## Canlı link
+## Live Link
 
-Dashboard 127.0.0.1 dışına kendiliğinden açılmaz. Tünel için `make share`. `SHARE_MINUTES` varsayılan 60. Kapatmak için `make unshare`. Token terminale yazılmaz; link yalnızca Telegram'daki izinli kullanıcıya gider.
+Dashboard does not bind outside 127.0.0.1 by default. Run `make share` for tunnel. `SHARE_MINUTES` defaults to 60. Run `make unshare` to terminate. Token is never printed to terminal; link is dispatched exclusively to the authorized Telegram user.

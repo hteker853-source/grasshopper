@@ -1,17 +1,17 @@
 # Kaggle Gemma 4
 
-## Rubrik
+## Rubric
 
-**varsayılan rubrik.** Resmi Kaggle rubriğine bu oturumda ulaşılamadı. Bu projeye uyum zayıf (`docs/rules/facts.md`).
+**default rubric.** Official Kaggle rubric was not reachable during this session. Fit for this project is weak (`docs/rules/facts.md`).
 
-| Kriter | Ağırlık |
+| Criterion | Weight |
 | --- | --- |
-| Teknik | 25 |
-| Yenilik | 20 |
-| Etki | 20 |
+| Technical | 25 |
+| Innovation | 20 |
+| Impact | 20 |
 | Demo | 20 |
 | UX | 15 |
 
-## Brifing
+## Briefing
 
-Paper 12 Kasım: 35.000 $. Ana yarışma 2 Aralık: 37.000 / 18.000 / 10.000 $. Onarım katmanı Ollama üzerinden Gemma'ya bağlanır. `GEMMA_MODEL` boşsa mock'tadır.
+Paper November 12: $35,000. Main competition December 2: $37,000 / $18,000 / $10,000. Healing layer connects to Gemma via Ollama. If `GEMMA_MODEL` is empty, runs in mock.

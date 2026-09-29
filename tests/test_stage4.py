@@ -16,11 +16,11 @@ def test_catalog_fast_is_cheaper_than_strong_and_live_nebius_is_unmeasured():
     row = catalog_table(prompt)
     assert row["fast_usd"] < row["strong_usd"]
     assert row["tokens_estimated"] == max(1, len(prompt) // 4)
-    assert row["live_nebius"] == "ölçülmedi"
-    assert row["source"] == "katalog fiyatı"
+    assert row["live_nebius"] == "unmeasured"
+    assert row["source"] == "catalog price"
     text = render_table(prompt, tavily=tavily_status(""))
-    assert "anahtar bekliyor" in text
-    assert tavily_status("present") == "anahtar var"
+    assert "waiting for key" in text
+    assert tavily_status("present") == "key present"
 
 
 def test_climate_sentence_is_written_only_when_the_page_says_it(ctx):

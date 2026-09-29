@@ -58,7 +58,7 @@ async def test_fast_tools_under_500ms_benchmark(ctx):
     data_start = json.loads(raw_start)
     assert "task_id" in data_start
     assert "speech" in data_start
-    assert "Göreviniz alındı" in data_start["speech"]
+    assert "Task accepted" in data_start["speech"]
     task_id = data_start["task_id"]
 
     # 2. get_task_status benchmark

@@ -1,37 +1,37 @@
 # Vultr Agent Rush Hackathon
 
-Kaynak: resmi kurallar ve jüri kriterleri, 2026-09-28 tarihinde lablab.ai üzerinden alındı.
+Source: official rules and jury criteria, retrieved 2026-09-28 from lablab.ai.
 https://lablab.ai/ai-hackathons/vultr-hackathon
 
-Bu dosya varsayılan rubrik değildir. Resmi jüri değerlendirme tablosudur.
+This file is not the default rubric. It is the official jury evaluation table.
 
-## Jüri Kriterleri
+## Jury Criteria
 
-| Kriter | Ağırlık (%) | Resmi Tanım |
+| Criterion | Weight (%) | Official Definition |
 | --- | --- | --- |
-| Application of Technology | 25 | Seçilen model(ler)in çözüme ne kadar etkili entegre edildiği |
-| Presentation | 25 | Sunum ve demo videosunun netliği ve ikna ediciliği |
-| Business Value | 25 | İş alanlarına uyum, pratik değer ve etki |
-| Originality | 25 | Çözümün özgünlüğü, yaratıcılığı ve ajan davranışları |
+| Application of Technology | 25 | How effectively selected model(s) are integrated into the solution |
+| Presentation | 25 | Clarity and persuasiveness of the presentation and demo video |
+| Business Value | 25 | Alignment with business domains, practical utility and impact |
+| Originality | 25 | Originality of the solution, creativity and agent behaviors |
 
-## Teknik Gereksinimler ve "Containment-First"
+## Technical Requirements and "Containment-First"
 
-- Tema: "Blast Radius Zero" — Vultr altyapısı üzerinde izole çalışma ortamında (sandbox) gerçek iş yapan web/kod ajanları.
-- Zorunlu teslimler:
-  1. Kurulum ve dokümantasyon içeren GitHub repo.
-  2. Vultr VM arka uç dağıtımı ve Vultr Serverless Inference üzerinden LLM çağrıları.
-  3. Genel demo URL ve kayıtlı demo videosu.
-  4. Videoda bir "containment moment": Sandbox'ın güvensiz bir eylemi (örn. tehlikeli komut, sonsuz döngü, düşmanca web sayfası) güvenle izole edip durdurduğunun kanıtı.
+- Theme: "Blast Radius Zero" — web/code agents performing real work inside isolated sandbox environments on Vultr infrastructure.
+- Mandatory deliverables:
+  1. GitHub repo with setup instructions and documentation.
+  2. Vultr VM backend deployment and LLM calls via Vultr Serverless Inference.
+  3. Public demo URL and recorded demo video.
+  4. A "containment moment" in the video: tangible proof that the sandbox safely isolates and halts an unsafe action (e.g. dangerous command, infinite loop, hostile webpage).
 
-## Takvim ve Ödüller
+## Schedule and Prizes
 
-- Tarih: 3–8 Kasım 2026 (çevrim içi build).
-- Ödüller: 9.000 $ nakit + 5.000 $ kredi.
-  - 1.: 5.000 $ nakit + 3.000 $ kredi
-  - 2.: 3.000 $ nakit + 1.000 $ kredi
-  - 3.: 1.000 $ nakit + 1.000 $ kredi
+- Date: Nov 3–8, 2026 (online build).
+- Prizes: $9,000 cash + $5,000 credit.
+  - 1st: $5,000 cash + $3,000 credit
+  - 2nd: $3,000 cash + $1,000 credit
+  - 3rd: $1,000 cash + $1,000 credit
 
-## Bu Repo
+## This Repository
 
-- Her koşu `blast_radius.json` yazar (dosyalar, alan adları, süre, maliyet).
-- Vultr sandbox entegrasyonu `grasshopper/sandbox_runner/vultr.py` içindedir.
+- Every run writes `blast_radius.json` (touched files, domains, duration, spend).
+- Vultr sandbox integration resides in `grasshopper/sandbox_runner/vultr.py`.

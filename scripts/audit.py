@@ -23,7 +23,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 PASS = "✅"
-WAIT = "⏳ anahtar bekliyor"
+WAIT = "⏳ waiting for key"
 FAIL = "❌"
 
 _TOKEN = re.compile(
@@ -123,7 +123,7 @@ def competition_row(
     keys = _KEY_FLAGS.get(flag, [])
     absent = missing_keys(keys, env) if keys else []
     if absent:
-        gaps.append("anahtar: " + ", ".join(absent))
+        gaps.append("key: " + ", ".join(absent))
     if "video" in required.lower() and not video_ok:
         gaps.append("video")
     if wants_form(required) and not has_form:
@@ -146,10 +146,10 @@ def competition_row(
 def readme_gaps(text: str) -> list[str]:
     gaps = []
     lower = text.lower()
-    if "scripts/setup.sh" not in text and "kurulum" not in lower and "## run it" not in lower:
-        gaps.append("kurulum")
-    if "| Competition |" not in text and "| Yarışma |" not in text:
-        gaps.append("yarışma tablosu")
+    if "scripts/setup.sh" not in text and "setup" not in lower and "kurulum" not in lower and "## run it" not in lower:
+        gaps.append("setup")
+    if "| competition |" not in lower and "| yar\u0131\u015fma |" not in lower:
+        gaps.append("competition table")
     return gaps
 
 

@@ -1,38 +1,38 @@
-# Amazon Build, Ship, Shape — Alexa+ ve mini'ler
+# Amazon Build, Ship, Shape — Alexa+ and minis
 
-Kaynak: resmi kurallar, 2026-09-28 tarihinde okundu.
+Source: official rules, accessed 2026-09-28.
 https://amazonappdev2026.devpost.com/rules
 
-Bu dosya varsayılan rubrik değildir.
+This file is not the default rubric.
 
-## Ağırlıklar
+## Weights
 
-Aşama 2, eşit ağırlık. Her biri 25%:
+Stage 2, equal weighting. 25% each:
 
-| Kriter | Ağırlık | Resmi soru |
+| Criterion | Weight | Official Question |
 | --- | --- | --- |
-| Tech Implementation | 25 | Proje ne kadar iyi kurulu ve zorunlu teknolojiyi ne kadar kullanıyor? |
-| Design | 25 | Ürün deneyimi bütün mü, etkileşim hedef yüzeye uygun mu? |
-| Potential Impact | 25 | Müşteri ihtiyacı için inandırıcı ve somut bir gerekçe var mı? |
-| Quality of the Idea | 25 | Zorunlu araçların yaratıcı kullanımı mı, yoksa bariz bir sarmalayıcı mı? |
+| Tech Implementation | 25 | How well is the project built and how deeply does it utilize the required technology? |
+| Design | 25 | Is the product experience coherent and suited for the target surface? |
+| Potential Impact | 25 | Is there a credible and tangible case for customer need? |
+| Quality of the Idea | 25 | Is it a creative application of the required tools or a thin wrapper? |
 
-Beraberlikte sıra: Tech Implementation, sonra Design, sonra Potential Impact, sonra Quality of the Idea.
+Tiebreaker priority: Tech Implementation, then Design, then Potential Impact, then Quality of the Idea.
 
 ## Bonus
 
-Friction log, aşama 1 elemesinde en fazla %10 bonus olarak aşama 2 puanına eklenir. Kaynak: aynı kurallar sayfası, "Bonus Points".
+Friction log awards up to a 10% bonus added to the Stage 2 score during Stage 1 review. Source: official rules page, "Bonus Points".
 
-## Ödül (nakit, resmi sayfa)
+## Prizes (cash, official page)
 
-- Alexa+ 1. / 2. / 3.: 25.000 $ / 15.000 $ / 4.000 $ nakit. Aynı basamaklarda AWS kredisi de yazıyor (15.000 / 5.000 / 1.000).
-- Open Source mini: 5.000 $ nakit + 5.000 $ AWS kredisi. Birincil track ile birlikte, hackathon penceresinde yapılan açık kaynak iş.
-- AWS Builder mini: 5.000 $ nakit + 5.000 $ AWS kredisi.
-- Bir proje en fazla 1 track + 1 mini.
+- Alexa+ 1st / 2nd / 3rd: $25,000 / $15,000 / $4,000 cash. Corresponding AWS credits listed (15,000 / 5,000 / 1,000).
+- Open Source mini: $5,000 cash + $5,000 AWS credit. Submitted alongside primary track for open-source work authored during the hackathon.
+- AWS Builder mini: $5,000 cash + $5,000 AWS credit.
+- One project may enter at most 1 primary track + 1 mini challenge.
 
-## Bu repo için seçilen paket
+## Package Selected for this Repository
 
-Alexa+ track (MCP Streamable HTTP veya simüle sayfa) + Open Source mini. AWS Builder ancak `ALLOW_BEDROCK=1` ve canlı anahtar varken.
+Alexa+ track (MCP Streamable HTTP and simulated page) + Open Source mini. AWS Builder only if `ALLOW_BEDROCK=1` and live credentials exist.
 
-## Doğrulama
+## Verification
 
-Resmi kurallar sayfası okundu. Katılımcı sayısı (yaklaşık 15.800) brifingdendir, bu sayfada sayılmadı.
+Official rules page verified. Participant count (~15,800) is from briefing, not enumerated on page.

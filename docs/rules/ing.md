@@ -1,27 +1,27 @@
-# ING Hubs Türkiye Agentic AI Hackathon 2026
+# ING Hubs Turkiye Agentic AI Hackathon 2026
 
-Kaynak: resmi kurallar ve program duyurusu, 2026-09-28 tarihinde alındı.
-Düzenleyen: ING Hubs Türkiye.
+Source: official rules and program announcement, retrieved 2026-09-28.
+Organized by: ING Hubs Turkiye.
 
-## Takvim ve Süreç
+## Timeline and Process
 
-- **Son Başvuru:** 4 Ekim 2026 (23:59).
-- **Açılış ve Konu Açıklaması:** 9 Ekim 2026 (online, seçilen takımlarla buluşma ve bankacılık odaklı problem konularının paylaşımı).
-- **Proje Geliştirme (Online):** 9–18 Ekim 2026 (mentor destekli).
-- **Fiziksel Final:** 3 Kasım 2026 (İstanbul, ING Hubs Türkiye yönetimi ve teknik jüriye sunum).
+- **Application Deadline:** October 4, 2026 (23:59).
+- **Kickoff and Problem Statement:** October 9, 2026 (online meeting with selected teams and announcement of banking-focused problem statements).
+- **Project Development (Online):** October 9–18, 2026 (mentor-supported).
+- **Physical Final:** November 3, 2026 (Istanbul, presentation to ING Hubs Turkiye executive and technical jury).
 
-## Katılım Şartları
+## Eligibility
 
-- Katılım: 2 kişilik takımlar.
-- Hedef Kitle: Lisans, yüksek lisans, doktora öğrencileri, yeni mezunlar ve veri bilimi/yazılım profesyonelleri.
-- Odak: Çok adımlı otonom ajanlar, generative AI ve bankacılık iş akışları.
+- Participation: Teams of 2.
+- Target Audience: Undergraduate, graduate, PhD students, recent graduates, and data science/software professionals.
+- Focus: Multi-step autonomous agents, generative AI, and banking workflows.
 
-## Ödüller
+## Prizes
 
-- 1. Takım: 2 x MacBook Neo
-- 2. Takım: 2 x Apple iPad
-- 3. Takım: 2 x Apple Watch SE
+- 1st Place Team: 2 x MacBook Neo
+- 2nd Place Team: 2 x Apple iPad
+- 3rd Place Team: 2 x Apple Watch SE
 
-## Bu Repo
+## This Repo
 
-- Bankacılık şablonu ve güvenlik kapıları: onay kapısı, işlem limiti, denetim izi (`sandbox_web` `/bank` ve `grasshopper/realweb/bank.py`).
+- Banking template and safety gates: approval gate, transaction limit, audit trail (`sandbox_web` `/bank` and `grasshopper/realweb/bank.py`).

@@ -4,7 +4,7 @@ Deadline: 2027-01-08
 
 Prize: Imagine Cup
 
-Verification: varsayılan rubrik
+Verification: default rubric
 
 Azure OpenAI is the strong tier and Azure Speech is the STT tier. Both fall back to mock without keys.
 

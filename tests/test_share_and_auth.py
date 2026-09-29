@@ -31,23 +31,23 @@ def test_pages_require_the_token_and_a_query_sets_the_cookie(caplog):
         assert "test-token" not in caplog.text
         assert client.get("/").status_code == 200
         assert client.get("/api/overview").status_code == 200
-        assert "CANLI" in client.get("/").text
-        assert "bekliyor" in client.get("/").text
+        assert "LIVE" in client.get("/").text
+        assert "waiting" in client.get("/").text
 
 
 def test_live_caption_shows_the_goal_and_waits_when_idle(ctx, tmp_path):
     idle = read_status(ctx.settings.runs_dir)
-    assert idle["label"] == "bekliyor"
+    assert idle["label"] == "waiting"
     assert idle["active"] is False
     frame = tmp_path / "shot.png"
     frame.write_bytes(b"\x89PNG\r\n")
     publish_frame(ctx.settings.runs_dir, run_id="run_live", source=frame, url="http://127.0.0.1/shop", goal="Log into the shop", active=True)
     current = read_status(ctx.settings.runs_dir)
-    assert current["label"] == "CANLI"
+    assert current["label"] == "LIVE"
     assert current["url"] == "http://127.0.0.1/shop"
     assert current["goal"] == "Log into the shop"
     publish_frame(ctx.settings.runs_dir, run_id="run_live", source=frame, url="http://127.0.0.1/shop", goal="Log into the shop", active=False)
-    assert read_status(ctx.settings.runs_dir)["label"] == "bekliyor"
+    assert read_status(ctx.settings.runs_dir)["label"] == "waiting"
     html = Path("grasshopper/ui/templates/dashboard.html").read_text(encoding="utf-8")
     assert 'id="canli"' in html and "canli-meta" in html
 

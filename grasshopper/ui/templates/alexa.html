@@ -30,42 +30,42 @@
 </head>
 <body>
   <main>
-    <p><a href="/">← Grasshopper Paneli</a></p>
-    <h1>Alexa+ Sesli Ajan</h1>
-    <p>Bu sayfa MCP Streamable HTTP (<code>/mcp/</code>) üzerinden bağlanan sesli bir Alexa+ arayüzüdür.</p>
+    <p><a href="/">← Grasshopper Dashboard</a></p>
+    <h1>Alexa+ Voice Agent</h1>
+    <p>This page is an Alexa+ voice interface connecting via MCP Streamable HTTP (<code>/mcp/</code>).</p>
 
     <div class="controls">
-      <button class="orb" id="orb" type="button">Konuş (Görev)</button>
-      <button class="btn-listen" id="btn-listen" type="button">Dinle (Sürekli)</button>
+      <button class="orb" id="orb" type="button">Speak (Task)</button>
+      <button class="btn-listen" id="btn-listen" type="button">Listen (Continuous)</button>
     </div>
 
-    <textarea id="text" placeholder="Veya metinle görev yazın (örn: 'Find cheapest 4-star book')"></textarea>
-    <!-- Güven ve Denetim Paneli -->
+    <textarea id="text" placeholder="Or type a task (e.g. 'Find cheapest 4-star book on books.toscrape.com')"></textarea>
+    <!-- Trust & Safety Panel -->
     <div id="trust-panel" style="margin: 14px 0; padding: 12px; border-radius: 10px; background: #0c1b2a; border: 1px solid #1d3b55; font-size: 13px; display: flex; justify-content: space-around; color: #9be7ff; text-align: left;">
-      <div>🛡️ <b>Onay Kapısı:</b> <span id="gate-indicator" style="color: #14ff63; font-weight: 700;">Aktif</span> (Kritik adımlar onay bekler)</div>
-      <div>💰 <b>Harcama Tavanı:</b> <span id="budget-indicator" style="color: #ffba14; font-weight: 700;">$0.50/gün</span> (koşu başı $0.05)</div>
+      <div>🛡️ <b>Approval Gate:</b> <span id="gate-indicator" style="color: #14ff63; font-weight: 700;">Active</span> (Risky steps require approval)</div>
+      <div>💰 <b>Budget Cap:</b> <span id="budget-indicator" style="color: #ffba14; font-weight: 700;">$0.50/day</span> ($0.05/run)</div>
     </div>
-    <p><button id="send" type="button" style="padding: 10px 20px; border-radius: 8px; background: #1463ff; color: white; border: 0; font-weight: bold; cursor: pointer;">MCP İle Gönder</button></p>
+    <p><button id="send" type="button" style="padding: 10px 20px; border-radius: 8px; background: #1463ff; color: white; border: 0; font-weight: bold; cursor: pointer;">Send via MCP</button></p>
 
-    <!-- Onay Kapısı Kartı -->
+    <!-- Approval Gate Card -->
     <div id="approval-card">
-      <div style="font-weight: bold; color: #ffba14; margin-bottom: 6px;">⚠️ İnsan Onayı Bekleniyor</div>
+      <div style="font-weight: bold; color: #ffba14; margin-bottom: 6px;">⚠️ Human Approval Required</div>
       <div id="approval-reason" style="font-size: 14px; margin-bottom: 8px;"></div>
-      <div style="font-size: 12px; color: #b7c9d8;">Sesle <i>"onaylıyorum"</i> deyin veya tıklayın:</div>
+      <div style="font-size: 12px; color: #b7c9d8;">Say <i>"approve"</i> or click below:</div>
       <div class="approval-actions">
-        <button class="btn-approve" id="btn-approve-click" type="button">Onayla</button>
-        <button class="btn-reject" id="btn-reject-click" type="button">Reddet</button>
+        <button class="btn-approve" id="btn-approve-click" type="button">Approve</button>
+        <button class="btn-reject" id="btn-reject-click" type="button">Reject</button>
       </div>
     </div>
 
-    <!-- Canlı Tarayıcı Önizleme Penceresi -->
+    <!-- Live Browser Preview Window -->
     <div class="preview-card">
-      <div class="preview-title">📺 Canlı Tarayıcı Önizleme (1 fps)</div>
-      <img id="live-frame" src="/live/frame.png" alt="Canlı Tarayıcı Önizleme" onerror="this.style.opacity='0.4'" onload="this.style.opacity='1'">
-      <div id="preview-caption" style="font-size: 12px; color: #8ba2b5; margin-top: 6px; text-align: left;">Durum: Bekliyor</div>
+      <div class="preview-title">📺 Live Browser Preview (1 fps)</div>
+      <img id="live-frame" src="/live/frame.png" alt="Live Browser Preview" onerror="this.style.opacity='0.4'" onload="this.style.opacity='1'">
+      <div id="preview-caption" style="font-size: 12px; color: #8ba2b5; margin-top: 6px; text-align: left;">Status: Idle</div>
     </div>
 
-    <pre id="log">MCP hazır.</pre>
+    <pre id="log">MCP ready.</pre>
   </main>
 
   <script>
@@ -90,7 +90,7 @@
       if (!window.speechSynthesis || !text) return;
       window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = "tr-TR";
+      utterance.lang = "en-US";
       window.speechSynthesis.speak(utterance);
     }
 
@@ -132,7 +132,7 @@
           currentApprovalId = item.id;
           approvalReasonEl.textContent = item.reason;
           approvalCard.className = "visible";
-          speakSpeech("Dikkat: Bir işlem insan onayı bekliyor. " + item.reason);
+          speakSpeech("Notice: Action requires human approval. " + item.reason);
         } else {
           currentApprovalId = null;
           approvalCard.className = "";
@@ -145,10 +145,10 @@
 
     async function handleApprove(decision) {
       if (!currentApprovalId) return;
-      say("Onay kapısı kararı: " + decision);
+      say("Approval gate decision: " + decision);
       await mcp("tools/call", {name: "approve", arguments: {approval_id: currentApprovalId, decision}});
       approvalCard.className = "";
-      speakSpeech(decision === "approved" ? "İşlem onaylandı." : "İşlem reddedildi.");
+      speakSpeech(decision === "approved" ? "Action approved." : "Action rejected.");
       currentApprovalId = null;
     }
 
@@ -157,21 +157,21 @@
 
     async function runTask(text) {
       if (!text) return;
-      say("MCP start_task çağrılıyor: " + text);
-      captionEl.textContent = "Durum: Görev başlatılıyor…";
+      say("Calling MCP start_task: " + text);
+      captionEl.textContent = "Status: Starting task…";
       await ensure();
       const queued = await mcp("tools/call", {name: "start_task", arguments: {text}});
       const body = JSON.parse(toolText(queued) || "{}");
       const taskId = body.task_id;
       if (body.speech) speakSpeech(body.speech);
-      say("Görev alındı: " + taskId);
+      say("Task accepted: " + taskId);
 
       for (let i = 0; i < 40; i++) {
         await new Promise((r) => setTimeout(r, 1500));
         const statusRes = await mcp("tools/call", {name: "get_task_status", arguments: {task_id: taskId}});
         const sBody = JSON.parse(toolText(statusRes) || "{}");
-        captionEl.textContent = "Durum: " + sBody.status;
-        say("Durum: " + sBody.status + " | " + (sBody.speech || ""));
+        captionEl.textContent = "Status: " + sBody.status;
+        say("Status: " + sBody.status + " | " + (sBody.speech || ""));
         if (["success", "failed", "cancelled"].includes(sBody.status)) {
           if (sBody.speech) speakSpeech(sBody.speech);
           break;
@@ -185,15 +185,15 @@
     const Rec = window.SpeechRecognition || window.webkitSpeechRecognition;
 
     orbBtn.onclick = () => {
-      if (!Rec) { alert("Tarayıcınız Web Speech API desteklemiyor. Metin kutusunu kullanın."); return; }
+      if (!Rec) { alert("Your browser does not support Web Speech API. Please type in the text box."); return; }
       const rec = new Rec();
-      rec.lang = "tr-TR";
+      rec.lang = "en-US";
       orbBtn.classList.add("listening");
       rec.onresult = (ev) => {
         orbBtn.classList.remove("listening");
         const transcript = ev.results[0][0].transcript;
         document.getElementById("text").value = transcript;
-        say("Algılanan ses: " + transcript);
+        say("Detected voice: " + transcript);
         runTask(transcript);
       };
       rec.onerror = () => orbBtn.classList.remove("listening");
@@ -203,20 +203,20 @@
 
     let continuousRec = null;
     listenBtn.onclick = () => {
-      if (!Rec) { alert("Tarayıcınız Web Speech API desteklemiyor."); return; }
+      if (!Rec) { alert("Your browser does not support Web Speech API."); return; }
       if (continuousListening) {
         continuousListening = false;
         listenBtn.classList.remove("active");
         if (continuousRec) continuousRec.stop();
-        say("Sürekli dinleme kapatıldı.");
+        say("Continuous listening stopped.");
         return;
       }
       continuousListening = true;
       listenBtn.classList.add("active");
-      say("Sürekli dinleme devrede: 'onaylıyorum' veya görev söyleyebilirsiniz.");
+      say("Continuous listening active: say 'approve', 'reject', or a task.");
 
       continuousRec = new Rec();
-      continuousRec.lang = "tr-TR";
+      continuousRec.lang = "en-US";
       continuousRec.continuous = true;
       continuousRec.interimResults = false;
 
@@ -224,10 +224,10 @@
         for (let i = ev.resultIndex; i < ev.results.length; ++i) {
           if (ev.results[i].isFinal) {
             const heard = ev.results[i][0].transcript.trim().toLowerCase();
-            say("Duyuldu: " + heard);
-            if (heard.includes("onaylıyorum") || heard.includes("onayla") || heard.includes("approve")) {
+            say("Heard: " + heard);
+            if (heard.includes("approve") || heard.includes("yes") || heard.includes("confirm")) {
               handleApprove("approved");
-            } else if (heard.includes("reddet") || heard.includes("reject")) {
+            } else if (heard.includes("reject") || heard.includes("no") || heard.includes("cancel")) {
               handleApprove("rejected");
             } else if (heard.length > 5) {
               document.getElementById("text").value = heard;

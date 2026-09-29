@@ -23,7 +23,7 @@
 - Sandbox execution defaults to this machine. Docker adds memory, CPU, and network limits and a named container used as the kill switch; a missing Docker binary falls back to local with a warning. Vultr opens a temporary instance and deletes it. There is no SSH step until `docs/rules/vultr.md` exists; that file will replace the remote-exec placeholder.
 - Dashboard pages and `/api` require `API_TOKEN`. A matching `?token=` sets an HttpOnly cookie and redirects so the token leaves the address bar. `/health`, `/mcp`, and `/webhooks/` stay open. The dev server default bind is 127.0.0.1.
 - Real Chromium runs publish a frame about 1.5 times a second to `runs/live_frame.png` with the current URL and step goal. `make share` parses a trycloudflare address and sends the link only to the allowed Telegram user.
-- `docs/READINESS.md` is an estimate. Rows marked DOĞRULANMADI in `docs/rules/facts.md` are not treated as decided. Colosseum stays out.
+- `docs/READINESS.md` is an estimate. Rows marked UNVERIFIED in `docs/rules/facts.md` are not treated as decided. Colosseum stays out.
 - Real sites need the code allowlist. The env list can only narrow it. Denylist and robots.txt win. Requests wait `REAL_SITE_DELAY_SEC`.
 - The router reserves catalog token price before each call. Daily cap 0.50 USD, per-run cap 0.05 USD. Over the cap the task stops and a budget notice is sent. Mock actual cost stays 0.
 - Bedrock stays off unless `ALLOW_BEDROCK=1`.
@@ -47,4 +47,6 @@
 - MCP Streamable HTTP protocol compliance verified with official SDK tests, <500ms tools benchmark, Web Speech API live preview on /alexa, and make share-mcp tunnel target.
 - Independent jury re-evaluation updated in docs/WIN_SCORECARD.md with concrete proof for A-class score gains (Amazon 7.85, Nebius 8.00, Open Agent 6.81, Vultr 6.85).
 - Monte Carlo EV model updated in scripts/ev_model.py with quality correlation and 3 scenarios (Base EV $1,601); docs/INCOME_PLAN.md compiled with 60h labor budget.
-- Görev 12: Nebius Token Factory live routing migration, zero-leak privacy sweep, single-commit clean master, headless GitHub OAuth device flow authorization, public repo create, gh-pages static replay deployment, and dual 3-minute demo video generation with bottom-right model overlay completed.
+- Task 12: Nebius Token Factory live routing migration, zero-leak privacy sweep, single-commit clean master, headless GitHub OAuth device flow authorization, public repo create, gh-pages static replay deployment, and dual 3-minute demo video generation with bottom-right model overlay completed.
+- Task 13: Full English localization across all documentation, templates, and submission kits; video generation engine enhanced with Loom-style Chrome window frame, gliding cursor, and action ripple.
+

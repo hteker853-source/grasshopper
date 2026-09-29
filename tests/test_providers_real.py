@@ -361,5 +361,5 @@ def test_provider_report_lists_what_this_module_proved():
         "whatsapp",
     )
     for name in proved:
-        assert f"| {name} | gerçek yol test edildi |" in text
-    assert "| solana-devnet | sadece anahtar eksik |" in text
+        assert f"| {name} | real path tested |" in text
+    assert "| solana-devnet | only key missing |" in text

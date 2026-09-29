@@ -4,7 +4,7 @@ Deadline: 2026-11-12
 
 Prize: Gemma paper track
 
-Verification: varsayılan rubrik
+Verification: default rubric
 
 When a step throws, the repair tier (Gemma via Ollama) is asked for a unified diff that is not auto-applied.
 

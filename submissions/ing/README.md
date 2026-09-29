@@ -4,7 +4,7 @@ Deadline: 2026-10-04
 
 Prize: Devices, not cash
 
-Verification: varsayılan rubrik
+Verification: default rubric
 
 Approval, limit, and an audit trail. Adapt after the topics arrive.
 

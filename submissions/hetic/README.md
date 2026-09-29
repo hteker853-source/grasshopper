@@ -4,7 +4,7 @@ Deadline: 2026-12-18
 
 Prize: Founder workflows
 
-Verification: varsayılan rubrik
+Verification: default rubric
 
 The shop and competition playbooks are the founder demos.
 

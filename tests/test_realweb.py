@@ -47,7 +47,7 @@ def test_fixture_scenarios_succeed_and_the_second_r1_run_calls_no_model(tmp_path
         assert second.ok, second.error
         assert second.llm_calls == 0
         panel = LearningStore(tmp_path / "learning.json").panel()
-        assert panel["label"] == "ölçüldü"
+        assert panel["label"] == "measured"
         assert panel["first_calls"] == first.llm_calls
         assert panel["second_calls"] == 0
         for key in ("R2", "R3", "R4", "R5"):

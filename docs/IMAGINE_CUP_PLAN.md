@@ -1,12 +1,11 @@
-# Imagine Cup 2027 — iki Azure servisi
+# Imagine Cup 2027 — Dual Azure Services Architecture
 
-Kod bu dosyayla değişmez. 2027 kuralları DOĞRULANMADI.
+Code is not modified by this document. 2027 rules UNVERIFIED.
 
-| Servis | Nereye bağlanır | Anahtar | Kod |
+| Service | Connection Point | Environment Variable / Key | Code Implementation |
 | --- | --- | --- | --- |
-| Azure AI Foundry / AI Studio | Güçlü katman (GPT-4o, Phi-3.5, Llama 3.1). Çoklu model yönetimi, prompt catalog ve güvenlik filtresi (Content Safety). | `LLM_STRONG_PROVIDER=azure`, `AZURE_OPENAI_ENDPOINT`, `AZURE_OPENAI_API_KEY`, `AZURE_OPENAI_DEPLOYMENT` | `grasshopper/providers/factory.py` içinde `azure` dalı, `llm_openai_compat.py` |
-| Azure AI Speech | Konuşmayı metne çeviren katman. Web mikrofonu ve yüklenen ses buraya gider. Whisper veya neural voice modelleri. | `STT_PROVIDER=azure`, `AZURE_SPEECH_KEY`, `AZURE_SPEECH_REGION` | `grasshopper/providers/stt_azure.py` |
-| Azure Content Safety | Karar ve gözlem katmanında güvenlik denetimi. Zararlı web içeriği veya prompt injection tespiti. | `AZURE_CONTENT_SAFETY_KEY`, `AZURE_CONTENT_SAFETY_ENDPOINT` | `grasshopper/realweb/policy.py` genişletme yuvası |
+| Azure AI Foundry / AI Studio | Strong tier (GPT-4o, Phi-3.5, Llama 3.1). Multi-model routing, prompt catalog, and safety filters (Content Safety). | `LLM_STRONG_PROVIDER=azure`, `AZURE_OPENAI_ENDPOINT`, `AZURE_OPENAI_API_KEY`, `AZURE_OPENAI_DEPLOYMENT` | `grasshopper/providers/factory.py` under `azure` branch, `llm_openai_compat.py` |
+| Azure AI Speech | Speech-to-text layer. Web microphone and uploaded audio processed here. Whisper or neural voice models. | `STT_PROVIDER=azure`, `AZURE_SPEECH_KEY`, `AZURE_SPEECH_REGION` | `grasshopper/providers/stt_azure.py` |
+| Azure Content Safety | Safety audit layer for decision and observation streams. Malicious web payload and prompt injection detection. | `AZURE_CONTENT_SAFETY_KEY`, `AZURE_CONTENT_SAFETY_ENDPOINT` | Extension hook in `grasshopper/realweb/policy.py` |
 
-Anahtar boşsa tüm servisler mock çalışır. Canlı çağrı ölçülmedi. `ALLOW_BEDROCK` bu plana dahil değil.
-
+When API keys are unset, all services execute deterministically in mock mode. Live calls unmeasured. `ALLOW_BEDROCK` is not included in this plan.

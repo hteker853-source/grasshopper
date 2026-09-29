@@ -1,17 +1,17 @@
 # Build With AI: Basics
 
-## Rubrik
+## Rubric
 
-**varsayılan rubrik.** Resmi ağırlık sayfasına bu oturumda ulaşılamadı.
+**default rubric.** Official weighting page was not reachable during this session.
 
-| Kriter | Ağırlık |
+| Criterion | Weight |
 | --- | --- |
-| Teknik | 25 |
-| Yenilik | 20 |
-| Etki | 20 |
+| Technical | 25 |
+| Innovation | 20 |
+| Impact | 20 |
 | Demo | 20 |
 | UX | 15 |
 
-## Brifing
+## Briefing
 
-2.500 $. Son tarih 26 Ekim. İstenen şey çalışan bir prototip. Bu repo mock modda anahtarsız `make test` ile prototipi koşar.
+$2,500. Deadline October 26. Required deliverable is a working prototype. This repo runs the prototype in keyless mock mode via `make test`.

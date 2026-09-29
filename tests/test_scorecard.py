@@ -32,8 +32,8 @@ def test_monte_carlo_is_stable_and_states_the_correlation_warning():
     second = simulate(draws=4000, seed=7)
     assert first == second
     text = render(first)
-    assert "TAHMİN" in text
-    assert "bağımsız" in text
-    assert "iyimser" in text
+    assert "ESTIMATE" in text
+    assert "independent" in text
+    assert "optimistic" in text
     assert 0 <= first["p_20k"] <= 1
     assert first["expected_usd"] >= 0

@@ -1,35 +1,35 @@
 # Open Agent Hackathon 2026
 
-Kaynak: resmi kurallar ve jüri kriterleri, 2026-09-28 tarihinde genai.works üzerinden alındı.
+Source: official rules and jury criteria, retrieved 2026-09-28 from genai.works.
 https://genai.works/ (Open Agent Hackathon)
 
-Bu dosya varsayılan rubrik değildir. Resmi jüri puanlama tablosudur.
+This file is not the default rubric. It is the official scoring table.
 
-## Puanlama Kriterleri (100 Puan)
+## Scoring Criteria (100 Points)
 
-| Kriter | Puan / Ağırlık | Açıklama |
+| Criterion | Points / Weight | Description |
 | --- | --- | --- |
-| Impact | 30 | Gerçek dünya problemini çözme, kullanıcıya somut fayda |
-| Technical | 20 | Teknik derinlik, çok adımlı muhakeme, mimari sağlamlık |
-| Innovation | 15 | Yaratıcı yaklaşım, yenilikçi ajan yetenekleri |
-| Demo | 15 | Çalışan prototip, etkili canlı gösterim |
-| Product & UX | 10 | Kullanıcı deneyimi, arayüz ve etkileşim kalitesi |
-| Sponsor Tech | 10 | Sponsor teknolojilerinin (örn. NVIDIA, Zetaris) entegrasyonu |
+| Impact | 30 | Solving a real-world problem, tangible end-user value |
+| Technical | 20 | Technical depth, multi-step reasoning, architectural robustness |
+| Innovation | 15 | Creative approach, novel agentic capabilities |
+| Demo | 15 | Working prototype, compelling live demo |
+| Product & UX | 10 | User experience, interface and interaction quality |
+| Sponsor Tech | 10 | Integration of sponsor technologies (e.g. NVIDIA, Zetaris) |
 
-## Bonus Puanlar (en fazla 30 puan)
+## Bonus Points (up to 30 points)
 
-- Açık kaynak kod paylaşımı (Open-sourcing the result)
-- Değerlendirme testleri (Shipping evals)
-- Hata modları ve öğrenilen dersler dokümantasyonu (Documenting failure modes)
+- Open-sourcing the result
+- Shipping evals
+- Documenting failure modes and lessons learned
 
-## Takvim ve Katılım Şartı
+## Schedule and Participation Requirements
 
-- Kayıt kapanışı: 13 Ekim 2026
-- Build penceresi: 15–20 Ekim 2026 (144 saat). Son teslim: 20 Ekim 23:45 UTC.
-- Sonuçlar: 30 Ekim 2026.
-- Mevcut projeler yalnızca Tinkerer track'te yarışabilir. Sadece bu penceredeki **yeni iş** puanlanır.
+- Registration closes: Oct 13, 2026
+- Build window: Oct 15–20, 2026 (144 hours). Final deadline: Oct 20, 23:45 UTC.
+- Results: Oct 30, 2026.
+- Existing projects may only enter the Tinkerer track. Only **new work** created during this window is scored.
 - Plan: `docs/OPEN_AGENT_PLAN.md`.
 
-## Ödül
+## Prizes
 
-- 8.000 $ / 4.000 $ / 2.000 $ (Toplam 20.000 $ havuz). Katılımcı ~1.200.
+- $8,000 / $4,000 / $2,000 (Total $20,000 pool). ~1,200 participants.

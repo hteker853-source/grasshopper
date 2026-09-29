@@ -1,13 +1,13 @@
-# Agentic Vision notu
+# Agentic Vision Note
 
-OpenCV 5 algısı bir sonraki kararı değiştirir. Akış: ekran görüntüsü → `detect_regions` / `change_percent` → seçici kırıldıysa Continue yazan kontrol → tıklama. İnsan onayı pahalı adımda durur.
+OpenCV 5 visual perception informs subsequent agent actions. Flow: screenshot → `detect_regions` / `change_percent` → fallback to "Continue" control if selectors break → click. Sensitive/costly actions pause for human approval.
 
-## Ölçüm
+## Measurement
 
-`tests/test_vision_change_and_dom_recovery_are_measured` kontrollü bir set ister: 10 aynı kart değişmemiş, 10 kaymış kart değişmiş, 20 konumda kimlik silinmiş Continue dikdörtgeni. Test, doğru sayının setin tamamına eşit olmasını bekler ve geçti. Bu, o setin sonucudur. Başka bir kamera veya canlı site için oran ölçülmedi.
+`tests/test_vision_change_and_dom_recovery_are_measured` specifies a controlled test set: 10 identical cards unchanged, 10 shifted cards changed, 20 bounding boxes of "Continue" buttons with identifiers stripped. The test asserts that detection matches the ground-truth set completely and passes. This reflects performance on this controlled benchmark; rates on other cameras or live external sites remain unmeasured.
 
-Canlı üçüncü parti sayfanın HTML'i kasıtlı bozulmadı. Yerel REC senaryosu `tests/test_realweb.py` içinde seçici kaybolduktan sonra metinle toparlanır ve görme çağrısını sayar.
+Third-party live page HTML was not deliberately mutated. The local REC scenario in `tests/test_realweb.py` recovers via text heuristics after selector disappearance and records vision model invocations.
 
-## Jüri kanıtı
+## Jury Evidence
 
-Diyagram `docs/ARCHITECTURE.md` içinde. İz: koşu klasöründeki `*_regions.png` ve `blast_radius.json`. AWS'ye koyma adımları `docs/OPENCV_AWS.md`. Deploy ölçülmedi.
+Diagram in `docs/ARCHITECTURE.md`. Artifacts: `*_regions.png` and `blast_radius.json` in the run directory. AWS deployment steps documented in `docs/OPENCV_AWS.md`. Live cloud deployment unmeasured.

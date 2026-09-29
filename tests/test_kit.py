@@ -15,4 +15,4 @@ def test_kit_script_opens_with_a_hook_and_the_form_is_english(tmp_path):
     assert "Halil should review" in script
     assert "not a submission" in script
     assert "Project: Grasshopper" in form
-    assert "ölçülmedi" in missing or "RELIABILITY_REAL" in script
+    assert "unmeasured" in missing or "RELIABILITY_REAL" in script

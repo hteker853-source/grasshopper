@@ -1,13 +1,13 @@
-# Varsayılan rubrik
+# Default Rubric
 
-Resmi kural sayfasından ağırlık alınamayan yarışmalarda kullanılan tablo. Bir yarışma dosyası "varsayılan rubrik" diyorsa puanlar buradadır.
+Table used for competitions where official weights could not be obtained from the rules page. If a competition file states "default rubric", the weights are defined here.
 
-| Kriter | Ağırlık |
+| Criterion | Weight |
 | --- | --- |
-| Teknik | 25 |
-| Yenilik | 20 |
-| Etki | 20 |
+| Technical | 25 |
+| Innovation | 20 |
+| Impact | 20 |
 | Demo | 20 |
 | UX | 15 |
 
-Toplam 100. Puan 0–10. Ağırlıklı skor = Σ(puan × ağırlık) / 100.
+Total 100. Scores 0–10. Weighted score = Σ(score × weight) / 100.

@@ -20,7 +20,7 @@
     <h1>Run {{ run_id }}</h1>
     <p class="muted">{{ summary }}</p>
     <section id="canli">
-      <h2>CANLI <span id="canli-label">bekliyor</span></h2>
+      <h2>LIVE <span id="canli-label">idle</span></h2>
       <p id="canli-meta" class="muted"></p>
       <img id="live-shot" alt="latest browser frame" hidden src="/runs/{{ run_id }}/live.png">
     </section>
@@ -47,7 +47,7 @@
       const res = await fetch("/api/live");
       if (!res.ok) return;
       const data = await res.json();
-      document.getElementById("canli-label").textContent = data.label || "bekliyor";
+      document.getElementById("canli-label").textContent = data.label || "idle";
       const bits = [];
       if (data.url) bits.push(data.url);
       if (data.goal) bits.push(data.goal);

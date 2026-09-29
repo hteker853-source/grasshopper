@@ -4,7 +4,7 @@ Deadline: unknown
 
 Prize: unknown
 
-Verification: varsayılan rubrik
+Verification: default rubric
 
 Rules were not found. Prize was not invented.
 

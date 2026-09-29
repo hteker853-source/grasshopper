@@ -1,17 +1,17 @@
 # Arbiter Hacks V1
 
-## Rubrik
+## Rubric
 
-**varsayılan rubrik.** Resmi ağırlık sayfasına bu oturumda ulaşılamadı.
+**default rubric.** Official weighting page was not reachable during this session.
 
-| Kriter | Ağırlık |
+| Criterion | Weight |
 | --- | --- |
-| Teknik | 25 |
-| Yenilik | 20 |
-| Etki | 20 |
+| Technical | 25 |
+| Innovation | 20 |
+| Impact | 20 |
 | Demo | 20 |
 | UX | 15 |
 
-## Karar
+## Decision
 
-`data/competitions.json` içinde `eligible=false`. Bağımsız takım teyidi yok. Brifing ödülü 3.800 $. Girilmez. Skor tablosunda aday olarak durur, gönderim taslağı üretilmez.
+`eligible=false` in `data/competitions.json`. No independent team confirmation. Briefing prize $3,800. Will not enter. Kept as candidate on scorecard, submission draft is not generated.

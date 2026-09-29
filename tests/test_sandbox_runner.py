@@ -106,13 +106,13 @@ def test_vultr_fake_api_creates_and_deletes_the_instance(tmp_path):
     assert any(row["result"] == "deleted" for row in rows)
     badge = runner_status(audit.path)
     assert badge["isolated"] is True
-    assert badge["label"] == "izole çalıştırıldı"
+    assert badge["label"] == "isolated execution"
 
 
 def test_dashboard_mentions_the_isolated_badge():
     html = Path("grasshopper/ui/templates/dashboard.html").read_text(encoding="utf-8")
     assert 'id="isolated"' in html
-    assert "izole çalıştırıldı" in html
+    assert "isolated execution" in html
 
 
 def _serve(app) -> str:

@@ -1,17 +1,17 @@
 # AssemblyAI Voice Agent
 
-## Rubrik
+## Rubric
 
-**varsayılan rubrik.** Resmi ağırlık sayfasına bu oturumda ulaşılamadı.
+**default rubric.** Official weighting page was not reachable during this session.
 
-| Kriter | Ağırlık |
+| Criterion | Weight |
 | --- | --- |
-| Teknik | 25 |
-| Yenilik | 20 |
-| Etki | 20 |
+| Technical | 25 |
+| Innovation | 20 |
+| Impact | 20 |
 | Demo | 20 |
 | UX | 15 |
 
-## Brifing
+## Briefing
 
-30 Eylül. 10.000 $ (5.000 nakit + 5.000 kredi). `ASSEMBLYAI_API_KEY` yok. STT varsayılanı mock. Sesli ajan demosu bu ürünün ana yolu değil.
+September 30. $10,000 ($5,000 cash + $5,000 credits). `ASSEMBLYAI_API_KEY` not present. STT defaults to mock. Voice agent demo is not the primary path for this product.

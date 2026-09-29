@@ -14,32 +14,32 @@ def catalog_table(prompt: str) -> dict:
         "fast_usd": fast,
         "strong_usd": strong,
         "ratio_strong_over_fast": (strong / fast) if fast else 0.0,
-        "source": "katalog fiyatı",
-        "live_nebius": "ölçülmedi",
-        "fast_model_slot": "NEBIUS_FAST_MODEL (NVIDIA Nemotron adı buraya yazılır)",
+        "source": "catalog price",
+        "live_nebius": "unmeasured",
+        "fast_model_slot": "NEBIUS_FAST_MODEL (NVIDIA Nemotron model name goes here)",
     }
 
 
 def tavily_status(api_key: str) -> str:
     if (api_key or "").strip():
-        return "anahtar var"
-    return "anahtar bekliyor"
+        return "key present"
+    return "waiting for key"
 
 
 def render_table(prompt: str, *, tavily: str) -> str:
     row = catalog_table(prompt)
     return "\n".join([
-        "# Fast ve strong katalog maliyeti",
+        "# Fast and strong catalog cost",
         "",
-        "Canlı Nebius faturası ölçülmedi. Aşağıdaki dolar katalog fiyatıdır.",
+        "Live Nebius invoice is unmeasured. The dollar amounts below are catalog prices.",
         "",
         "| | fast | strong |",
         "| --- | --- | --- |",
-        f"| 1.000 token fiyatı | ${PRICE_PER_1K['fast']} | ${PRICE_PER_1K['strong']} |",
-        f"| Bu metin ({row['tokens_estimated']} token tahmini) | ${row['fast_usd']:.6f} | ${row['strong_usd']:.6f} |",
+        f"| Price per 1,000 tokens | ${PRICE_PER_1K['fast']} | ${PRICE_PER_1K['strong']} |",
+        f"| This prompt ({row['tokens_estimated']} token estimate) | ${row['fast_usd']:.6f} | ${row['strong_usd']:.6f} |",
         "",
-        f"Strong / fast oranı: {row['ratio_strong_over_fast']:.1f}.",
-        f"Fast yuva: {row['fast_model_slot']}.",
+        f"Strong / fast ratio: {row['ratio_strong_over_fast']:.1f}.",
+        f"Fast slot: {row['fast_model_slot']}.",
         f"Tavily: {tavily}.",
         "",
     ])

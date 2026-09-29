@@ -1,103 +1,103 @@
 # Grasshopper — ASUS UGen AI League, Stage I
 
-20 sayfa. Markdown sunum. YouTube yüklemesi yapılmadı. UGen300 bu makinede yok. Donanım entegrasyonu ölçülmedi.
+20 slides. Markdown presentation. YouTube upload not performed. UGen300 not present on this machine. Hardware integration unmeasured.
 
-<!-- sayfa 1 -->
-## 1. Kapak
+<!-- slide 1 -->
+## 1. Cover
 
-Grasshopper, bir cümleyi adımlara bölüp tarayıcıda çalıştıran, her adımı kontrol eden ve para harcamadan önce duran açık kaynaklı bir işçidir. Lisans MIT. Bu sunum Stage I içindir. Gönderilmedi. Halil gözden geçirir.
+Grasshopper is an open-source browser worker that breaks a natural-language goal into steps, validates each step, and stops before spending funds. MIT licensed. This presentation is for Stage I. Not submitted. Halil will review.
 
-<!-- sayfa 2 -->
-## 2. Tek cümle
+<!-- slide 2 -->
+## 2. One sentence
 
-Kırılan bir sayfada aynı işi ikinci kez model parasız tekrar edebilen, harcaması tavanla kesilen bir tarayıcı işçisi.
+A browser worker that replays tasks on modified web pages with zero model cost on second execution, capped by strict budget limits.
 
-<!-- sayfa 3 -->
-## 3. Kim için
+<!-- slide 3 -->
+## 3. Target User
 
-Kendi sitesinde tekrarlayan işi olan bir kişi: eski ilan, form, kontrol listesi. Jüri bir işletme müşterisi görmez. Kullanıcı sayısı ölçülmedi.
+An individual running repetitive tasks on their own web properties: stale listings, forms, checklists. No enterprise customer base claimed. User count is unmeasured.
 
-<!-- sayfa 4 -->
-## 4. Sorun
+<!-- slide 4 -->
+## 4. Problem
 
-Tarayıcı ajanları ilk denemede pahalıdır, ikinci denemede de aynı parayı öder, ve bir seçici değişince sessizce yanlış yere tıklar. Grasshopper ikinci başarılı izi yeniden oynatır ve seçici kaybolunca görüntüye bakar.
+Browser agents are expensive on their first attempt, incur the exact same cost on repeat runs, and silently misclick when a selector shifts. Grasshopper replays cached execution traces and falls back to computer vision when selectors break.
 
-<!-- sayfa 5 -->
-## 5. Ürün
+<!-- slide 5 -->
+## 5. Product
 
-Dashboard, onay kapısı, MCP ile Alexa benzeri sayfa, sandbox siteler, gerçek site için allowlist. Varsayılan mod mock'tur. Anahtar olmadan `make test` çalışır.
+Dashboard, human-in-the-loop approval gate, Alexa-style voice interface via MCP, local sandbox sites, and allowlist for real sites. Default mode is mock. `make test` passes without API keys.
 
-<!-- sayfa 6 -->
-## 6. Üç komut
+<!-- slide 6 -->
+## 6. Three commands
 
-`bash scripts/setup.sh`, ardından `.env` kopyası, ardından `make test`. Ayrıntı CONTRIBUTING.md ve README içindedir.
+`bash scripts/setup.sh`, copy `.env.example` to `.env`, then `make test`. Details in CONTRIBUTING.md and README.md.
 
-<!-- sayfa 7 -->
-## 7. Mimari
+<!-- slide 7 -->
+## 7. Architecture
 
-Kanallar kuyruğa düşer. Planlayıcı playbook'a bakar, yoksa modele sorar. Tarayıcı eylemi çalıştırır. Doğrulayan bakar. Explainer nedenini yazar. Ayrıntı docs/ARCHITECTURE.md ve oradaki Mermaid diyagramıdır.
+Inbound channels feed the task queue. Router checks playbooks, falling back to LLM. Driver executes browser actions. Verifier validates outcomes. Explainer writes trace logs. Documented in docs/ARCHITECTURE.md with Mermaid diagrams.
 
-<!-- sayfa 8 -->
-## 8. Öğrenme
+<!-- slide 8 -->
+## 8. Learning
 
-İlk koşu model çağırır. İz kaydolur. İkinci koşu aynı sayfada 0 çağrı hedefler. Fixtürde bu `tests/test_realweb.py` ile geçti. Canlı sitede bench bitene kadar sayı ölçülmedi.
+Initial run calls LLM and saves action trace. Second run on same workflow targets 0 model calls. Proven in fixture suite via `tests/test_realweb.py`. Live site benchmarks unmeasured until full test pass completes.
 
-<!-- sayfa 9 -->
-## 9. Maliyet
+<!-- slide 9 -->
+## 9. Cost
 
-Günlük tavan 0.50 $, koşu başı 0.05 $. Router çağrıdan önce token fiyatını sayar. Aşılırsa görev durur ve bildirim gider. Mock faturası 0'dır. Canlı fatura ölçülmedi. docs/COST.md.
+Hard limits: $0.50 daily cap, $0.05 per-run cap. Router estimates token pricing before each call. Task halts and notifies user if limit is reached. Mock invoice is $0. Real spend documented in docs/COST.md.
 
-<!-- sayfa 10 -->
-## 10. Görme
+<!-- slide 10 -->
+## 10. Vision
 
-OpenCV 5 fark ve bölge bulur. Kontrollü sette değişen kart değişmiş, aynı kart aynı sayılır. Kimliği silinen Continue düğmesi görme ile seçilir. O setin dışında doğruluk ölçülmedi. docs/AGENTIC_VISION.md.
+OpenCV identifies diffs and visual bounding regions. On controlled fixture sets, modified elements are differentiated and unmodified elements remain stable. Continue button without DOM id is clicked via vision fallback. Accuracy outside fixture set is unmeasured. See docs/AGENTIC_VISION.md.
 
-<!-- sayfa 11 -->
-## 11. Güvenlik
+<!-- slide 11 -->
+## 11. Safety
 
-Allowlist kodda sabittir. Etsy, Amazon perakende, sosyal medya, Google giriş ve ödeme sayfaları reddedilir. robots.txt ve istek arası bekleme vardır. Mainnet cüzdan adresi reddedilir.
+Allowlist hardcoded in policy. Retail checkouts, social media feeds, third-party logins, and payment endpoints are denied. Strict robots.txt adherence and request rate limiting. Mainnet crypto addresses refused.
 
-<!-- sayfa 12 -->
-## 12. Onay
+<!-- slide 12 -->
+## 12. Approval
 
-Para, paylaşım ve dışarı aktarma onay ister. Reddedilirse durur. Mock banka aynı üç kapıyı gösterir: limit, onay, denetim izi. ING konusu 9 Ekim'de gelince bu şablon uyarlanır.
+Financial transfers, outbound shares, and data exports require explicit human approval. Workflow halts if rejected. Mock bank enforces limit, approval, and audit trail.
 
-<!-- sayfa 13 -->
-## 13. Patlama yarıçapı
+<!-- slide 13 -->
+## 13. Blast Radius
 
-Her koşunun sonunda dokunulan dosyalar, gidilen alan adları, süre ve maliyet JSON olur. Docker varsa isteğe bağlıdır. Yoksa uyarıyla yerel çalışır. Gerçek Vultr makinesi bu oturumda açılmadı.
+Each run outputs `blast_radius.json` recording touched files, visited domains, duration, and financial spend. Docker runner is optional; falls back to local sandbox with warning if absent.
 
-<!-- sayfa 14 -->
+<!-- slide 14 -->
 ## 14. Demo
 
-videos/demo.mp4 yaklaşık 64 saniye, 1280x720. Üç dakikanın altında. YouTube'a Halil yükler. Bu dosya yükleme kanıtı değildir.
+`videos/demo.mp4` under 180 seconds, 1280x720. Halil handles YouTube upload. File existence is not proof of submission.
 
-<!-- sayfa 15 -->
-## 15. Test
+<!-- slide 15 -->
+## 15. Testing
 
-Son tam turda `make test` yeşildi ve `make audit` kırmızı değildi. Sayılar docs/HANDOFF.md ve docs/AUDIT.md içindedir. Yer tutucu test yok.
+Clean test suite: `make test` green, `make audit` passes without missing deliverables. Verified in docs/HANDOFF.md and docs/AUDIT.md. No placeholder assertions.
 
-<!-- sayfa 16 -->
-## 16. Kenar cihaz
+<!-- slide 16 -->
+## 16. Edge Device
 
-UGen300 yok. Model bu kasada çalışıyor, kenarda bir NPU'ya bağlanmadı. Bağlantı ölçülmedi. Stage II cihazı gelirse ilk iş, aynı gözlem döngüsünü o kutuda bir kez koşup süreyi yazmaktır.
+UGen300 hardware not physically attached. Model executes locally on host, not connected to edge NPU. Latency unmeasured. If Stage II hardware is granted, observation loop will be benchmarked on device.
 
-<!-- sayfa 17 -->
-## 17. Ne ölçülmedi
+<!-- slide 17 -->
+## 17. What Was Not Measured
 
-Canlı Nebius faturası, canlı Bedrock çağrısı, AWS'ye konmuş görme servisi, UGen300 gecikmesi, gerçek kullanıcı, YouTube izlenmesi. Bunlar uydurulmadı.
+Live cloud Bedrock calls, remote AWS vision service, UGen300 NPU latency, real commercial users, YouTube view count. None of these are fabricated.
 
-<!-- sayfa 18 -->
-## 18. Risk
+<!-- slide 18 -->
+## 18. Risks
 
-Sandbox jüriye küçük görünebilir. Gerçek site bench'i bu sunum yazılırken sürüyor olabilir. Sayı yoksa "ölçülmedi" denir. Donanım şartı bu paketle kapanmaz.
+Local sandbox may appear synthetic to evaluators. Real site benchmark runs must be cited honestly. Hardware qualification cannot be met without device delivery.
 
-<!-- sayfa 19 -->
-## 19. İstenen karar
+<!-- slide 19 -->
+## 19. Requested Decision
 
-Stage I için sunum ve kısa video yeter. Cihaz iddiası yok. Değerlendirme, tekrarlanabilir test ve tavanlı maliyet üzerinedir.
+Presentation and video demo are sufficient for Stage I evaluation. No device presence claimed. Judged on reproducible test suite and hard budget caps.
 
-<!-- sayfa 20 -->
-## 20. Kapanış
+<!-- slide 20 -->
+## 20. Conclusion
 
-Grasshopper MIT. Gönderim insan işi. İletişim ve form Halil'de. Tarih sırası docs/INSAN_ISLERI.md içindedir.
+Grasshopper is MIT licensed. Final submission is handled by Halil. Task timeline tracked in docs/INSAN_ISLERI.md.

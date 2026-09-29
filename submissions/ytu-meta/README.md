@@ -4,7 +4,7 @@ Deadline: 2026-10-11
 
 Prize: 6000 USD pool (brief)
 
-Verification: varsayılan rubrik
+Verification: default rubric
 
 Clients exist. The December event is in person.
 

@@ -1,25 +1,25 @@
-# Open Agent — 15–20 Ekim planı
+# Open Agent — October 15–20 Execution Plan
 
-Bugün 2026-09-28. Bu pencerede yazılacak modülün kodu bu turda yazılmadı. Eski commit yeni iş sayılmaz.
+Today is 2026-09-28. The code scheduled for this submission window has not been authored in advance. Prior commits do not count as new work.
 
-## Yeni iş (pencere açılınca)
+## New Work (When Window Opens)
 
-1. 15 Ekim: `grasshopper/open_agent/` diye bir paket aç. İçinde tek bir iş: gerçek siteden okunan bir sayfanın neden o adımda seçildiğini üç cümleyle yazan bir kayıt. Mevcut explainer'ı kopyalama; yeni dosya, yeni test.
-2. 16 Ekim: O kaydı çalıştıran bir senaryo. Başarı ölçütü sayfada duran bir cümle. Test yeşil olmadan commit yok.
-3. 17 Ekim: Aynı senaryonun ikinci koşusunda model çağrısı 0 mı, ölç. Sayıyı bu dosyaya yaz. Uydurma.
-4. 18 Ekim: Video. İlk 20 saniye kanca, sonra o sayı.
-5. 19 Ekim: Form taslağı. Gönderme.
-6. 20 Ekim: Halil gönderir ya da göndermez.
+1. October 15: Create package `grasshopper/open_agent/`. Single focus: a structured log explaining why a specific page was chosen at that step in three sentences. Do not copy existing explainer; new file, new tests.
+2. October 16: Scenario exercising that log. Success criterion: single-sentence DOM verification. No commit without green test suite.
+3. October 17: Measure whether second run of the same scenario makes zero model calls. Record actual number here. No fabricated numbers.
+4. October 18: Video recording. Hook in first 20 seconds, followed by verified numbers.
+5. October 19: Submission form draft. Do not auto-submit.
+6. October 20: Halil decides whether to submit.
 
-## Commit takvimi
+## Commit Schedule
 
-| Gün | Commit konusu |
+| Date | Commit Milestone |
 | --- | --- |
-| 15 Eki | open_agent paketi ve boş olmayan bir test |
-| 16 Eki | senaryo yeşil |
-| 17 Eki | ikinci koşu ölçümü |
-| 18 Eki | video notu |
-| 19 Eki | form taslağı |
-| 20 Eki | insan gönderimi, kod yok |
+| Oct 15 | `open_agent` package and non-empty test |
+| Oct 16 | Scenario passing |
+| Oct 17 | Replay run measurement |
+| Oct 18 | Video script notes |
+| Oct 19 | Submission form draft |
+| Oct 20 | Human submission, no code changes |
 
-Puan ağırlığı brifingden: Impact 30, Technical 20, Innovation 15, Demo 15, UX 10, sponsor bonusu resmi sayfada görülmedi.
+Scoring weights from briefing: Impact 30, Technical 20, Innovation 15, Demo 15, UX 10; sponsor bonus not listed on official page.

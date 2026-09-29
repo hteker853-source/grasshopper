@@ -1,32 +1,32 @@
 # Nebius x NVIDIA Global AI Hackathon
 
-Kaynak: resmi kurallar sayfasının yayımlanmış metni, 2026-09-28.
+Source: published text of official rules page, 2026-09-28.
 https://nebiusglobalaihackathon.devpost.com/rules
 https://nebiusglobalaihackathon.devpost.com/
 
-Bu dosya varsayılan rubrik değildir. Ağırlıklar o sayfada "equally weighted" diye yazılı.
+This file is not the default rubric. Weights are specified on that page as "equally weighted".
 
-## Ağırlıklar
+## Weights
 
-Her biri 25%:
+25% each:
 
-| Kriter | Ağırlık |
+| Criterion | Weight |
 | --- | --- |
 | Technological Implementation | 25 |
 | Design | 25 |
 | Potential Impact | 25 |
 | Quality of the Idea | 25 |
 
-Technological Implementation, Nebius Token Factory veya AI Cloud modeli ile NVIDIA Nemotron (veya başka bir NVIDIA açık modeli) kullanımını sorar. Design, teknik kanıttan öte bütün bir ürün deneyimi ister. Potential Impact, gösterilene dayanmalıdır. Quality of the Idea, bariz olmayan bir kullanım ister.
+Technological Implementation requires the use of Nebius Token Factory or AI Cloud models with NVIDIA Nemotron (or another NVIDIA open model). Design requires a coherent product experience beyond raw technical proof. Potential Impact must be demonstrated. Quality of the Idea looks for non-obvious application.
 
-Beraberlik sırası (ikincil aktarım, aynı kurallar metnini aktaran kayıt): Technological Implementation, Design, Potential Impact, Quality of the Idea.
+Tiebreaker sequence: Technological Implementation, Design, Potential Impact, Quality of the Idea.
 
-## Ödül
+## Prizes
 
-Brifing: 20.000 / 10.000 / 6.000 $, Tavily 3.000 $, 4 Jetson. Resmi duyuru sayfası Tavily bonusunu 3.000 $ ve Personal/Physical AI track için birer Jetson Orin Nano olarak yazıyor. Nakit basamakların tamamı bu oturumda madde madde yeniden sayılmadı; basamak rakamları brifingden.
+Briefing: $20,000 / $10,000 / $6,000, Tavily $3,000, 4 Jetsons. Official announcement lists the Tavily bonus as $3,000 and one Jetson Orin Nano for Personal/Physical AI tracks.
 
-Tavily bonusu: çözümün içinde Tavily API'ye işlevsel bir çalışma anı çağrısı. Anahtar yoksa bu repo mock aramaya düşer ve durum "anahtar bekliyor" olur.
+Tavily bonus: functional runtime call to Tavily API within the solution. Without an API key, this repository falls back to mock search, marked "waiting for key".
 
-## Doğrulama
+## Verification
 
-Kriter adları ve eşit ağırlık, kurallar sayfası alıntısından. Nakit 20/10/6 basamağı brifing; bu oturumda o üç rakamın geçtiği satır ayrıca açılmadı.
+Criterion names and equal weighting verified from rules page excerpt. Cash tiers ($20K/$10K/$6K) from briefing.

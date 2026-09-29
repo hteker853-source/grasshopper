@@ -48,14 +48,14 @@ def test_denylist_blocks_shops_social_login_and_payment_pages():
         "https://www.etsy.com/listing/1": "denylist",
         "https://www.amazon.com/dp/1": "denylist",
         "https://amazon.co.uk/s?k=book": "denylist",
-        "https://twitter.com/grasshopper": "sosyal medya",
-        "https://www.facebook.com/": "sosyal medya",
-        "https://accounts.google.com/signin": "google giriş",
-        "https://www.google.com/signin/v2": "google giriş",
-        "https://checkout.stripe.com/pay/cs_test": "ödeme sayfası",
-        "https://example.com/checkout": "ödeme sayfası",
-        "https://github.com/login": "github giriş",
-        "https://example.com/hello": "REAL_SITES_ALLOWLIST dışında",
+        "https://twitter.com/grasshopper": "social media",
+        "https://www.facebook.com/": "social media",
+        "https://accounts.google.com/signin": "google login",
+        "https://www.google.com/signin/v2": "google login",
+        "https://checkout.stripe.com/pay/cs_test": "payment page",
+        "https://example.com/checkout": "payment page",
+        "https://github.com/login": "github login",
+        "https://example.com/hello": "outside REAL_SITES_ALLOWLIST",
     }
     for url, reason in blocked.items():
         verdict = classify(url, settings)
@@ -72,12 +72,12 @@ def test_env_allowlist_can_only_narrow_the_code_list():
     assert classify("https://books.toscrape.com/", settings).allowed
     quotes = classify("https://quotes.toscrape.com/", settings)
     assert quotes.allowed is False
-    assert quotes.reason == "REAL_SITES_ALLOWLIST daraltması"
+    assert quotes.reason == "REAL_SITES_ALLOWLIST narrowing"
     # A host outside the code list stays outside even if the env names it.
     forced = _Settings("example.com")
     verdict = classify("https://example.com/hello", forced)
     assert verdict.allowed is False
-    assert verdict.reason == "REAL_SITES_ALLOWLIST dışında"
+    assert verdict.reason == "outside REAL_SITES_ALLOWLIST"
 
 
 def test_per_run_cap_stops_before_the_call_and_notifies(ctx):

@@ -21,7 +21,7 @@ def frame_path(runs_dir: Path) -> Path:
 def read_status(runs_dir: Path) -> dict:
     path = status_path(runs_dir)
     if not path.is_file():
-        return {"active": False, "url": "", "goal": "", "run_id": "", "label": "bekliyor"}
+        return {"active": False, "url": "", "goal": "", "run_id": "", "label": "waiting"}
     try:
         data = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
@@ -32,7 +32,7 @@ def read_status(runs_dir: Path) -> dict:
         "url": str(data.get("url") or ""),
         "goal": str(data.get("goal") or ""),
         "run_id": str(data.get("run_id") or ""),
-        "label": "CANLI" if active else "bekliyor",
+        "label": "LIVE" if active else "waiting",
     }
 
 

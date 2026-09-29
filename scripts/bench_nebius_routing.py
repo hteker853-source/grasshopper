@@ -102,13 +102,13 @@ async def main():
     lines = [
         "# Nebius Token Factory Model Routing Benchmark",
         "",
-        f"**Tarih**: 2026-09-28  ",
-        f"**Uç Nokta**: `{base_url}`  ",
-        f"**Örneklem Sayısı**: N=5  ",
+        f"**Date**: 2026-09-28  ",
+        f"**Endpoint**: `{base_url}`  ",
+        f"**Sample Size**: N=5  ",
         "",
-        "## Karşılaştırmalı Yönlendirme Tablosu",
+        "## Comparative Routing Table",
         "",
-        "| Senaryo | Katman / Model | Başarı (Geçerli JSON) | Ort. Gecikme | Ort. Token | Toplam $ (N=5) |",
+        "| Scenario | Tier / Model | Success (Valid JSON) | Avg Latency | Avg Tokens | Total $ (N=5) |",
         "| :--- | :--- | :---: | :---: | :---: | :---: |",
     ]
 
@@ -120,11 +120,11 @@ async def main():
 
     lines.extend([
         "",
-        "## Analiz ve Yönlendirme Stratejisi",
+        "## Analysis and Routing Strategy",
         "",
-        "1. **Gecikme & Maliyet Farkı:** Fast model (Nemotron Lightning) ultra düşük maliyetle (~$0.0002/1K token) ortalama 0.3-0.6s içinde karar üretirken, Strong model (Nemotron Ultra 550B) karmaşık akıl yürütme adımlarında devreye girer.",
-        "2. **Hata Anında Eskalasyon:** Grasshopper varsayılan olarak Fast modeli kullanır. Hata veya JSON format bozulması durumunda (last_error) Router otomatik olarak Strong modele yükseltme (tier='strong') yapar.",
-        "3. **Tasarruf:** Tüm çağrıların doğrudan Strong modele gitmesi engellenerek %80+ token tasarrufu sağlanır.",
+        "1. **Latency & Cost Delta:** The Fast model (Nemotron Lightning) produces decisions with ultra-low cost (~$0.0002/1K tokens) and 0.3-0.6s latency on average, while the Strong model (Nemotron Ultra 550B) steps in for complex multi-step reasoning.",
+        "2. **Escalation on Error:** Grasshopper routes to the Fast model by default. If an error or JSON malformation occurs (last_error), Router automatically escalates to the Strong tier (tier='strong').",
+        "3. **Savings:** Bypassing the Strong tier on standard steps keeps 80%+ of token consumption off expensive models.",
     ])
 
     out = ROOT / "docs" / "NEBIUS_BENCH.md"

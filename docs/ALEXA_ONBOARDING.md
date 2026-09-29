@@ -1,30 +1,30 @@
-# Alexa+ Geliştirici Portalı MCP Entegrasyon Kılavuzu
+# Alexa+ Developer Console MCP Integration Guide
 
-Bu belge, Grasshopper'ın Model Context Protocol (MCP) Streamable HTTP sunucusunu Amazon Alexa+ geliştirici konsoluna bağlama adımlarını, manifest şablonunu ve örnek konuşma akışlarını içerir.
+This document outlines the setup steps, manifest schema, and conversational flows for connecting Grasshopper's Model Context Protocol (MCP) Streamable HTTP server to the Amazon Alexa+ developer console.
 
 ---
 
-## 1. Geliştirici Portalı Yapılandırma Adımları
+## 1. Developer Console Configuration Steps
 
-### Adım 1: Alexa Developer Console'a Giriş
-1. [developer.amazon.com/alexa/console/ask](https://developer.amazon.com/alexa/console/ask) adresine gidin.
-2. **Create Skill** butonuna tıklayın.
-3. Skill adı: `Grasshopper Worker`.
-4. Model seçimi: **Alexa+ AI Assistant / Tool Calling** veya **Custom**.
+### Step 1: Sign in to Alexa Developer Console
+1. Navigate to [developer.amazon.com/alexa/console/ask](https://developer.amazon.com/alexa/console/ask).
+2. Click **Create Skill**.
+3. Skill Name: `Grasshopper Worker`.
+4. Model Selection: **Alexa+ AI Assistant / Tool Calling** or **Custom**.
 
-### Adım 2: MCP Endpoint Bağlama
-1. Sol menüden **Tools & Integrations** > **Model Context Protocol (MCP)** sekmesine tıklayın.
-2. **Endpoint Type**: `Streamable HTTP` seçin.
+### Step 2: Connect MCP Endpoint
+1. In the sidebar, navigate to **Tools & Integrations** > **Model Context Protocol (MCP)**.
+2. **Endpoint Type**: Select `Streamable HTTP`.
 3. **Endpoint URL**:
-   - Yerel test / Demo için: `make share-mcp` ile üretilen Cloudflare tünel adresi (örn: `https://xyz.trycloudflare.com/mcp/`).
-   - Üretim için: AWS App Runner HTTPS adresi (örn: `https://grasshopper.us-east-1.awsapprunner.com/mcp/`).
-4. **Authentication**: `Bearer Token` seçin.
+   - For Local Testing / Demo: Cloudflare tunnel generated via `make share-mcp` (e.g., `https://xyz.trycloudflare.com/mcp/`).
+   - For Production: AWS App Runner HTTPS endpoint (e.g., `https://grasshopper.us-east-1.awsapprunner.com/mcp/`).
+4. **Authentication**: Select `Bearer Token`.
    - Header: `Authorization: Bearer <MCP_BEARER_TOKEN>`
 5. **Allowed Origins**: `https://alexa.amazon.com`.
 
-### Adım 3: Araç Keşfi (Tool Discovery)
-1. **Discover Tools** butonuna basın.
-2. Konsol `/mcp/` endpoint'ine `tools/list` isteği atarak Grasshopper'ın 8 aracını otomatik olarak listeler:
+### Step 3: Tool Discovery
+1. Click **Discover Tools**.
+2. The console issues a `tools/list` request against `/mcp/`, enumerating Grasshopper's 8 registered tools:
    - `start_task(text)`
    - `get_task_status(task_id)`
    - `get_task_result(task_id)`
@@ -36,11 +36,11 @@ Bu belge, Grasshopper'ın Model Context Protocol (MCP) Streamable HTTP sunucusun
 
 ---
 
-## 2. Geliştirici Doğrulama (cURL Komutları)
+## 2. Developer Verification (cURL Commands)
 
-Alexa+ konsoluna bağlamadan önce uç noktanızı terminalden test edin:
+Verify endpoint connectivity prior to linking in Alexa Developer Console:
 
-### A. Sunucu Başlatma ve Protokol El Sıkışması
+### A. Handshake and Initialization
 ```bash
 curl -X POST https://your-domain.com/mcp/ \
   -H "Content-Type: application/json" \
@@ -57,7 +57,7 @@ curl -X POST https://your-domain.com/mcp/ \
   }'
 ```
 
-### B. Araç Listeleme (tools/list)
+### B. Tool Enumeration (tools/list)
 ```bash
 curl -X POST https://your-domain.com/mcp/ \
   -H "Content-Type: application/json" \
@@ -70,7 +70,7 @@ curl -X POST https://your-domain.com/mcp/ \
   }'
 ```
 
-### C. Sesli Görev Başlatma (start_task)
+### C. Task Dispatch (start_task)
 ```bash
 curl -X POST https://your-domain.com/mcp/ \
   -H "Content-Type: application/json" \
@@ -82,12 +82,12 @@ curl -X POST https://your-domain.com/mcp/ \
     "params": {
       "name": "start_task",
       "arguments": {
-        "text": "books.toscrape.com üzerinde 4 yıldızlı en ucuz kitabı bul"
+        "text": "Find cheapest 4-star book on books.toscrape.com"
       }
     }
   }'
 ```
-*Dönen Yanıt:*
+*Sample Response:*
 ```json
 {
   "jsonrpc": "2.0",
@@ -96,7 +96,7 @@ curl -X POST https://your-domain.com/mcp/ \
     "content": [
       {
         "type": "text",
-        "text": "{\"task_id\": \"task_01j...\", \"status\": \"queued\", \"speech\": \"Göreviniz alındı: books.toscrape.com üzerinde 4 yıldızlı.... Tarayıcıda başlatılıyor.\"}"
+        "text": "{\"task_id\": \"task_01j...\", \"status\": \"queued\", \"speech\": \"Task received: Finding cheapest 4-star book on books.toscrape.com. Launching browser.\"}"
       }
     ]
   }
@@ -105,7 +105,7 @@ curl -X POST https://your-domain.com/mcp/ \
 
 ---
 
-## 3. Skill Manifest Şablonu (`skill.json`)
+## 3. Skill Manifest Template (`skill.json`)
 
 ```json
 {
@@ -116,11 +116,6 @@ curl -X POST https://your-domain.com/mcp/ \
           "name": "Grasshopper Browser Worker",
           "summary": "Autonomous web browser agent connected via MCP",
           "description": "Multi-step web automation, price checking, and shop administration with risk-gated human approvals."
-        },
-        "tr-TR": {
-          "name": "Grasshopper Tarayıcı İşçisi",
-          "summary": "MCP üzerinden bağlanan otonom web ajanı",
-          "description": "Çok adımlı web otomasyonu, fiyat araştırması ve insan onay kapılı mağaza yönetimi."
         }
       }
     },
@@ -144,29 +139,29 @@ curl -X POST https://your-domain.com/mcp/ \
 
 ---
 
-## 4. Örnek Diyalog Akışları
+## 4. Sample Conversational Flows
 
-### Senaryo 1: Mağaza İlan Denetimi
-> **Kullanıcı:** "Alexa, Grasshopper'a söyle eski ilanlarımı kontrol etsin."
+### Scenario 1: E-Commerce Store Listing Audit
+> **User:** "Alexa, tell Grasshopper to check my stale store listings."
 >
-> **Alexa (MCP -> `store_check_old_listings(months=4)`):** "Göreviniz alındı. Mağazanıza giriş yapılıyor ve 4 aydan eski ilanlar taranıyor."
+> **Alexa (MCP -> `store_check_old_listings(months=4)`):** "Task received. Logging into store dashboard and scanning listings older than 4 months."
 >
-> *(Ajan arka planda çalışır, 3 eski ilan tespit eder)*
+> *(Agent executes in background, detects 3 stale items)*
 >
-> **Kullanıcı:** "Alexa, Grasshopper ne durumda?"
+> **User:** "Alexa, what is Grasshopper's status?"
 >
-> **Alexa (MCP -> `get_task_status(task_id)`):** "Göreviniz tamamlandı. 4 aydan eski 3 adet pasif ilan bulundu, fiyat güncelleme önerileri panonuzda hazır."
+> **Alexa (MCP -> `get_task_status(task_id)`):** "Task complete. Found 3 inactive listings older than 4 months; price adjustment suggestions are ready on your dashboard."
 
-### Senaryo 2: Fiyat Araştırması ve Çok Adımlı Veri Aktarımı
-> **Kullanıcı:** "Alexa, Grasshopper'a en ucuz 4 yıldızlı kitabı bulmasını ve yazarını özetlemesini söyle."
+### Scenario 2: Price Comparison & Multi-Step Research
+> **User:** "Alexa, ask Grasshopper to find the cheapest 4-star book and summarize the author."
 >
-> **Alexa (MCP -> `start_task(...)`):** "Göreviniz alındı: En ucuz 4 yıldızlı kitap aranıyor ve Wikipedia'dan yazar özeti derleniyor."
+> **Alexa (MCP -> `start_task(...)`):** "Task received: Finding cheapest 4-star book and fetching author bio from Wikipedia."
 >
-> **Alexa (Tamamlandığında):** "Araştırma bitti. Bulunan kitap 'A Light in the Attic', fiyatı 51.77 Pound. Yazarı Shel Silverstein, Amerikalı şair ve karikatürist."
+> **Alexa (Upon completion):** "Research complete. Identified 'A Light in the Attic' at 51.77 GBP. Author is Shel Silverstein, American poet and cartoonist."
 
-### Senaryo 3: Riskli İşlemde Sesli Onay Kapısı
-> **Alexa:** "Dikkat, Grasshopper'dan bildirim: 0.50 SOL tutarında abonelik ödemesi için onayınız gerekiyor. Onaylıyor musunuz?"
+### Scenario 3: Human Approval Gate on Sensitive Operations
+> **Alexa:** "Alert from Grasshopper: Human approval required to execute a 0.50 SOL subscription payment. Do you approve?"
 >
-> **Kullanıcı:** "Evet, onaylıyorum."
+> **User:** "Yes, I approve."
 >
-> **Alexa (MCP -> `approve(approval_id, 'approved')`):** "İşlem onaylandı. Ödeme güvenli sınır dahilinde devnet üzerinde tamamlandı."
+> **Alexa (MCP -> `approve(approval_id, 'approved')`):** "Action approved. Payment completed within safety boundaries on Solana devnet."

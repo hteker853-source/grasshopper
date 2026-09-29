@@ -4,7 +4,7 @@ Halil should review this draft. It is not a submission.
 
 0:00–0:20 Hook. One sentence: a worker that checks its own clicks, stops before it spends, and shows the cost. Name the sponsor piece for this kit: Amazon Bedrock (AgentCore / Strands-compatible model call).
 
-0:20–1:10 Measured number. Measured real-site numbers are in docs/RELIABILITY_REAL.md. Read them on camera. Do not invent a percentage. If the file says ölçülmedi, say ölçülmedi.
+0:20–1:10 Measured number. Measured real-site numbers are in docs/RELIABILITY_REAL.md. Read them on camera. Do not invent a percentage. If the file says unmeasured, say unmeasured.
 
 1:10–2:20 Live path. Dashboard, one task, the timeline, the approval gate.
 

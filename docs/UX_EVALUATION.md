@@ -1,56 +1,56 @@
-# Yapay Zekâ Kişilikleriyle Simüle Edilmiş Sezgisel İnceleme (Gerçek Kullanıcı Testi Değil)
+# Simulated Heuristic Review with AI Personas (Not a Real User Study)
 
 > [!IMPORTANT]
-> **Dürüstlük Bildirimi:** Bu dokümandaki değerlendirmeler ve metrikler gerçek insan kullanıcılarla yapılmış bir saha/kullanıcı testi DEĞİLDİR. Yapay zekâ kişilikleriyle (teknik, ürün, tasarım, etki, şüpheci) simüle edilmiş sezgisel inceleme (heuristic walkthrough) ve otomatik DOM/uç nokta assertion testleridir. Gerçek kullanıcı davranışı ölçülmemiştir.
+> **Honesty Notice:** The evaluations and metrics in this document DO NOT represent field or usability tests conducted with real human users. They are heuristic walkthroughs simulated using AI personas (developer, product, design, business impact, skeptic) alongside automated DOM and endpoint assertion tests. Real human user behavior was not measured.
 
-Tarih: 2026-09-28  
-Yöntem: Yapay zekâ kişilikleriyle simüle edilmiş sezgisel inceleme (gerçek kullanıcı testi değil) ve otomatik DOM doğrulama  
-Hedef Yüzeyler: Ana Pano (`/`), Alexa Simülatörü (`/alexa`), Canlı Koşu Ekranı (`/runs/{id}`), Canlı Akış (`/canli`)
-
----
-
-## 1. Simüle Edilen Kişilikler
-
-1. **Teknik Kullanıcı (Developer / DevOps):** API, MCP endpoint'leri (`/mcp`), token maliyetleri ve log doğrulaması.
-2. **Operatör / Ürün Yöneticisi:** Görev akışı, onay kuyruğu (`#approvals`), gerçek zamanlı durum izleme.
-3. **Tasarımcı / UX Uzmanı:** Görsel hiyerarşi, duyarlı düzen (viewport meta), renk kontrastı, geri bildirim hızları.
-4. **İş Sahibi (Business Owner):** Bütçe tavanı sınırları, token tasarruf paneli (`#savings`), öğrenme grafiği (`#learning`).
-5. **Şüpheci Denetçi (Skeptic):** Gerçek vs. simüle veriler, canlı ekran görüntüsü akışı (`/runs/{id}/live.png`), güvenlik kapıları.
+Date: 2026-09-28  
+Methodology: Simulated heuristic review using AI personas (not real user testing) and automated DOM verification.  
+Target Surfaces: Dashboard (`/`), Alexa Simulator (`/alexa`), Live Run View (`/runs/{id}`), Live Stream (`/canli`).
 
 ---
 
-## 2. Simüle Edilen Görev Senaryoları (Otomatik DOM/İşlem Ölçümü)
+## 1. Simulated Personas
 
-| No | Simüle Görev Senaryosu | Beklenen Süre | Ölçülen Süre | Tamamlanma | Hata Toparlanma | Simüle Skor (1-10) |
+1. **Technical User (Developer / DevOps):** API, MCP endpoints (`/mcp`), token expenditures, and structured log verification.
+2. **Operator / Product Manager:** Task pipeline, approval queue (`#approvals`), real-time operational status.
+3. **Designer / UX Specialist:** Visual hierarchy, responsive layout (viewport meta), color contrast, feedback latency.
+4. **Business Owner:** Hard spending ceiling limits, token savings telemetry (`#savings`), recipe learning curve (`#learning`).
+5. **Skeptical Auditor:** Real vs. mock data distinction, live screenshot feed (`/runs/{id}/live.png`), security policy enforcement.
+
+---
+
+## 2. Simulated Task Scenarios (Automated DOM & Transaction Timings)
+
+| No | Simulated Task Scenario | Expected Latency | Measured Latency | Completion | Error Recovery | Simulated Rating (1-10) |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: |
-| **G1** | Doğal dille çok adımlı görev girme (Composer) | < 10s | 3.2s | 100% | - | 9.4 |
-| **G2** | Yüksek riskli ödeme / işlem onayını inceleme ve onaylama | < 5s | 1.8s | 100% | Anında geri alma | 9.6 |
-| **G3** | Alexa sesli komut simülasyonunu çalıştırma (`/alexa`) | < 8s | 4.1s | 100% | Tekrar dene butonu | 9.0 |
-| **G4** | Öğrenme grafiği ve maliyet tasarrufu panelini denetleme | < 5s | 1.5s | 100% | Otomatik 1s yenileme | 9.5 |
-| **G5** | Canlı ekran akışını (`/canli-shot`) mobil cihazda izleme | < 3s | 1.2s | 100% | Yeniden bağlanma | 9.1 |
+| **G1** | Natural language multi-step task intake (Composer) | < 10s | 3.2s | 100% | - | 9.4 |
+| **G2** | Review and sign off high-risk payment / transaction approval | < 5s | 1.8s | 100% | Instant rollback | 9.6 |
+| **G3** | Trigger Alexa voice command simulation (`/alexa`) | < 8s | 4.1s | 100% | Retry button | 9.0 |
+| **G4** | Inspect recipe learning curve and token savings panels | < 5s | 1.5s | 100% | Auto 1s refresh | 9.5 |
+| **G5** | Monitor live frame stream (`/canli-shot`) on mobile viewport | < 3s | 1.2s | 100% | Auto-reconnect | 9.1 |
 
 ---
 
-## 3. Bulgular ve Yapılan Düzenlemeler
+## 3. Findings and Implemented Improvements
 
-1. **Duyarlı Tasarım (Responsive Layout):**
-   - `viewport` meta etiketi (`width=device-width, initial-scale=1`) ile mobil ekranlarda taşma engellendi.
-   - Pano iki kolonlu (`grid split`) yapıdan tek kolona daralan esnek CSS düzenine sahiptir.
+1. **Responsive Layout:**
+   - Enforced viewport meta tag (`width=device-width, initial-scale=1`) preventing horizontal scroll on mobile viewports.
+   - Dashboard flexes from a two-column grid (`grid split`) into a single-column layout on narrower screens.
 
-2. **Geri Bildirim ve Durum Görünürlüğü (State Visibility):**
-   - `#learning` paneli: 1. koşu ve 2. koşu LLM çağrılarını görsel SVG çubuk grafikle (`learnBars`) sunar.
-   - `#savings` paneli: Güçlü model yerine hızlı model kullanılarak sağlanan tahmini dolar tasarrufunu 4 basamaklı hassasiyetle (`$0.0000`) gösterir.
-   - `#isolated` rozeti: Görevin Docker veya Vultr üzerinde izole çalıştırıldığını açıkça gösterir.
+2. **Feedback and State Visibility:**
+   - `#learning` panel: Renders run 1 vs run 2 model call counts via an SVG bar chart (`learnBars`).
+   - `#savings` panel: Visualizes estimated USD savings achieved by routing through fast rather than strong models, formatted to four decimal places (`$0.0000`).
+   - `#isolated` badge: Explicitly indicates execution inside Docker or Vultr isolation wrappers.
 
-3. **Erişilebilirlik ve Güvenlik:**
-   - Onay butonları renk ve anlamsal etiketlerle (`class="ok"`, `class="danger"`) ayrıştırılmıştır.
-   - API erişiminde yetkisiz erişimler HTTP 401 ile güvenle engellenir, token geçişi çerezle saklanır.
+3. **Accessibility and Safety:**
+   - Approval controls feature distinct color tokens and semantic classes (`class="ok"`, `class="danger"`).
+   - Unauthorized API requests are securely denied with HTTP 401; authentication tokens are persisted via cookies.
 
 ---
 
-## 4. Test Kanıtı
+## 4. Test Evidence
 
 - `tests/test_dashboard_ux.py`:
-  - `test_dashboard_telemetry_elements_and_viewport`: Pano öğelerinin, responsive meta etiketinin ve telemetri panellerinin doğrulaması.
-  - `test_alexa_simulator_interactive_elements`: Alexa simülatör etkileşim elemanlarının kontrolü.
-  - `test_run_page_live_frame_and_step_telemetry`: Canlı yayın ve adım telemetrisi doğrulaması.
+  - `test_dashboard_telemetry_elements_and_viewport`: Verifies dashboard telemetry components, responsive meta tags, and panels.
+  - `test_alexa_simulator_interactive_elements`: Validates interactive controls on the Alexa simulator.
+  - `test_run_page_live_frame_and_step_telemetry`: Confirms live frame streaming and step telemetry displays.

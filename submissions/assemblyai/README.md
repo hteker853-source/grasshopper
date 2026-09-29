@@ -4,7 +4,7 @@ Deadline: 2026-09-30
 
 Prize: 5000 USD cash + 5000 credit (brief)
 
-Verification: varsayılan rubrik
+Verification: default rubric
 
 The STT client is tested against a fake server. This demo is not a voice agent.
 

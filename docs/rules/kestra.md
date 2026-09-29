@@ -1,29 +1,29 @@
 # Kestra Hacktober 2026
 
-Kaynak: resmi kurallar ve etkinlik sayfası, 2026-09-28 tarihinde kestra.io üzerinden alındı.
+Source: official rules and event page, retrieved 2026-09-28 via kestra.io.
 https://kestra.io
 
-## Katılım Track'leri ve Değerlendirme
+## Tracks and Evaluation
 
-- **Track 1: Çekirdek ve Eklenti Repoları (Core & Plugin Repos)**
-  - Kestra açık kaynak repolarına PR gönderilir.
-  - Ödüller, kabul edilip merge edilen tüm PR'lar arasından çekiliş yöntemiyle belirlenir.
+- **Track 1: Core & Plugin Repos**
+  - PRs submitted to Kestra open-source repositories.
+  - Prizes determined via raffle among all accepted and merged PRs.
 - **Track 2: Kestra Blueprints**
-  - Kestra Blueprints şablonları gönderilir.
-  - Kestra ekibi tarafından değerlendirilir:
-    - Fayda ve kullanışlılık (Usefulness)
-    - Hata yönetimi kalitesi (Quality of error handling)
-    - Dokümantasyon netliği (Documentation clarity)
-    - Kestra'nın özgün bir yeteneğini öğretme / gösterme (Teaching a unique Kestra capability)
+  - Kestra Blueprints templates submitted.
+  - Evaluated by the Kestra team on:
+    - Usefulness
+    - Quality of error handling
+    - Documentation clarity
+    - Teaching a unique Kestra capability
 
-## Ödüller
+## Prizes
 
-Her iki track için ayrı ödül katmanları:
-- 1.lik: MacBook Neo
-- 2.lik: Apple iPad (10. Nesil)
-- 3.lük: 150 $ Amazon Hediye Kartı
-- En az 1 PR merge edilen tüm katılımcılara Kestra hediyelik ürünleri (swag).
+Separate prize tiers for both tracks:
+- 1st Place: MacBook Neo
+- 2nd Place: Apple iPad (10th Gen)
+- 3rd Place: $150 Amazon Gift Card
+- Kestra swag for all participants with at least 1 merged PR.
 
-## Takvim
+## Timeline
 
-- Süreç: 1–31 Ekim 2026.
+- Duration: October 1–31, 2026.

@@ -1,17 +1,17 @@
 # Hackster Nordic
 
-## Rubrik
+## Rubric
 
-**varsayılan rubrik.** Resmi kural sayfasına bu oturumda ulaşılamadı. Ödül, tarih ve jüri ağırlığı brifingde de yok. Uydurulmadı.
+**default rubric.** Official rules page was not reachable during this session. Prize, date, and jury weights are not in briefing either. Not fabricated.
 
-| Kriter | Ağırlık |
+| Criterion | Weight |
 | --- | --- |
-| Teknik | 25 |
-| Yenilik | 20 |
-| Etki | 20 |
+| Technical | 25 |
+| Innovation | 20 |
+| Impact | 20 |
 | Demo | 20 |
 | UX | 15 |
 
-## Durum
+## Status
 
-Ödül: bilinmiyor. Tarih: bilinmiyor. Doğrulama: DOĞRULANMADI. Beklenen değer hesabına nakit olarak girmez.
+Prize: unknown. Date: unknown. Verification: UNVERIFIED. Does not enter expected value calculation as cash.

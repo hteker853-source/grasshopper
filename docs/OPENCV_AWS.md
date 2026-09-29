@@ -1,14 +1,14 @@
-# OpenCV — AWS kanıt adımları
+# OpenCV — AWS Verification Steps
 
-Hesap bu oturumda açılmadı. Aşağısı Halil'in izleyeceği sıra. Komutlar örnek isim kullanır. Gizli değer yazılmaz.
+No cloud account was opened in this session. The following is the manual procedure for Halil. Commands use placeholder names. Secrets must never be committed.
 
-1. AWS hesabına Halil girer. Yeni hesap bu dosyadan açılmaz.
-2. Bölge seçer. `AWS_REGION` değerini `.env` içine kendi yazar.
-3. IAM kullanıcısına ECR'ye push ve bir servisi çalıştırma izni verir. Anahtar repoya girmez.
-4. `vision_service/Dockerfile` imajını kendi makinesinde derler.
-5. ECR deposu açar, imajı oraya iter.
-6. Servisi App Runner ya da ECS/Fargate üzerinde 8081 portuyla çalıştırır. Sağlık yolu `/health`.
-7. Servis adresini `VISION_SERVICE_URL` olarak `.env`e yazar. Uygulama o adres doluysa `grasshopper/browser/vision.py` aynı görüntüyü oraya yollar. Boşsa işlem yerelde kalır.
-8. `tests/test_vision_service.py` yerel servisle geçer. Canlı AWS adresi bu oturumda ölçülmedi.
+1. Halil logs into the AWS console. No new accounts are created from this repo.
+2. Select target region. Halil sets `AWS_REGION` in `.env`.
+3. Grant IAM permissions for ECR push and running an App Runner / ECS service. Keys never enter git.
+4. Build `vision_service/Dockerfile` on local host machine.
+5. Create ECR repository, tag, and push image.
+6. Run service on App Runner or ECS/Fargate bound to port 8081. Health endpoint `/health`.
+7. Configure endpoint URL as `VISION_SERVICE_URL` in `.env`. When set, `grasshopper/browser/vision.py` dispatches frames there. When empty, processing remains local.
+8. `tests/test_vision_service.py` passes against local service. Live AWS endpoint unmeasured in this session.
 
-Sorumlu bulut teslimi jüri maddesi, bu adımlar yapılmadan kapanmaz.
+Responsible cloud deployment rubric requirements require completing these manual operational steps.

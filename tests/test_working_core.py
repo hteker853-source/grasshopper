@@ -87,11 +87,11 @@ def test_capability_d_scheduled_task_parsing():
     """(d) Scheduled task natural language parsing (bu gece 00:00'da, tomorrow, in N minutes)."""
     now = datetime(2026, 9, 28, 14, 0, 0, tzinfo=timezone.utc)
 
-    # 1. 'bu gece 00:00'da'
-    p1 = parse_when("bu gece 00:00'da kitap fiyatlarını denetle", now=now)
+    # 1. 'tonight 00:00'
+    p1 = parse_when("tonight 00:00 check book prices", now=now)
     assert p1.scheduled_at is not None
     assert p1.scheduled_at.hour == 0 and p1.scheduled_at.minute == 0
-    assert "kitap fiyatlarını denetle" in p1.remaining
+    assert "check book prices" in p1.remaining
 
     # 2. 'in 30 minutes'
     p2 = parse_when("in 30 minutes check server health", now=now)

@@ -14,10 +14,9 @@ if str(ROOT) not in sys.path:
 from scripts.scores import COMPETITIONS, place_probability, weighted
 
 WARNING = (
-    "UYARI: Yarışmalar birbirinden bağımsız çizildiğinde sonuçlar aşırı iyimser olur. "
-    "Aynı jüri, aynı kod tabanı ve aynı takvim yüzünden sonuçlar pozitif korelasyonla "
-    "birlikte hareket eder. Gerçekte tam bağımsızlık varsayımı fazlasıyla iyimserdir; "
-    "kötü günde genel bir hata veya jüri şüphesi toplu elemeye neden olur."
+    "WARNING: Assuming competitions are fully independent produces overly optimistic estimates. "
+    "Shared evaluation criteria, common code base, and the same submission window introduce positive correlation. "
+    "In reality, complete independence is overly optimistic; a general defect or jury skepticism on a bad day causes batch rejection."
 )
 
 
@@ -92,22 +91,22 @@ def simulate_all() -> dict[str, dict]:
 def render(result: dict | None = None) -> str:
     if result is not None and "expected_usd" in result and "bear" not in result:
         return "\n".join([
-            "# Beklenen değer (TAHMİN)",
+            "# Expected value (ESTIMATE)",
             "",
-            "Bu bir ölçüm değildir. TAHMİNDİR.",
+            "This is not a measurement. It is an ESTIMATE.",
             "",
             result.get("warning", WARNING),
             "",
-            f"Çekiliş: {result['draws']}. Tohum: {result.get('seed', 20260928)}.",
+            f"Draws: {result['draws']}. Seed: {result.get('seed', 20260928)}.",
             "",
-            "| Sonuç | Değer |",
+            "| Outcome | Value |",
             "| --- | --- |",
-            f"| Beklenen değer | ${result['expected_usd']:.0f} |",
-            f"| En az 1 ödül | {result['p_any']:.1%} |",
-            f"| 10.000$+ | {result['p_10k']:.1%} |",
-            f"| 20.000$+ | {result['p_20k']:.1%} |",
+            f"| Expected value | ${result['expected_usd']:.0f} |",
+            f"| At least 1 prize | {result['p_any']:.1%} |",
+            f"| $10,000+ | {result['p_10k']:.1%} |",
+            f"| $20,000+ | {result['p_20k']:.1%} |",
             "",
-            "Yarışmalar arası bağımsız çiziliş varsayımı fazlasıyla iyimserdir.",
+            "The assumption of independent draws across competitions is overly optimistic.",
             "",
         ])
 
@@ -117,34 +116,34 @@ def render(result: dict | None = None) -> str:
     bull = results["bull"]
 
     lines = [
-        "# Kazanç Modeli ve Beklenen Değer (EV) Raporu",
+        "# Earnings Model and Expected Value (EV) Report",
         "",
         "> [!IMPORTANT]",
-        "> Bu bir kesin gelir taahhüdü değildir. Yapay zekâ jüri puanlarına ve Monte Carlo simülasyonuna dayanan TAHMİNDİR.",
+        "> This is not a guaranteed income commitment. It is an ESTIMATE based on AI jury scores and Monte Carlo simulation.",
         "",
         WARNING,
         "",
-        "## 1. Üç Senaryo Analizi (Korelasyonlu Model)",
+        "## 1. Three Scenario Analysis (Correlated Model)",
         "",
-        "| Metrik | Ayı (Bear) | Taban (Base) | Boğa (Bull) |",
+        "| Metric | Bear | Base | Bull |",
         "| --- | --- | --- | --- |",
-        f"| **Beklenen Değer (EV)** | **${bear['expected_usd']:.0f}** | **${base['expected_usd']:.0f}** | **${bull['expected_usd']:.0f}** |",
-        f"| **En Az 1 Ödül İhtimali** | {bear['p_any']:.1%} | {base['p_any']:.1%} | {bull['p_any']:.1%} |",
-        f"| **10.000$+ Gelir İhtimali** | {bear['p_10k']:.1%} | {base['p_10k']:.1%} | {bull['p_10k']:.1%} |",
-        f"| **20.000$+ Gelir İhtimali** | {bear['p_20k']:.1%} | {base['p_20k']:.1%} | {bull['p_20k']:.1%} |",
+        f"| **Expected Value (EV)** | **${bear['expected_usd']:.0f}** | **${base['expected_usd']:.0f}** | **${bull['expected_usd']:.0f}** |",
+        f"| **At Least 1 Prize Probability** | {bear['p_any']:.1%} | {base['p_any']:.1%} | {bull['p_any']:.1%} |",
+        f"| **$10,000+ Earnings Probability** | {bear['p_10k']:.1%} | {base['p_10k']:.1%} | {bull['p_10k']:.1%} |",
+        f"| **$20,000+ Earnings Probability** | {bear['p_20k']:.1%} | {base['p_20k']:.1%} | {bull['p_20k']:.1%} |",
         "",
-        "## 2. '20.000$ Ortalama' Varsayımının Gerçeklik Testi",
+        "## 2. Reality Check on the '$20,000 Average' Premise",
         "",
-        "- **19 yarışmada 20.000$ ortalama:** Toplam 380.000$ nakit ödül demektir. Bu varsayım **İMKÂNSIZDIR**; çünkü 19 yarışmanın tüm birincilik ödüllerinin toplam nakit havuzu bile ~180.000$ civarındadır ve birçok yarışma (ING, Kestra, Arbiter, Nordic) nakit değil kredi veya sertifika verir.",
-        "- **Toplamda 20.000$+ kazanma ihtimali:**",
-        f"  - Taban senaryoda toplam gelirin 20.000$ veya üzerine çıkma ihtimali **%{base['p_20k']*100:.1f}**, Boğa senaryoda **%{bull['p_20k']*100:.1f}**'dir.",
-        "- **Hangi yarışmalar olmadan 20.000$ imkânsız?**",
-        "  - **Amazon (Alexa+ 1.: 25.000$)** ve **Nebius (1.: 20.000$)** bu hedefin omurgasıdır. Bu iki yarışma olmadan portföydeki diğer tüm yarışmalar kazanılsa dahi 20.000$ nakite ulaşmak neredeyse imkânsızdır (Vultr 9K + Open Agent 8K = 17K).",
+        "- **$20,000 average across 19 competitions:** That would mean $380,000 in cash prizes. This premise is **IMPOSSIBLE**; the entire first-place cash prize pool of all 19 competitions combined is only ~$180,000, and several contests (ING, Kestra, Arbiter, Nordic) award credits or certificates rather than cash.",
+        "- **Probability of winning $20,000+ total:**",
+        f"  - In the Base scenario, the probability of total income reaching $20,000 or more is **{base['p_20k']*100:.1f}%**, and in the Bull scenario it is **{bull['p_20k']*100:.1f}%**.",
+        "- **Which competitions are critical for $20,000?**",
+        "  - **Amazon (Alexa+ 1st: $25,000)** and **Nebius (1st: $20,000)** form the backbone of this goal. Without these two competitions, even winning all other contests in the portfolio makes reaching $20,000 in cash virtually impossible (Vultr 9K + Open Agent 8K = 17K).",
         "",
-        "## 3. Varsayımlar ve Notlar",
-        "- Simülasyon her senaryo için 20.000 çekiliş ile yapılmıştır.",
-        "- Aynı yarışma içindeki dereceler birbirini dışlar (aynı anda 1. ve 2. olunamaz).",
-        "- Kalite faktörü korelasyonu (±0.35 şok) ile yarışmaların birlikte başarı/başarısızlık eğilimi modellenmiştir.",
+        "## 3. Assumptions and Notes",
+        "- The simulation runs 20,000 draws for each scenario.",
+        "- Placement outcomes within the same competition are mutually exclusive (one cannot place 1st and 2nd simultaneously).",
+        "- A latent quality correlation shock (±0.35) models co-dependent success/failure tendencies across contests.",
         "",
     ]
     return "\n".join(lines)

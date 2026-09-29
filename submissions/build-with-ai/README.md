@@ -4,7 +4,7 @@ Deadline: 2026-10-26
 
 Prize: Prototype
 
-Verification: varsayılan rubrik
+Verification: default rubric
 
 The sandbox plus the dashboard is the prototype reviewers can click through.
 

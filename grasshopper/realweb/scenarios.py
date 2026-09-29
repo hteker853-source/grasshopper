@@ -46,7 +46,7 @@ def live_scenarios() -> list[Scenario]:
     return [
         Scenario(
             "R1",
-            "books.toscrape üzerinde en ucuz 4 yıldızlı kitabı bul ve yazarını Wikipedia'da özetle",
+            "find the cheapest 4-star book on books.toscrape and summarize its author on Wikipedia",
             "https://books.toscrape.com/index.html",
             max_steps=70,
             max_seconds=240,
@@ -54,28 +54,28 @@ def live_scenarios() -> list[Scenario]:
         ),
         Scenario(
             "R2",
-            "saucedemo'ya gir, iki ürün ekle, ödeme özetindeki toplamı oku",
+            "log into saucedemo, add two items, read the total in checkout summary",
             "https://www.saucedemo.com/",
             max_steps=20,
             max_seconds=90,
         ),
         Scenario(
             "R3",
-            "Hacker News ilk üç başlığı özetle",
+            "summarize the top three Hacker News headlines",
             "https://news.ycombinator.com/",
             max_steps=6,
             max_seconds=40,
         ),
         Scenario(
             "R4",
-            "arXiv 'browser agents' aramasındaki son üç makaleyi yaz",
+            "write the latest three papers in arXiv 'browser agents' search",
             "https://export.arxiv.org/api/query?search_query=all:browser+agents&start=0&max_results=3",
             max_steps=6,
             max_seconds=40,
         ),
         Scenario(
             "R5",
-            "the-internet dinamik yükleme, açılır liste ve dosya yükleme",
+            "the-internet dynamic loading, dropdown list and file upload",
             "https://the-internet.herokuapp.com/dynamic_loading/2",
             max_steps=16,
             max_seconds=90,

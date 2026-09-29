@@ -4,7 +4,7 @@ Deadline: 2026-10-31
 
 Prize: Device or 150 USD card
 
-Verification: varsayılan rubrik
+Verification: default rubric
 
 No Kestra pull request lives here.
 

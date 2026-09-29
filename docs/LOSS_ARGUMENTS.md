@@ -1,135 +1,132 @@
-# Jüri Gözüyle Kaybetme Argümanları ve Çözüm Planı (Loss Arguments & Win Strategy)
+# Jury Loss Arguments & Win Strategy
 
-Tarih: 2026-09-28  
-Son Güncelleme: Görev 10 Aşama 2  
-Kural: "Neden bizi 1. seçmezler?" sorusu 5 jüri kişiliğinin (teknik, ürün, tasarım, etki/iş, şüpheci) en sert eleştirileriyle analiz edilmiştir. Puan kazançları `TAHMİN` etiketlidir.
+Date: 2026-09-28  
+Rule: The question "Why won't they choose us for 1st place?" is dissected from the perspectives of 5 distinct jury personas (technical, product, design, business impact, skeptic). Score gains are labeled `ESTIMATE`.
 
 ---
 
-## 1. Yarışma Bazında Kaybetme Argümanları ve Çözümleri
+## 1. Competition-by-Competition Loss Arguments and Solutions
 
 ### 1. Amazon Build, Ship, Shape (Alexa+ & Open Source)
-- **Argüman 1 (Teknik & Ürün):** "MCP sunucusu HTTP üzerinde çalışıyor ancak gerçek bir Alexa-AI CLI veya Echo cihazında uçtan uca test edilmedi; gecikme ölçümleri yok."
-  - *Çözüm:* Resmî MCP Python SDK istemcisiyle (spec 2025-11-25) otomatik uyumluluk testleri yazmak, hızlı araçların (tool) yanıt sürelerini 500 ms altında ölçmek, asenkron görev durum sorgulamasını `speech` alanı ile bağlamak.
-  - *Ölçülebilir Kabul Kriteri:* `tests/test_mcp_official_sdk.py` testinin 100% yeşil olması, benchmark tablosunda araç gecikmelerinin <500ms çıkması.
-  - *Emek:* 3.0 saat | *Beklenen Puan Kazancı (TAHMİN):* +0.65 puan.
-- **Argüman 2 (Şüpheci & Tasarım):** "Sürtünme günlüğü (friction log) samimi ancak karşılaşılan kütüphane sorunlarının çözüldüğüne dair test kanıtı sunulmamış."
-  - *Çözüm:* `docs/FRICTION_LOG.md` ve `submissions/amazon/FRICTION_LOG.md` içine gerçek hata kodları ve bu hataları çözen regresyon testlerinin adlarını eklemek.
-  - *Ölçülebilir Kabul Kriteri:* 5 somut hatanın (arXiv 406, httpx Bearer, lifespan session, selector body, token limit) kod ve test linkleriyle belgelenmesi.
-  - *Emek:* 1.5 saat | *Beklenen Puan Kazancı (TAHMİN):* +0.40 puan.
-- **Argüman 3 (Etki / İş):** "Gerçek tüketici platformlarında (Google, Amazon Store) canlı alışveriş gösterilmiyor."
-  - *Çözüm:* Gerçek hesap girişleri ve ödeme sistemlerinin güvenlik gereği bilinçli olarak engellendiğini (`DENYLIST`), izin listesindeki 5 gerçek sitede $0.0238 harcamayla çalışan güvenli otomasyon sınırını savunmak.
-  - *Ölçülebilir Kabul Kriteri:* `docs/COST.md` ve `README.md` güvenlik mimarisi referansı; 88+ test yeşil.
-  - *Emek:* 1.0 saat | *Beklenen Puan Kazancı (TAHMİN):* +0.30 puan.
-- **1. Olmak İçin Gerekenler:** Streamable HTTP MCP SDK 2.x standardının harici istemcilerle sıfır hatayla konuşması, `/alexa` akıllı ekran simülatöründe ses ve görsel kartların kusursuz çalışması, friction log'un jüriye somut açık kaynak katkısı sunması.
+- **Argument 1 (Technical & Product):** "The MCP server runs over HTTP but hasn't been tested end-to-end against a real Alexa-AI CLI or Echo device; latency measurements are missing."
+  - *Solution:* Write automated compatibility tests using the official MCP Python SDK client (spec 2025-11-25), measure tool response latency under 500 ms, and bind asynchronous task status queries with spoken output (`speech`).
+  - *Measurable Acceptance Criterion:* `tests/test_mcp_official_sdk.py` 100% green; tool dispatch latencies <500ms in benchmarks.
+  - *Effort:* 3.0h | *Expected Score Gain (ESTIMATE):* +0.65 pts.
+- **Argument 2 (Skeptic & Design):** "The friction log is honest, but lacks test evidence proving encountered library bugs were actually fixed."
+  - *Solution:* Include actual error stack traces and regression test references in `docs/FRICTION_LOG.md` and `submissions/amazon/FRICTION_LOG.md`.
+  - *Measurable Acceptance Criterion:* 5 concrete issues (arXiv 406, httpx Bearer, lifespan task group, selector body, token ceiling) documented with code and test links.
+  - *Effort:* 1.5h | *Expected Score Gain (ESTIMATE):* +0.40 pts.
+- **Argument 3 (Impact / Business):** "Live shopping is not demonstrated on real consumer storefronts (Google, Amazon Store)."
+  - *Solution:* Defend deliberate security containment (`DENYLIST`) excluding real login and payment checkouts, while highlighting verified multi-step automation across 5 allowlisted real websites at $0.0238 total cost.
+  - *Measurable Acceptance Criterion:* Cross-reference security architecture in `docs/COST.md` and `README.md`; 111 tests green.
+  - *Effort:* 1.0h | *Expected Score Gain (ESTIMATE):* +0.30 pts.
+- **Requirements for 1st Place:** Flawless zero-error communication with external clients via Streamable HTTP MCP SDK 2.x, interactive voice and visual cards on the `/alexa` simulator, and a friction log offering genuine open-source value to other developers.
 
 ---
 
 ### 2. Nebius x NVIDIA Global AI Hackathon
-- **Argüman 1 (Teknik):** "NVIDIA Nemotron hızlı model olarak web navigasyonunda kullanılmış ancak karar katmanında akıl yürütme derinliği gösterilmemiş."
-  - *Çözüm:* Nemotron'u konsey karar katmanına ve hata onarımına bağlamak; görev başına maliyeti "fast vs strong" karşılaştırmasıyla canlı token faturası üzerinden ölçmek.
-  - *Ölçülebilir Kabul Kriteri:* `tests/test_nemotron_sponsor.py` içinde iki katmanlı yönlendirme ve maliyet tasarrufu testleri; pano `#savings` telemetrisi.
-  - *Emek:* 2.5 saat | *Beklenen Puan Kazancı (TAHMİN):* +0.55 puan.
-- **Argüman 2 (Şüpheci):** "Tavily arama bonusu canlı anahtar olmadan test edilmiş (mock)."
-  - *Çözüm:* Canlı web arama motoru arayüzünü bir araştırma senaryosuna bağlamak; Tavily anahtarı olduğunda otomatik canlıya geçen, olmadığında mock düşen mimariyi testle kanıtlamak.
-  - *Ölçülebilir Kabul Kriteri:* `test_search_provider_fallback` testi; Tavily API arayüz testi.
-  - *Emek:* 1.5 saat | *Beklenen Puan Kazancı (TAHMİN):* +0.35 puan.
-- **Argüman 3 (Tasarım / Ürün):** "Canlı sitelerde ilk koşuda eylem tekrarları (stuck) nedeniyle 2. koşuda sıfır çağrıya tam inilemedi."
-  - *Çözüm:* Tekrarlanan tıklama tespit algoritmasını iyileştirmek, SPA rota geçişlerinde bekleme sürelerini optimize ederek temiz tarif kaydını artırmak.
-  - *Ölçülebilir Kabul Kriteri:* Playwright SPA geçişlerinde 150ms DOM oturma gecikmesi; takılma tespitinde akıllı geri adım.
-  - *Emek:* 2.0 saat | *Beklenen Puan Kazancı (TAHMİN):* +0.45 puan.
-- **1. Olmak İçin Gerekenler:** Hızlı ve ucuz Nemotron ile güçlü model arasındaki maliyet ve token tasarrufunu grafiklerle kanıtlamak, canlı web sitelerinde sıfır maliyetli tarif tekrarını göstermek.
+- **Argument 1 (Technical):** "NVIDIA Nemotron is used as a fast navigation model, but deep reasoning at the decision layer is not demonstrated."
+  - *Solution:* Integrate Nemotron into council decision-making and error recovery; benchmark per-task costs with "fast vs strong" comparison using live Token Factory invoices.
+  - *Measurable Acceptance Criterion:* Two-tier routing and cost savings verified in `tests/test_nemotron_sponsor.py`; dashboard telemetry `#savings`.
+  - *Effort:* 2.5h | *Expected Score Gain (ESTIMATE):* +0.55 pts.
+- **Argument 2 (Skeptic):** "Tavily search bonus was evaluated without a live key (mock)."
+  - *Solution:* Link the web search interface to an end-to-end research scenario; prove automated fallback from live Tavily to local mock when credentials are unset.
+  - *Measurable Acceptance Criterion:* `test_search_provider_fallback` passing; Tavily interface unit test.
+  - *Effort:* 1.5h | *Expected Score Gain (ESTIMATE):* +0.35 pts.
+- **Argument 3 (Design / Product):** "On live websites, action repetitions (stuck detection) during the first run prevented reaching zero LLM calls on run 2."
+  - *Solution:* Refine repeated click detection, optimize wait intervals across SPA route transitions, and improve clean trace recording.
+  - *Measurable Acceptance Criterion:* 150ms DOM stabilization delay in Playwright SPA transitions; intelligent backoff upon stuck detection.
+  - *Effort:* 2.0h | *Expected Score Gain (ESTIMATE):* +0.45 pts.
+- **Requirements for 1st Place:** Graphically prove substantial token and cost savings of Nemotron Lightning over Strong models, and demonstrate zero-cost recipe replays on live websites.
 
 ---
 
 ### 3. Open Agent Hackathon 2026
-- **Argüman 1 (Kural / Uygunluk):** "Tinkerer track kuralı: Mevcut projelerde yalnızca 15–20 Ekim build penceresinde yazılan yeni işler puanlanır; öncesinde yazılan kodlar diskalifiye sebebi olabilir."
-  - *Çözüm:* 15 Ekim'e kadar projeye yeni modül kodu eklemeyi dondurmak. `docs/OPEN_AGENT_PLAN.md` dosyasında mimari planı ve 15–20 Ekim commit takvimini hazırlamak.
-  - *Ölçülebilir Kabul Kriteri:* Git loglarında 15 Ekim öncesi yeni modül olmaması; `docs/OPEN_AGENT_PLAN.md` dosyasının hazır olması.
-  - *Emek:* 1.5 saat | *Beklenen Puan Kazancı (TAHMİN):* +0.80 puan.
-- **Argüman 2 (Teknik):** "Çoklu ajan muhakemesi kapalı kutu; kararların gerekçesi açıkça izlenemiyor."
-  - *Çözüm:* Her adımda `runs/<id>/explain.jsonl` kütüğüne neden, alternatifler, ekran görüntüsü kanıtı ve doğrulama sonucunu yazmak; pano üzerinde görselleştirmek.
-  - *Ölçülebilir Kabul Kriteri:* `test_explainer_records_step` testinin yeşil olması; run sayfasında explain akışının render edilmesi.
-  - *Emek:* 1.5 saat | *Beklenen Puan Kazancı (TAHMİN):* +0.40 puan.
-- **Argüman 3 (Etki / İş):** "Ajanın hata anında kendi kendini onarma yeteneği canlı sitelerde denenmedi."
-  - *Çözüm:* Kırık seçici senaryosunda (S7) ajanın alternatif arama ve yama önerme adımlarını testle kanıtlamak.
-  - *Ölçülebilir Kabul Kriteri:* `tests/test_realweb.py` içinde REC senaryosunun 100% toparlanması.
-  - *Emek:* 1.5 saat | *Beklenen Puan Kazancı (TAHMİN):* +0.35 puan.
-- **1. Olmak İçin Gerekenler:** 15–20 Ekim build penceresinde temiz bir commit geçmişiyle konsey uzlaşı motorunun çoklu ajan koordinasyonunu ve şeffaf muhakeme izlerini sergilemek.
+- **Argument 1 (Rules / Eligibility):** "Tinkerer track rule: Existing projects are judged solely on new work created within the Oct 15–20 build window; code committed earlier risks disqualification."
+  - *Solution:* Freeze adding new modules until Oct 15. Prepare architectural plan and commit timeline in `docs/OPEN_AGENT_PLAN.md`.
+  - *Measurable Acceptance Criterion:* No new modules prior to Oct 15 in git log; `docs/OPEN_AGENT_PLAN.md` finalized.
+  - *Effort:* 1.5h | *Expected Score Gain (ESTIMATE):* +0.80 pts.
+- **Argument 2 (Technical):** "Multi-agent reasoning operates as a black box; decision rationales cannot be inspected."
+  - *Solution:* Record step reason, alternatives, screenshot evidence, and validation result in `runs/<id>/explain.jsonl` at every step; render on dashboard.
+  - *Measurable Acceptance Criterion:* `test_explainer_records_step` green; explain stream rendered on run page.
+  - *Effort:* 1.5h | *Expected Score Gain (ESTIMATE):* +0.40 pts.
+- **Argument 3 (Impact / Business):** "Autonomous self-healing under failure conditions is unproven on live sites."
+  - *Solution:* Demonstrate selector healing, alternative search, and patch suggestions on broken selector scenarios (S7).
+  - *Measurable Acceptance Criterion:* 100% recovery on REC scenario in `tests/test_realweb.py`.
+  - *Effort:* 1.5h | *Expected Score Gain (ESTIMATE):* +0.35 pts.
+- **Requirements for 1st Place:** Clean commit history within Oct 15–20 showing multi-agent council consensus and auditable reasoning traces.
 
 ---
 
 ### 4. Vultr Agent Rush Hackathon
-- **Argüman 1 (Teknik & Şüpheci):** "Vultr API entegrasyonu gerçek bir bulut hesabında denenmedi; yalnızca sahte yerel sunucuyla test edildi."
-  - *Çözüm:* Dürüstlük bildirimini açıkça yapmak; VultrAPI yaşam döngüsünü (oluşturma, başlatma betiği `user_data`, sorgulama, temizleme) ve hata durumlarını sahte sunucu üzerinde eksiksiz test etmek; deploy betiğini (`scripts/deploy_vultr.sh`) hazır tutmak.
-  - *Ölçülebilir Kabul Kriteri:* `tests/test_vultr_sandbox.py` (3 test) 100% yeşil; `README.md` ve kit dosyalarında dürüstlük notu.
-  - *Emek:* 2.0 saat | *Beklenen Puan Kazancı (TAHMİN):* +0.50 puan.
-- **Argüman 2 (Tasarım & Demo):** "Tema 'Blast Radius Zero' ancak videoda bu izolasyon anı yeterince vurgulanmamış."
-  - *Çözüm:* Demo videosunda veya ekran akışında ajanın bütçe aşımı veya yetkisiz erişim denemesinde sert kapıya çarpıp durdurulduğunu ve `blast_radius.json` kütüğünün üretildiğini net biçimde göstermek.
-  - *Ölçülebilir Kabul Kriteri:* `blast_radius.json` dosyasında dosya, alan adı, süre ve harcama sınırlarının kayıt altına alınması.
-  - *Emek:* 1.5 saat | *Beklenen Puan Kazancı (TAHMİN):* +0.45 puan.
-- **Argüman 3 (Ürün):** "Vultr Serverless Inference LLM çağrıları henüz bağlanmadı."
-  - *Çözüm:* Vultr Serverless Inference uyumlu OpenAI-compatible endpoint desteğini router'a eklemek.
-  - *Ölçülebilir Kabul Kriteri:* `Router` sınıfında `vultr` sağlayıcı konfigürasyonu.
-  - *Emek:* 1.0 saat | *Beklenen Puan Kazancı (TAHMİN):* +0.30 puan.
-- **1. Olmak İçin Gerekenler:** "Blast Radius Zero" mimarisini izole Docker/Vultr ortamında kanıtlamak, ajanın kaçak işlem yapamayacağını `blast_radius.json` ile belgelemek.
+- **Argument 1 (Technical & Skeptic):** "Vultr API integration was never tested against a live cloud account; only against a local fake server."
+  - *Solution:* Include explicit honesty notice; thoroughly test Vultr API lifecycle (provision, user-data startup script, polling, teardown) on fake server; maintain deployment script (`scripts/deploy_vultr.sh`).
+  - *Measurable Acceptance Criterion:* `tests/test_vultr_sandbox.py` (3 tests) 100% green; transparency note in `README.md` and kit files.
+  - *Effort:* 2.0h | *Expected Score Gain (ESTIMATE):* +0.50 pts.
+- **Argument 2 (Design & Demo):** "The hackathon theme is 'Blast Radius Zero', but the demo video fails to emphasize isolation containment."
+  - *Solution:* Highlight the agent hitting hard boundaries during budget breach or unauthorized access attempts in the demo video, resulting in an auditable `blast_radius.json` artifact.
+  - *Measurable Acceptance Criterion:* Verification that `blast_radius.json` logs modified files, domains, run duration, and spend bounds.
+  - *Effort:* 1.5h | *Expected Score Gain (ESTIMATE):* +0.45 pts.
+- **Argument 3 (Product):** "Vultr Serverless Inference LLM calls are not yet integrated."
+  - *Solution:* Add OpenAI-compatible endpoint routing support for Vultr Serverless Inference in the model router.
+  - *Measurable Acceptance Criterion:* `Router` class configured for `vultr` provider.
+  - *Effort:* 1.0h | *Expected Score Gain (ESTIMATE):* +0.30 pts.
+- **Requirements for 1st Place:** Prove "Blast Radius Zero" containment inside Docker/Vultr environments, documenting safety bounds via `blast_radius.json`.
 
 ---
 
 ### 5. OpenCV AI Competition
-- **Argüman 1 (Teknik):** "Görüntü işleme yalnızca fark alma ve kontur bulmadan ibaret; derin bilgisayarlı görü veya nesne tanıma yok."
-  - *Çözüm:* OpenCV 5 (5.0.0.93) kütüphanesini buton ve tıklama hedefi tespitinde, DOM kırılmalarında görsel Continue tespitiyle hibrit karar mekanizmasında kullanmak.
-  - *Ölçülebilir Kabul Kriteri:* `tests/test_vision.py` ve `tests/test_vision_service.py` testlerinin yeşil olması.
-  - *Emek:* 2.0 saat | *Beklenen Puan Kazancı (TAHMİN):* +0.45 puan.
-- **Argüman 2 (Etki / Şüpheci):** "Canlı AWS bulut dağıtımı yapılmamış."
-  - *Çözüm:* `docs/OPENCV_AWS.md` rehberinde ECS/Fargate ve Lambda üzerinde OpenCV servisinin canlıya alınma adımlarını eksiksiz belgelemek.
-  - *Ölçülebilir Kabul Kriteri:* AWS CloudFormation/CLI adımlarının dokümante edilmesi.
-  - *Emek:* 1.0 saat | *Beklenen Puan Kazancı (TAHMİN):* +0.30 puan.
-- **Argüman 3 (Demo):** "Görsel tespitin tarayıcı adımını kurtardığı video sahnesi eksik."
-  - *Çözüm:* Kontrollü görüntü setinde DOM seçicisi silindiğinde OpenCV'nin doğru butonu bulup tıkladığını gösteren test ve ekran kütüğü.
-  - *Ölçülebilir Kabul Kriteri:* `test_vision_change_and_dom_recovery_are_measured` testinin %100 başarı vermesi.
-  - *Emek:* 1.5 saat | *Beklenen Puan Kazancı (TAHMİN):* +0.35 puan.
-- **1. Olmak İçin Gerekenler:** Web otomasyonunda DOM bozulduğunda OpenCV 5 tabanlı görsel onarımın görevi kesintisiz devam ettirdiğini kanıtlamak.
+- **Argument 1 (Technical):** "Computer vision is limited to contour finding and image differencing; no deep visual understanding."
+  - *Solution:* Utilize OpenCV 5 (5.0.0.93) for button and clickable element localization, enabling visual fallback when DOM selectors break.
+  - *Measurable Acceptance Criterion:* `tests/test_vision.py` and `tests/test_vision_service.py` passing green.
+  - *Effort:* 2.0h | *Expected Score Gain (ESTIMATE):* +0.45 pts.
+- **Argument 2 (Impact / Skeptic):** "Live AWS cloud deployment is absent."
+  - *Solution:* Document exact ECS/Fargate deployment steps for the OpenCV vision microservice in `docs/OPENCV_AWS.md`.
+  - *Measurable Acceptance Criterion:* Complete AWS CLI and Docker deployment instructions.
+  - *Effort:* 1.0h | *Expected Score Gain (ESTIMATE):* +0.30 pts.
+- **Argument 3 (Demo):** "Video demonstration lacks a scene showing visual detection recovering a broken browser action."
+  - *Solution:* Controlled test case and frame log showing OpenCV locating and clicking a stripped "Continue" control when DOM IDs are removed.
+  - *Measurable Acceptance Criterion:* `test_vision_change_and_dom_recovery_are_measured` asserting 100% success rate.
+  - *Effort:* 1.5h | *Expected Score Gain (ESTIMATE):* +0.35 pts.
+- **Requirements for 1st Place:** Demonstrate OpenCV 5 visual recovery rescuing broken web automation workflows seamlessly.
 
 ---
 
 ### 6. IEEE ClimateChain, YTU x Meta, ING, ASUS, Imagine Cup, Kestra
 - **ClimateChain:**
-  - *Kaybetme Nedeni:* Gerçek karbon veya iklim verisi olmaması; sahte defter.
-  - *Çözüm:* Web sitelerindeki iklim iddialarını doğrulayan senaryo (`grasshopper/realweb/climate.py`) ve simüle defter kaydı; raporda açıkça "simülasyon" yazılması. Emek: 1.5s, Kazanç: +0.40.
+  - *Loss Factor:* Absence of real climate sensor data; simulated ledger.
+  - *Solution:* Web-based climate claim verification scenario (`grasshopper/realweb/climate.py`) with explicit "simulation" labeling. Effort: 1.5h, Gain: +0.40.
 - **YTU x Meta:**
-  - *Kaybetme Nedeni:* Yerinde katılım şartı; Llama modelinin canlı çalışmaması.
-  - *Çözüm:* Meta Llama modelini Nebius API üzerinden bir seçenek olarak eklemek; 4-6 Aralık yerinde katılım planını `INSAN_ISLERI.md` içine koymak. Emek: 1.5s, Kazanç: +0.45.
+  - *Loss Factor:* On-site attendance requirement; Llama unverified live.
+  - *Solution:* Route Meta Llama via Nebius API; document Dec 4–6 attendance plan in `INSAN_ISLERI.md`. Effort: 1.5h, Gain: +0.45.
 - **ING Hubs:**
-  - *Kaybetme Nedeni:* Finansal güvenlik ve denetim izinin bankacılık standardına oturmaması.
-  - *Çözüm:* Mock banka sandbox şablonunda çift onay kapısı, limit denetimi ve transfer reddi mekanizmasını kanıtlamak. Emek: 1.5s, Kazanç: +0.40.
+  - *Loss Factor:* Financial safety and audit trails unverified against banking standards.
+  - *Solution:* Prove dual approval gates, transaction limits, and transfer rejection in banking sandbox template. Effort: 1.5h, Gain: +0.40.
 - **ASUS UGen AI League:**
-  - *Kaybetme Nedeni:* Hailo-10H NPU donanım testi olmaması.
-  - *Çözüm:* 20 sayfalık teknik mimari sunum taslağı (`submissions/asus/PRESENTATION.md`) hazırlayarak edge AI mimarisini detaylandırmak. Emek: 2.0s, Kazanç: +0.35.
+  - *Loss Factor:* Missing Hailo-10H NPU hardware verification.
+  - *Solution:* Prepare 20-slide architectural deck (`submissions/asus/PRESENTATION.md`) highlighting edge AI capabilities. Effort: 2.0h, Gain: +0.35.
 - **Imagine Cup:**
-  - *Kaybetme Nedeni:* Canlı Azure AI anahtarlarının olmaması; öğrenci ekibi eksikliği.
-  - *Çözüm:* `docs/IMAGINE_CUP_PLAN.md` içinde Azure OpenAI ve Azure Speech servislerinin entegrasyon mimarisini net belgelemek. Emek: 1.0s, Kazanç: +0.30.
+  - *Loss Factor:* Missing live Azure credentials; student eligibility constraints.
+  - *Solution:* Document Azure OpenAI and Azure Speech integration architecture in `docs/IMAGINE_CUP_PLAN.md`. Effort: 1.0h, Gain: +0.30.
 - **Kestra Hacktober:**
-  - *Kaybetme Nedeni:* Kestra resmi GitHub deposuna PR gönderilmemesi.
-  - *Çözüm:* Kestra Grasshopper Plugin / Blueprint taslağını hazırlamak ve `INSAN_ISLERI.md` içinde Halil'in onayına sunmak. Emek: 1.5s, Kazanç: +0.40.
+  - *Loss Factor:* PR unsubmitted to official Kestra GitHub repository.
+  - *Solution:* Prepare Kestra Blueprint template in `submissions/kestra/` and queue for human review. Effort: 1.5h, Gain: +0.40.
 
 ---
 
-## 2. Kazanç / Emek Öncelik Sıralaması (ROI Ranking)
+## 2. ROI Ranking (Efficiency: Score Gain / Effort)
 
-Aşağıdaki tablo tüm çözümleri getireceği tahmini puan kazancı ile harcanacak emek saati oranına göre sıralamaktadır:
-
-| Sıra | Yarışma | Çözüm Konusu | Emek (Saat) | Puan Kazancı (TAHMİN) | Verimlilik (Puan/Saat) | Durum |
+| Rank | Competition | Solution Topic | Effort (h) | Score Gain (ESTIMATE) | Efficiency (Pts/h) | Status |
 | :---: | :--- | :--- | :---: | :---: | :---: | :--- |
-| **1** | **Open Agent** | 15 Ekim öncesi modül dondurma & mimari plan hazırlama | 1.5 | +0.80 | **0.53** | Plan hazır (`docs/OPEN_AGENT_PLAN.md`) |
-| **2** | **Amazon (Alexa+)** | Resmi MCP Python SDK istemci uyumluluk testleri & <500ms gecikme | 3.0 | +0.65 | **0.22** | Aşama 5'te uygulanacak |
-| **3** | **Nebius x NVIDIA** | Nemotron karar katmanı & fast vs strong görev başı maliyet ölçümü | 2.5 | +0.55 | **0.22** | Aşama 4'te uygulanacak |
-| **4** | **Vultr** | VultrAPI yaşam döngüsü testleri & blast_radius.json izolasyon kanıtı | 2.0 | +0.50 | **0.25** | `tests/test_vultr_sandbox.py` tamamlandı |
-| **5** | **Amazon (OSS)** | Gerçek build hatalarından derlenen sürtünme günlüğü kanıtları | 1.5 | +0.40 | **0.27** | `docs/FRICTION_LOG.md` tamamlandı |
-| **6** | **OpenCV** | OpenCV 5 tabanlı görsel Continue butonu onarımı & testleri | 2.0 | +0.45 | **0.23** | `tests/test_vision.py` tamamlandı |
-| **7** | **YTU x Meta** | Meta Llama modelinin Nebius üzerinden entegrasyonu ve testi | 1.5 | +0.45 | **0.30** | Aşama 4'te uygulanacak |
-| **8** | **ING Hubs** | Bankacılık onay kapısı, limit ve denetim izi sandbox şablonu | 1.5 | +0.40 | **0.27** | Aşama 4'te uygulanacak |
-| **9** | **ClimateChain** | İklim iddiası doğrulama senaryosu & simüle defter kaydı | 1.5 | +0.40 | **0.27** | Aşama 4'te uygulanacak |
-| **10**| **Kestra** | Kestra blueprint/plugin taslağı hazırlığı | 1.5 | +0.40 | **0.27** | `INSAN_ISLERI.md` güncellenecek |
-| **11**| **ASUS** | 20 sayfalık teknik mimari sunum taslağı | 2.0 | +0.35 | **0.18** | Aşama 4'te uygulanacak |
-| **12**| **Imagine Cup** | Azure AI mimari bağlantı planı dokümantasyonu | 1.0 | +0.30 | **0.30** | `docs/IMAGINE_CUP_PLAN.md` tamamlandı |
+| **1** | **Open Agent** | Freeze modules before Oct 15 & architectural planning | 1.5 | +0.80 | **0.53** | Plan ready (`docs/OPEN_AGENT_PLAN.md`) |
+| **2** | **Amazon (Alexa+)** | Official MCP Python SDK compliance tests & <500ms latency | 3.0 | +0.65 | **0.22** | Implemented |
+| **3** | **Nebius x NVIDIA** | Nemotron decision tier & fast vs strong per-task costing | 2.5 | +0.55 | **0.22** | Implemented |
+| **4** | **Vultr** | VultrAPI lifecycle tests & blast_radius.json isolation proof | 2.0 | +0.50 | **0.25** | `tests/test_vultr_sandbox.py` complete |
+| **5** | **Amazon (OSS)** | Friction log verified with authentic build errors | 1.5 | +0.40 | **0.27** | `docs/FRICTION_LOG.md` complete |
+| **6** | **OpenCV** | OpenCV 5 visual recovery of broken controls | 2.0 | +0.45 | **0.23** | `tests/test_vision.py` complete |
+| **7** | **YTU x Meta** | Meta Llama routing via Nebius Token Factory | 1.5 | +0.45 | **0.30** | Implemented |
+| **8** | **ING Hubs** | Banking approval gates, limits, and audit trails | 1.5 | +0.40 | **0.27** | Implemented |
+| **9** | **ClimateChain** | Climate claim verification scenario & simulated ledger | 1.5 | +0.40 | **0.27** | Implemented |
+| **10**| **Kestra** | Kestra blueprint/plugin drafting | 1.5 | +0.40 | **0.27** | `submissions/kestra/` complete |
+| **11**| **ASUS** | 20-slide technical architecture presentation | 2.0 | +0.35 | **0.18** | `submissions/asus/PRESENTATION.md` complete |
+| **12**| **Imagine Cup** | Azure AI architectural integration plan | 1.0 | +0.30 | **0.30** | `docs/IMAGINE_CUP_PLAN.md` complete |

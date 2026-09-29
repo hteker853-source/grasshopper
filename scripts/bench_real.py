@@ -2,7 +2,7 @@
 """Run R1–R5 N times and write docs/RELIABILITY_REAL.md from the runs.
 
 Live numbers are whatever happened. A scenario that cannot be started is
-recorded as ölçülmedi. Nothing in the report is filled in by hand.
+recorded as unmeasured. Nothing in the report is filled in by hand.
 """
 
 from __future__ import annotations
@@ -98,7 +98,7 @@ def _row(scenario_id: str, reports: list[WebReport] | None, note: str) -> list[s
         return [
             f"## {scenario_id}",
             "",
-            f"Durum: ölçülmedi. {note}",
+            f"Status: unmeasured. {note}",
             "",
         ]
     successes = sum(1 for report in reports if report.ok)
@@ -108,24 +108,24 @@ def _row(scenario_id: str, reports: list[WebReport] | None, note: str) -> list[s
     tokens = sum(report.tokens for report in reports) / n if n else 0.0
     dollars = sum(report.usd_actual for report in reports)
     r1 = reports[0]
-    second_calls = reports[1].llm_calls if len(reports) > 1 else "ölçülmedi"
+    second_calls = reports[1].llm_calls if len(reports) > 1 else "unmeasured"
     errors = sorted({report.error for report in reports if report.error})
     lines = [
         f"## {scenario_id}",
         "",
-        f"- Koşu: {n}",
-        f"- Başarı: {successes}/{n} ({rate:.1f}%)",
-        f"- Ortalama adım: {steps:.1f}",
-        f"- Ortalama token: {tokens:.0f}",
-        f"- Toplam gerçek harcama: ${dollars:.6f}",
-        f"- 1. koşu LLM çağrısı: {r1.llm_calls}",
-        f"- 1. koşu token: {r1.tokens}",
-        f"- 1. koşu $: ${r1.usd_actual:.6f}",
-        f"- 1. koşu süre: {r1.seconds:.1f}s",
-        f"- 2. koşu (tarif) LLM çağrısı: {second_calls}",
+        f"- Runs: {n}",
+        f"- Success: {successes}/{n} ({rate:.1f}%)",
+        f"- Average steps: {steps:.1f}",
+        f"- Average tokens: {tokens:.0f}",
+        f"- Total actual spend: ${dollars:.6f}",
+        f"- Run 1 LLM calls: {r1.llm_calls}",
+        f"- Run 1 tokens: {r1.tokens}",
+        f"- Run 1 $: ${r1.usd_actual:.6f}",
+        f"- Run 1 duration: {r1.seconds:.1f}s",
+        f"- Run 2 (playbook) LLM calls: {second_calls}",
     ]
     if errors:
-        lines.append("- Hatalar: " + "; ".join(errors[:4]))
+        lines.append("- Errors: " + "; ".join(errors[:4]))
     lines.append("")
     return lines
 
@@ -137,16 +137,16 @@ def _stat(scenario, reports: list[WebReport] | None, note: str) -> dict:
             "goal": scenario.goal,
             "runs": 0,
             "successes": 0,
-            "rate_str": "ölçülmedi",
+            "rate_str": "unmeasured",
             "steps": 0.0,
             "tokens": 0.0,
             "dollars": 0.0,
-            "first_calls": "ölçülmedi",
-            "first_tokens": "ölçülmedi",
-            "first_dollars": "ölçülmedi",
-            "first_seconds": "ölçülmedi",
-            "second_calls": "ölçülmedi",
-            "note": note or "ölçülmedi",
+            "first_calls": "unmeasured",
+            "first_tokens": "unmeasured",
+            "first_dollars": "unmeasured",
+            "first_seconds": "unmeasured",
+            "second_calls": "unmeasured",
+            "note": note or "unmeasured",
         }
     successes = sum(1 for report in reports if report.ok)
     n = len(reports)
@@ -155,7 +155,7 @@ def _stat(scenario, reports: list[WebReport] | None, note: str) -> dict:
     tokens = sum(report.tokens for report in reports) / n if n else 0.0
     dollars = sum(report.usd_actual for report in reports)
     r1 = reports[0]
-    second_calls = f"{reports[1].llm_calls} çağrı" if len(reports) > 1 else "ölçülmedi"
+    second_calls = f"{reports[1].llm_calls} calls" if len(reports) > 1 else "unmeasured"
     errors = sorted({report.error for report in reports if report.error})
     note_str = "; ".join(errors[:3]) if errors else "-"
     return {
@@ -217,7 +217,7 @@ async def main() -> int:
             try:
                 reports.append(await _one(scenario, settings, router, work / f"{scenario.id}-{index}"))
             except Exception as exc:
-                err = f"koşu {index} açılmadı: {exc}"
+                err = f"run {index} failed to open: {exc}"
                 stats.append(_stat(scenario, None, err))
                 detail_blocks.extend(_row(scenario.id, None, err))
                 failed_open = True
@@ -234,14 +234,14 @@ async def main() -> int:
     overall_rate = (100.0 * total_successes / total_runs) if total_runs else 0.0
 
     lines = [
-        "# Gerçek site güvenilirliği",
+        "# Real site reliability",
         "",
-        f"N={n}. Provider: {settings.llm_fast_provider} ({model_info}). Gecikme: {settings.real_site_delay_sec}s.",
-        "1. koşu canlı LLM ile kararları üretir ve iz kaydeder; 2. koşu öğrenilen tarifi 0 model çağrısıyla yeniden oynatır.",
+        f"N={n}. Provider: {settings.llm_fast_provider} ({model_info}). Delay: {settings.real_site_delay_sec}s.",
+        "Run 1 generates decisions with live LLM and records trace; Run 2 replays learned playbook with 0 model calls.",
         "",
-        "## Güvenilirlik Tablosu",
+        "## Reliability Table",
         "",
-        "| Senaryo | Hedef | Koşu | Başarı Oranı | Ort. Adım | 1. Koşu LLM | 1. Koşu Token | 1. Koşu $ | 1. Koşu Süre | 2. Koşu (Tarif) | Not / Hata |",
+        "| Scenario | Goal | Runs | Success Rate | Avg Steps | Run 1 LLM | Run 1 Tokens | Run 1 $ | Run 1 Duration | Run 2 (Playbook) | Notes / Error |",
         "| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |",
     ]
     for s in stats:
@@ -252,32 +252,32 @@ async def main() -> int:
         )
     lines.extend([
         "",
-        "## Bozulan Sayfa Toparlanma Tablosu",
+        "## Broken Page Recovery Table",
         "",
-        "| Test Metriği | Deneme | Başarılı Toparlanma | Yüzde |",
+        "| Test Metric | Trials | Successful Recovery | Percentage |",
         "| :--- | :---: | :---: | :---: |",
-        f"| Kontrollü görüntü seti (değişiklik ayrımı) | {change['total']} | {change['correct']} | {change['accuracy']:.0%} |",
-        f"| DOM kimliği silinmiş kontrolde Continue seçimi | {recovery['n']} | {recovery['hits']} | {recovery['rate']:.0%} |",
-        "| Canlı sitede kasıtlı HTML değişikliği | - | - | ölçülmedi (üçüncü parti sayfa değiştirilmedi) |",
-        "| REC senaryosu (yerel bozuk sayfa toparlanması) | 1 | 1 | 100% |",
+        f"| Controlled image set (change detection) | {change['total']} | {change['correct']} | {change['accuracy']:.0%} |",
+        f"| Continue selection on control with stripped DOM id | {recovery['n']} | {recovery['hits']} | {recovery['rate']:.0%} |",
+        "| Deliberate HTML mutation on live site | - | - | unmeasured (third-party page not mutated) |",
+        "| REC scenario (local broken page recovery) | 1 | 1 | 100% |",
         "",
-        "## Senaryo Detayları",
+        "## Scenario Details",
         "",
     ])
     lines.extend(detail_blocks)
     total_first_calls = sum(s['first_calls'] for s in stats if isinstance(s['first_calls'], int))
     lines.extend([
-        "## Okuma",
+        "## Reading",
         "",
-        f"Ölçülen {total_runs} koşunun {total_successes}'i başarılı: %{overall_rate:.0f}. "
+        f"{total_successes} of {total_runs} measured runs succeeded: {overall_rate:.0f}%. "
         f"Provider: {settings.llm_fast_provider} ({model_info}). "
-        f"1. koşularda toplam {total_first_calls} canlı LLM çağrısı yapıldı ve BudgetLedger ile harcama ${router.budget.daily_actual:.6f} olarak ölçüldü. "
-        + ("Canlı LLM çağrılarında döngü takılma tespiti (stuck) ve süre bütçesi tetiklendi; başarılı iz tamamlanamadığında 2. koşuda tarif oynatılamadı." if total_successes == 0 else "İkinci koşuda öğrenilen tarif ile 0 model çağrısı sağlandı."),
+        f"Across Run 1 executions, {total_first_calls} live LLM calls were made and spend was measured at ${router.budget.daily_actual:.6f} via BudgetLedger. "
+        + ("In live LLM calls, loop stuck detection and time budget were triggered; because successful traces could not be completed, playbooks could not replay on Run 2." if total_successes == 0 else "Run 2 achieved 0 model calls via learned playbooks."),
         "",
-        "## Harcama",
+        "## Spend",
         "",
-        f"Bu bankonun gerçek `cost_usd` toplamı: ${router.budget.daily_actual:.6f}.",
-        "Canlı Nebius Nemotron çağrılarının gerçek maliyeti BudgetLedger'dan geçmiştir. Mock çağrılarda maliyet 0 iken gerçek çağrılarda non-zero harcama doğrulanmıştır.",
+        f"Total actual `cost_usd` for this bench: ${router.budget.daily_actual:.6f}.",
+        "Live Nebius Nemotron calls were accurately billed through BudgetLedger. Non-zero spend was verified for real calls while remaining $0 for mock.",
         "",
     ])
 
