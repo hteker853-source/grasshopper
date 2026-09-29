@@ -51,4 +51,5 @@
 - Task 13: Full English localization across all documentation, templates, and submission kits; video generation engine enhanced with Loom-style Chrome window frame, gliding cursor, and action ripple.
 - Task 14: Switched video recording to native Chromium context.record_video_dir (1280x720) without overlays; produced single shared 68-second authentic scenario (Books to Scrape -> Wikipedia -> Grasshopper Dashboard), approved via Telegram gate, saved to videos/main_demo.mp4, and updated all kit and audit references.
 - Updated repo URLs to https://github.com/hteker853-source/grasshopper, jury replay to https://hteker853-source.github.io/grasshopper/, and YouTube demo video https://youtu.be/3MFjYfCec4c across README.md, docs, and all submission DESCRIPTION.md files.
+- Packaged Amazon submission kit (DESCRIPTION, FRICTION_LOG, VIDEO_SCRIPT, CHECKLIST, screenshots, main_demo.mp4) into 4.66 MB zip and dispatched to Telegram via sendDocument.
 

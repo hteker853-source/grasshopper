@@ -10,6 +10,7 @@ data/*.db*
 data/*.db-shm
 data/*.db-wal
 videos/
+*.zip
 data/video_tmp/
 docs/INSAN_ISLERI.md
 docs/HANDOFF.md
