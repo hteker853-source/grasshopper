@@ -10,6 +10,10 @@ Grasshopper is an open-source (MIT) autonomous multi-step browser agent designed
 
 A central innovation is **zero-cost recipe replay**: once Grasshopper discovers a successful path through a site, it compiles the execution trace into an approved playbook. Subsequent runs execute deterministically with **zero model calls**, driving marginal inference cost to zero.
 
+- **Demo Video:** https://youtu.be/3MFjYfCec4c
+- **GitHub Repository:** https://github.com/hteker853-source/grasshopper
+- **Jury Replay (Static Demo):** https://hteker853-source.github.io/grasshopper/
+
 ---
 
 ## Technical Architecture & Offline-First Design

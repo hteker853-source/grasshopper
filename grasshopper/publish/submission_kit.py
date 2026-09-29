@@ -26,6 +26,7 @@ def build_kit(slug: str, dest_root: Path | None = None) -> Path:
     if slug != "amazon":
         (dest / "DESCRIPTION.md").write_text(
             row.get("summary", "") + "\n\n" + row.get("how_to_enable", "") + "\n\n"
+            "Demo video: https://youtu.be/3MFjYfCec4c\n\n"
             "Halil should review this draft. It is not submitted.\n",
             encoding="utf-8",
         )

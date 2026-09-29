@@ -4,7 +4,7 @@
 [![Tests](https://img.shields.io/badge/tests-111%20passed-brightgreen.svg)]()
 [![Audit](https://img.shields.io/badge/audit-22%20✅%20%2F%208%20⏳-blue.svg)](docs/AUDIT.md)
 
-Grasshopper is an open-source, multi-step browser AI agent that operates web browsers like a human. It turns repetitive manual browser workflows into safe, budgeted, self-healing automations via a single natural-language prompt or voice command. Live deployment: [halil.devnet](https://halil.devnet) (or GitHub: [https://github.com/grasshopper-agent/grasshopper](https://github.com/grasshopper-agent/grasshopper)).
+Grasshopper is an open-source, multi-step browser AI agent that operates web browsers like a human. It turns repetitive manual browser workflows into safe, budgeted, self-healing automations via a single natural-language prompt or voice command. GitHub: https://github.com/hteker853-source/grasshopper | Jüri replay: https://hteker853-source.github.io/grasshopper/ | Demo video: https://youtu.be/3MFjYfCec4c
 
 Once a workflow is successfully completed, Grasshopper learns the recipe and replays it on subsequent runs with **zero model calls**, driving marginal inference cost to zero.
 
@@ -13,7 +13,7 @@ Once a workflow is successfully completed, Grasshopper learns the recipe and rep
 ## 3-Command Setup
 
 ```bash
-git clone https://github.com/grasshopper-agent/grasshopper.git && cd grasshopper
+git clone https://github.com/hteker853-source/grasshopper.git && cd grasshopper
 bash scripts/setup.sh
 make run
 ```

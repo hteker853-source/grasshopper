@@ -2,4 +2,6 @@ The explainer records the reason, the alternatives, the evidence screenshot, and
 
 Ready. Every step writes runs/<id>/explain.jsonl and the run page renders it.
 
+Demo video: https://youtu.be/3MFjYfCec4c
+
 Halil should review this draft. It is not submitted.

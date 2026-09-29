@@ -7,7 +7,7 @@ Thank you for your interest in contributing to Grasshopper! Grasshopper is an op
 ## Quick Start (Three Commands)
 
 ```bash
-git clone https://github.com/grasshopper-agent/grasshopper.git && cd grasshopper
+git clone https://github.com/hteker853-source/grasshopper.git && cd grasshopper
 bash scripts/setup.sh
 make test
 ```

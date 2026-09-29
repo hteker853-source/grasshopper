@@ -2,4 +2,6 @@ The fast tier is the Nebius slot. Router logs show how often cheap calls replace
 
 Set LLM_FAST_PROVIDER=nebius, NEBIUS_API_KEY, NEBIUS_BASE_URL, and NEBIUS_FAST_MODEL.
 
+Demo video: https://youtu.be/3MFjYfCec4c
+
 Halil should review this draft. It is not submitted.
