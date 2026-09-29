@@ -71,7 +71,7 @@ OPEN_AGENT = [
     _row("Innovation", 15, (8, 7, 5, 8, 5), (8, 7, 5, 8, 5),
          "Zero-cost playbook playback on rerun, hard budget protection."),
     _row("Demo", 15, (6, 7, 7, 7, 4), (6, 7, 7, 7, 4),
-         "62-second video videos/demo.mp4; dashboard, learning curve, and protection demo."),
+         "62-second video videos/main_demo.mp4; dashboard, learning curve, and protection demo."),
     _row("Product & UX", 10, (7, 8, 8, 7, 5), (7, 8, 8, 7, 5),
          "Run overview, live frames, step targets, and budget metrics."),
     _row("Sponsor Tech", 10, (7, 6, 5, 7, 4), (9, 8, 6, 8, 6),
@@ -82,7 +82,7 @@ VULTR = [
     _row("Application of Technology", 25, (6, 7, 5, 6, 4), (8, 8, 6, 7, 6),
          "tests/test_vultr_sandbox.py: VultrAPI lifecycle (get, list, user_data), error recovery, sandbox cleanup, and isolated execution proven by tests."),
     _row("Presentation", 25, (6, 7, 6, 6, 4), (6, 7, 6, 6, 4),
-         "Isolation moment in 62s video videos/demo.mp4, docs/rules/vultr.md full rule documentation."),
+         "Isolation moment in 62s video videos/main_demo.mp4, docs/rules/vultr.md full rule documentation."),
     _row("Business Value", 25, (7, 8, 5, 8, 5), (7, 8, 5, 8, 5),
          "Enterprise safety via hard budget stop ($0.50/$0.05), allow/denylist, approval gate on sensitive actions."),
     _row("Originality", 25, (7, 8, 6, 7, 5), (7, 8, 6, 7, 5),
@@ -108,7 +108,7 @@ DEFAULT = [
     _row("Technical", 25, (4, 4, 3, 3, 3), (6, 5, 4, 4, 4), "Relevant test file and default rubric."),
     _row("Innovation", 20, (4, 3, 3, 3, 2), (5, 4, 4, 3, 3), "Existing agent loop. Contest-specific novel thesis is limited."),
     _row("Impact", 20, (3, 3, 2, 2, 2), (3, 3, 2, 2, 2), "Users or revenue unmeasured."),
-    _row("Demo", 20, (4, 4, 4, 3, 3), (5, 5, 4, 4, 3), "videos/demo.mp4 64s. Contest-specific title clip generated separately."),
+    _row("Demo", 20, (4, 4, 4, 3, 3), (5, 5, 4, 4, 3), "videos/main_demo.mp4 64s. Contest-specific title clip generated separately."),
     _row("UX", 15, (5, 5, 6, 4, 3), (6, 5, 6, 4, 4), "Dashboard learning and cost panel."),
 ]
 

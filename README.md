@@ -35,6 +35,7 @@ This command:
 2. Simulates natural language task intake, multi-step planning, and browser interactions.
 3. Verifies the `BudgetLedger` hard spending cap and `ApprovalGate` human sign-off policy.
 4. Generates a static jury playback page at `site/index.html` with step-by-step screenshots.
+5. Official 68-second native Chromium video walkthrough available at [`videos/main_demo.mp4`](videos/main_demo.mp4) (authentic browser execution with zero overlay artifacts).
 
 ---
 

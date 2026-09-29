@@ -42,6 +42,6 @@
 1. Sign in to the Devpost portal (`https://amazonappdev2026.devpost.com/`).
 2. Primary category: **Alexa+ Track**, Mini category: select **Open Source Mini**.
 3. Paste text from `submissions/amazon/DESCRIPTION.md`.
-4. Upload recorded video (`videos/amazon_demo.mp4`) to YouTube/Vimeo/Loom and enter URL.
+4. Upload recorded video (`videos/main_demo.mp4`) to YouTube/Vimeo/Loom and enter URL.
 5. Provide GitHub repo link (`https://github.com/.../grasshopper`).
 6. Give final human approval and submit.

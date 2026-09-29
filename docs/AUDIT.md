@@ -31,7 +31,7 @@ Real keys that are still empty are waiting, not failed. Nothing here is submitte
 | LICENSE is MIT | ✅ |  |
 | Secrets stay out of git | ✅ |  |
 | Tests assert something real | ✅ |  |
-| videos/demo.mp4 ≤ 180s | ✅ | 62s |
+| videos/main_demo.mp4 ≤ 180s | ✅ | 68s |
 | MCP /mcp tool list | ✅ | approve, council_ask, get_audit_log, get_task_result, get_task_status, list_pending_approvals, run_task, schedule_task, start_task, store_check_old_listings |
 | README setup and competition table | ✅ |  |
 

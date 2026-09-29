@@ -1,6 +1,6 @@
 # Readiness and Win Potential
 
-Date: 2026-09-28. Evidence: `make test` 111 passed, `make audit` 22 ✅ / 8 ⏳ / 0 ❌, `docs/PROVIDERS_VERIFIED.md`, `docs/AUDIT.md`, `submissions/amazon/` drafts, `runs/demo-record` records (`run_ed76f4a16239`, `run_2036d34900f2`, `run_9f24d8fa5fad`), `videos/demo.mp4` (audit: 62s).
+Date: 2026-09-28. Evidence: `make test` 111 passed, `make audit` 22 ✅ / 8 ⏳ / 0 ❌, `docs/PROVIDERS_VERIFIED.md`, `docs/AUDIT.md`, `submissions/amazon/` drafts, `runs/demo-record` records (`run_ed76f4a16239`, `run_2036d34900f2`, `run_9f24d8fa5fad`), `videos/main_demo.mp4` (audit: 62s).
 
 Probabilities are an ESTIMATE. Intervals do not represent certainty. Unknown items remain marked "unknown". No competition is deemed eliminated or won based on UNVERIFIED notes.
 

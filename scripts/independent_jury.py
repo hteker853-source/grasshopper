@@ -80,7 +80,7 @@ COMPETITIONS = {
             ("Impact", 30, "Solving real-world browser automation challenges safely and affordably."),
             ("Technical", 20, "Multi-agent reasoning, council consensus mechanism, explainer traces, architecture."),
             ("Innovation", 15, "Learned recipe replay (0 LLM calls), hard budget ledger, approval gate."),
-            ("Demo", 15, "Recorded video demo (videos/demo.mp4, 62s), live streaming endpoint."),
+            ("Demo", 15, "Recorded video demo (videos/main_demo.mp4, 62s), live streaming endpoint."),
             ("Product & UX", 10, "Execution dashboard, pending approvals view, step telemetry."),
             ("Sponsor Tech", 10, "NVIDIA Nemotron integration, open agent protocols."),
         ],
@@ -88,7 +88,7 @@ COMPETITIONS = {
             "- Impact: Safe autonomous browser agent preventing financial or data loss via human approval gates and domain allowlists.\n"
             "- Technical: Multi-agent council mechanism (council_ask tool), step-by-step reasoning traces (explain.jsonl), 88 pytest tests passing.\n"
             "- Innovation: Zero-cost recipe caching on repeated workflows; hard budget ceiling enforced before model calls.\n"
-            "- Demo: 62-second recorded video (videos/demo.mp4, 303 KB) showing dashboard, live execution, learning curve, and savings.\n"
+            "- Demo: 62-second recorded video (videos/main_demo.mp4, 303 KB) showing dashboard, live execution, learning curve, and savings.\n"
             "- Product & UX: Interactive dashboard with runs overview, live screenshots, step goals, and budget metrics.\n"
             "- Sponsor Tech: Built with NVIDIA Nemotron models on Nebius cloud.\n"
             "- Constraint Note: Eligible for Tinkerer track; official build window is Oct 15-20, plan ready in docs/OPEN_AGENT_PLAN.md."
@@ -104,7 +104,7 @@ COMPETITIONS = {
         ],
         "evidence": (
             "- Technology: Autonomous web agent with headless browser driver and HTTP fallback; Docker container sandbox with memory/CPU/network limits; simulated Vultr instance creation/deletion in grasshopper/sandbox_runner/vultr.py.\n"
-            "- Presentation: 62-second demo video videos/demo.mp4 with containment moment; complete documentation in docs/rules/vultr.md.\n"
+            "- Presentation: 62-second demo video videos/main_demo.mp4 with containment moment; complete documentation in docs/rules/vultr.md.\n"
             "- Business Value: Protects users from rogue agent actions: hard daily/per-run budget stop ($0.50/$0.05), domain allowlist/denylist, approval gate for sensitive actions.\n"
             "- Originality: Every execution generates blast_radius.json tracking modified files, domains contacted, execution duration, and USD spent."
         )

@@ -82,7 +82,7 @@ Rubric: briefing, no official page. Before 6.32. After 6.48.
 | Innovation | 15 | 8 | 7 | 5 | 8 | 5 | 6.60 |
 | evidence | | Zero-cost playbook playback on rerun, hard budget protection. | | | | | |
 | Demo | 15 | 6 | 7 | 7 | 7 | 4 | 6.20 |
-| evidence | | 62-second video videos/demo.mp4; dashboard, learning curve, and protection demo. | | | | | |
+| evidence | | 62-second video videos/main_demo.mp4; dashboard, learning curve, and protection demo. | | | | | |
 | Product & UX | 10 | 7 | 8 | 8 | 7 | 5 | 7.00 |
 | evidence | | Run overview, live frames, step targets, and budget metrics. | | | | | |
 | Sponsor Tech | 10 | 9 | 8 | 6 | 8 | 6 | 7.40 |
@@ -111,7 +111,7 @@ Rubric: default rubric. Before 6.15. After 6.50.
 | Application of Technology | 25 | 8 | 8 | 6 | 7 | 6 | 7.00 |
 | evidence | | tests/test_vultr_sandbox.py: VultrAPI lifecycle (get, list, user_data), error recovery, sandbox cleanup, and isolated execution proven by tests. | | | | | |
 | Presentation | 25 | 6 | 7 | 6 | 6 | 4 | 5.80 |
-| evidence | | Isolation moment in 62s video videos/demo.mp4, docs/rules/vultr.md full rule documentation. | | | | | |
+| evidence | | Isolation moment in 62s video videos/main_demo.mp4, docs/rules/vultr.md full rule documentation. | | | | | |
 | Business Value | 25 | 7 | 8 | 5 | 8 | 5 | 6.60 |
 | evidence | | Enterprise safety via hard budget stop ($0.50/$0.05), allow/denylist, approval gate on sensitive actions. | | | | | |
 | Originality | 25 | 7 | 8 | 6 | 7 | 5 | 6.60 |

@@ -346,7 +346,7 @@ def build_rows(*, env: dict[str, str] | None = None, mcp_names: set[str] | None 
         rows.append(Row("Secrets stay out of git", PASS if not gaps else FAIL, "; ".join(gaps)))
     fakes = fake_tests(sorted((ROOT / "tests").glob("test_*.py")))
     rows.append(Row("Tests assert something real", PASS if not fakes else FAIL, ", ".join(fakes)))
-    rows.append(Row("videos/demo.mp4 ≤ 180s", PASS if ok_video else FAIL, video_detail))
+    rows.append(Row("videos/main_demo.mp4 ≤ 180s", PASS if ok_video else FAIL, video_detail))
     tool_note = ", ".join(sorted(names)) if names else "no tools"
     rows.append(Row("MCP /mcp tool list", PASS if mcp_ok else FAIL, tool_note))
     readme = (ROOT / "README.md").read_text(encoding="utf-8")

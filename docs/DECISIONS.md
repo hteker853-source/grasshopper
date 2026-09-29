@@ -14,7 +14,7 @@
 - Real Chromium checks live in `tests/test_browser_real.py` under the `browser` marker. `make test-browser` runs them; `make test` still runs the whole suite, including those two scenarios.
 - Reliability is `scripts/reliability.py`: fifty real-Chromium runs each of S3 and S1, sandbox delay 100–800 ms, cookie banner left on, secrets blanked so the run cannot notify.
 - The run page reloads `/runs/<id>/live.png` every second. `/canli` and approval notices send that frame only to `TELEGRAM_ALLOWED_USER_ID`.
-- Playwright records each run at 1280x720 under `runs/<id>/video/`. `make record` stitches the agent and dashboard views into `videos/demo.mp4` and sends it only when the file is under 50 MB.
+- Playwright records each run at 1280x720 under `runs/<id>/video/`. `make record` stitches the agent and dashboard views into `videos/main_demo.mp4` and sends it only when the file is under 50 MB.
 - `make audit` writes `docs/AUDIT.md`. A competition that still needs a real key is marked waiting, not failed.
 - Provider clients keep their public default hosts. Optional base-URL settings exist so tests can point those same clients at local fakes. Bedrock is verified with a botocore Stubber. Solana stays unwired until a devnet keypair exists.
 - `submissions/amazon/` is a draft for Halil to review. The agent does not upload it or open a submission form.
@@ -49,4 +49,5 @@
 - Monte Carlo EV model updated in scripts/ev_model.py with quality correlation and 3 scenarios (Base EV $1,601); docs/INCOME_PLAN.md compiled with 60h labor budget.
 - Task 12: Nebius Token Factory live routing migration, zero-leak privacy sweep, single-commit clean master, headless GitHub OAuth device flow authorization, public repo create, gh-pages static replay deployment, and dual 3-minute demo video generation with bottom-right model overlay completed.
 - Task 13: Full English localization across all documentation, templates, and submission kits; video generation engine enhanced with Loom-style Chrome window frame, gliding cursor, and action ripple.
+- Task 14: Switched video recording to native Chromium context.record_video_dir (1280x720) without overlays; produced single shared 68-second authentic scenario (Books to Scrape -> Wikipedia -> Grasshopper Dashboard), approved via Telegram gate, saved to videos/main_demo.mp4, and updated all kit and audit references.
 

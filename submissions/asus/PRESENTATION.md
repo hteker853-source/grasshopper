@@ -70,7 +70,7 @@ Each run outputs `blast_radius.json` recording touched files, visited domains, d
 <!-- slide 14 -->
 ## 14. Demo
 
-`videos/demo.mp4` under 180 seconds, 1280x720. Halil handles YouTube upload. File existence is not proof of submission.
+`videos/main_demo.mp4` under 180 seconds, 1280x720. Halil handles YouTube upload. File existence is not proof of submission.
 
 <!-- slide 15 -->
 ## 15. Testing
